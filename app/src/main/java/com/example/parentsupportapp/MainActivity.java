@@ -1,76 +1,123 @@
 package com.example.parentsupportapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
+
     private ActivityMainBinding binding;
 
+    private Animator coinFlip1Animation;
+    private Animator coinFlip2Animation;
+    private AnimatorSet coinFlipAnimation;
+
+    private Handler handler;
+    private ImageView head;
+    private ImageView tail;
+    private Button flipButton;
+
+    private boolean isHead;
+    private boolean isFlipping;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        isHead = true;
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        head = findViewById(R.id.head);
+        tail = findViewById(R.id.tail);
+
+        flipButton = findViewById(R.id.flip);
+
+        handler = new Handler();
+
+        coinFlip1Animation = AnimatorInflater.loadAnimator(this,
+                R.animator.coin_flip_animator_1);
+
+        coinFlip2Animation = AnimatorInflater.loadAnimator(this,
+                R.animator.coin_flip_animator_2);
+
+        coinFlipAnimation = new AnimatorSet();
+
+        coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (isFlipping == true) {
+                    headOrTail();
+                    coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
+                    coinFlipAnimation.start();
+                }
+
+            }
+
+            public void onAnimationStart(Animator animation) {
+                isFlipping = true;
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                isFlipping = false;
+            }
+        });
+
+        flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                headOrTail();
+                coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
+                coinFlipAnimation.start();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        coinFlipAnimation.cancel();
+                    }
+                }, 5000);
+
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void headOrTail() {
+        if (isHead) {
+            coinFlip1Animation.setTarget(head);
+            coinFlip2Animation.setTarget(tail);
+            isHead = false;
         }
-
-        return super.onOptionsItemSelected(item);
+        else {
+            coinFlip1Animation.setTarget(tail);
+            coinFlip2Animation.setTarget(head);
+            isHead = true;
+        }
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    private void tailToHead() {
+        coinFlip1Animation.setTarget(tail);
+        coinFlip2Animation.setTarget(head);
+        coinFlip2Animation.start();
+        coinFlip1Animation.start();
+        isHead = true;
     }
+
+
 }
