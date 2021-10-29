@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimerActivity">
+
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:text="Start/Pause"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOneMin"
+        app:layout_constraintEnd_toStartOf="@+id/buttonStop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
+
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonStart"
+        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+
+    <Button
+        android:id="@+id/buttonOneMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 Min"
+        app:layout_constraintBottom_toTopOf="@+id/buttonThreeMin"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTwoMin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+
+    <Button
+        android:id="@+id/buttonTwoMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 Min"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonOneMin"
+        app:layout_constraintTop_toTopOf="@+id/buttonOneMin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
+
+    <Button
+        android:id="@+id/buttonThreeMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 Min"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTenMin"
+        app:layout_constraintEnd_toStartOf="@+id/buttonFiveMin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonOneMin" />
+
+    <Button
+        android:id="@+id/buttonFiveMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5 Min"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonThreeMin"
+        app:layout_constraintTop_toTopOf="@+id/buttonThreeMin" />
+
+    <Button
+        android:id="@+id/buttonTenMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 Min"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCustomMin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThreeMin" />
+
+    <Button
+        android:id="@+id/buttonCustomMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonTenMin"
+        app:layout_constraintTop_toTopOf="@+id/buttonTenMin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
