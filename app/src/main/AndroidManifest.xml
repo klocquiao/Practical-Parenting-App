@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
+            android:name=".ChildConfigActivity"
+            android:exported="true" />
+        <activity
             android:name=".CoinFlipActivity"
             android:exported="true" />
         <activity
