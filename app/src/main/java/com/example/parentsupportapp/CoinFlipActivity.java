@@ -74,14 +74,11 @@ public class CoinFlipActivity extends AppCompatActivity {
         transitionUpTail = ObjectAnimator.ofFloat(tail, "translationY", -250f);
         transitionUpAnimation.playTogether(transitionUpHead, transitionUpTail);
         transitionUpAnimation.setInterpolator(new AnticipateOvershootInterpolator());
-        transitionUpAnimation.setDuration(600);
 
         transitionDownHead = ObjectAnimator.ofFloat(head, "translationY", 0f);
         transitionDownTail = ObjectAnimator.ofFloat(tail, "translationY", 0f);
         transitionDownAnimation.playTogether(transitionDownHead, transitionDownTail);
         transitionDownAnimation.setInterpolator(new BounceInterpolator());
-        transitionDownAnimation.setDuration(1000);
-        transitionDownAnimation.setStartDelay(600);
 
         head.setCameraDistance(8000);
         tail.setCameraDistance(8000);
@@ -89,12 +86,11 @@ public class CoinFlipActivity extends AppCompatActivity {
        coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (isFlipping == true) {
+                if (isFlipping) {
                     headOrTail();
                     coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
                     coinFlipAnimation.start();
                 }
-
             }
 
             public void onAnimationStart(Animator animation) {
@@ -111,26 +107,28 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flipButton.setEnabled(false);
                 int delay;
-                headOrTail();
-                coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
-                transitionUpAnimation.start();
-                transitionDownAnimation.start();
-                coinFlipAnimation.start();
 
                 if (random.nextBoolean()) {
                     transitionUpAnimation.setDuration(600);
-                    transitionDownAnimation.setStartDelay(600);
                     transitionDownAnimation.setDuration(1000);
+                    transitionDownAnimation.setStartDelay(600);
                     delay = 1200;
 
                 }
                 else {
                     transitionUpAnimation.setDuration(700);
-                    transitionDownAnimation.setStartDelay(700);
                     transitionDownAnimation.setDuration(1200);
+                    transitionDownAnimation.setStartDelay(700);
                     delay = 1400;
                 }
+
+                headOrTail();
+                coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
+                transitionUpAnimation.start();
+                transitionDownAnimation.start();
+                coinFlipAnimation.start();
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -138,6 +136,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                         coinFlipAnimation.cancel();
                         head.setRotationX(0);
                         tail.setRotationX(0);
+                        flipButton.setEnabled(true);
                     }
                 }, delay);
 
