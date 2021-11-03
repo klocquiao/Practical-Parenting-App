@@ -6,6 +6,8 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -47,6 +49,9 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         coinFlipAnimation = new AnimatorSet();
 
+        head.setCameraDistance(8000);
+        tail.setCameraDistance(8000);
+
         coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -81,7 +86,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                     public void run() {
                         coinFlipAnimation.cancel();
                     }
-                }, 5000);
+                }, 2500);
 
             }
         });
@@ -98,5 +103,10 @@ public class CoinFlipActivity extends AppCompatActivity {
             coinFlip2Animation.setTarget(head);
             isHead = true;
         }
+    }
+
+    public static Intent getIntent(Context c) {
+        Intent intent = new Intent(c, CoinFlipActivity.class);
+        return intent;
     }
 }

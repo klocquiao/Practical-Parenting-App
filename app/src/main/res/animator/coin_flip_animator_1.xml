@@ -4,15 +4,14 @@
         android:propertyName="rotationX"
         android:valueFrom="0"
         android:valueTo="180"
-        android:duration="400">
+        android:duration="100">
     </objectAnimator>
 
     <objectAnimator
         android:valueFrom="1.0"
         android:valueTo="0.0"
         android:propertyName="alpha"
-        android:startOffset="200"
+        android:startOffset="50"
         android:duration="1">
     </objectAnimator>
-
 </set>
