@@ -49,17 +49,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-        isHead = true;
 
+        isHead = true;
         random = new Random();
 
         head = findViewById(R.id.head);
         tail = findViewById(R.id.tail);
-
         flipButton = findViewById(R.id.flip);
 
         handler = new Handler();
 
+        //Initialize animation components
         coinFlip1Animation = AnimatorInflater.loadAnimator(this,
                 R.animator.coin_flip_animator_1);
 
@@ -70,6 +70,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         transitionUpAnimation = new AnimatorSet();
         transitionDownAnimation = new AnimatorSet();
 
+        //Create the "up and down" animation for the coin flip
         transitionUpHead = ObjectAnimator.ofFloat(head, "translationY", -250f);
         transitionUpTail = ObjectAnimator.ofFloat(tail, "translationY", -250f);
         transitionUpAnimation.playTogether(transitionUpHead, transitionUpTail);
@@ -80,6 +81,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         transitionDownAnimation.playTogether(transitionDownHead, transitionDownTail);
         transitionDownAnimation.setInterpolator(new BounceInterpolator());
 
+        //Change camera distance for head and tail images
         head.setCameraDistance(8000);
         tail.setCameraDistance(8000);
 
@@ -119,7 +121,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 }
                 else {
                     transitionUpAnimation.setDuration(700);
-                    transitionDownAnimation.setDuration(1200);
+                    transitionDownAnimation.setDuration(1100);
                     transitionDownAnimation.setStartDelay(700);
                     delay = 1400;
                 }
@@ -136,10 +138,15 @@ public class CoinFlipActivity extends AppCompatActivity {
                         coinFlipAnimation.cancel();
                         head.setRotationX(0);
                         tail.setRotationX(0);
-                        flipButton.setEnabled(true);
                     }
                 }, delay);
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        flipButton.setEnabled(true);
+                    }
+                }, delay + 400);
             }
         });
     }
