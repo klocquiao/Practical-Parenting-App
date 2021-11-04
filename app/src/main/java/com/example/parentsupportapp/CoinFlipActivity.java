@@ -9,6 +9,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -33,7 +34,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ObjectAnimator transitionDownHead;
     private ObjectAnimator transitionDownTail;
     private AnimatorSet transitionDownAnimation;
-
+    private MediaPlayer coinFlipSound;
     private Handler handler;
     private ImageView head;
     private ImageView tail;
@@ -85,6 +86,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         head.setCameraDistance(8000);
         tail.setCameraDistance(8000);
 
+        //Create coin flip sound
+        coinFlipSound = MediaPlayer.create(this, R.raw.coinflipsound);
+
        coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -127,6 +131,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 }
 
                 headOrTail();
+                coinFlipSound.start();
                 coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
                 transitionUpAnimation.start();
                 transitionDownAnimation.start();
