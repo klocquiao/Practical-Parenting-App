@@ -13,11 +13,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -35,7 +32,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ObjectAnimator transitionDownTail;
     private AnimatorSet transitionDownAnimation;
     private MediaPlayer coinFlipSound;
-    private Handler handler;
+
     private ImageView head;
     private ImageView tail;
     private Button flipButton;
@@ -44,7 +41,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private boolean isFlipping;
 
     private Random random;
-
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +50,17 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         isHead = true;
         random = new Random();
+        handler = new Handler();
 
         head = findViewById(R.id.head);
         tail = findViewById(R.id.tail);
         flipButton = findViewById(R.id.flip);
 
-        handler = new Handler();
+        setupCoinFlipAnimation();
+        setupFlipButton();
+    }
 
+    private void setupCoinFlipAnimation() {
         //Initialize animation components
         coinFlip1Animation = AnimatorInflater.loadAnimator(this,
                 R.animator.coin_flip_animator_1);
@@ -89,11 +90,11 @@ public class CoinFlipActivity extends AppCompatActivity {
         //Create coin flip sound
         coinFlipSound = MediaPlayer.create(this, R.raw.coinflipsound);
 
-       coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
+        coinFlipAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (isFlipping) {
-                    headOrTail();
+                    checkHeadsOrTails();
                     coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
                     coinFlipAnimation.start();
                 }
@@ -101,7 +102,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
             public void onAnimationStart(Animator animation) {
                 isFlipping = true;
-
             }
 
             @Override
@@ -109,7 +109,9 @@ public class CoinFlipActivity extends AppCompatActivity {
                 isFlipping = false;
             }
         });
+    }
 
+    private void setupFlipButton() {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,13 +132,14 @@ public class CoinFlipActivity extends AppCompatActivity {
                     delay = 1400;
                 }
 
-                headOrTail();
+                checkHeadsOrTails();
                 coinFlipSound.start();
                 coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
                 transitionUpAnimation.start();
                 transitionDownAnimation.start();
                 coinFlipAnimation.start();
 
+                //Wait for coin flip animation to finish
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -146,6 +149,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                     }
                 }, delay);
 
+                //Wait for bounce interpolation to finish
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -156,7 +160,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         });
     }
 
-    private void headOrTail() {
+
+    private void checkHeadsOrTails() {
         if (isHead) {
             coinFlip1Animation.setTarget(head);
             coinFlip2Animation.setTarget(tail);
