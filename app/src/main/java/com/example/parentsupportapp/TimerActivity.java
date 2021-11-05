@@ -89,7 +89,11 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 askForCustomTime();
-                updateTimerTextView();
+//                lastSelectedTime = timeLeftInMill;
+//                if (!isTicking) {
+//                    startTimer();
+//                }
+//                updateTimerTextView();
             }
         });
 
@@ -101,13 +105,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void askForCustomTime() {
-        View input = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
 
-        final long[] extractedTime = new long[2];
+        EditText minuteText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertMinute);
+        EditText secondText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertSecond);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Provide time");
-        alert.setView(input);
+        alert.setView(dialogView);
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -119,48 +124,17 @@ public class TimerActivity extends AppCompatActivity {
                 // need to validate newTime isn't too large (don't want the kids to starve)
 
                 // need to pull time out here
-                long mins = extractedTime[0];
-                long secs = extractedTime[1];
-                timeLeftInMill = (mins * 60 * 1000) + (secs * 1000);
+                long extractedMinutes = Long.parseLong(minuteText.getText().toString());
+                long extractedSeconds = Long.parseLong(secondText.getText().toString());
+                timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
+                lastSelectedTime = timeLeftInMill;
+                if (!isTicking) {
+                    startTimer();
+                }
+                updateTimerTextView();
             }
         });
         alert.show();
-
-        EditText minuteText = (EditText) findViewById(R.id.editTextTimerAlertMinute);
-        EditText secondText = (EditText) findViewById(R.id.editTextTimerAlertSecond);
-
-        minuteText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                extractedTime[0] = Long.parseLong(editable.toString());
-            }
-        });
-        secondText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                extractedTime[1] = Long.parseLong(editable.toString());
-            }
-        });
     }
 
     private void timerReset() {
