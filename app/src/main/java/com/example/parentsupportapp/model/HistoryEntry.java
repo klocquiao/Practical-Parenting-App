@@ -4,24 +4,34 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HistoryEntry {
-    private static final int HEADS = 0;
-    private static final int TAILS = 1;
-    private int flipperName;
-    private LocalDateTime timeOfFlip;
+    private String flipperName;
+    private String timeOfFlip;
     private int flipChoice;
     private int flipResult;
 
-    public HistoryEntry(int flipperName, int flipChoice, int flipResult) {
-        this.timeOfFlip = LocalDateTime.now();
+    public HistoryEntry(String flipperName, int flipChoice, int flipResult) {
+        this.timeOfFlip = convertTimeToString();
         this.flipperName = flipperName;
         this.flipChoice = flipChoice;
         this.flipResult = flipResult;
     }
 
-    public String getTimeOfFlip() {
+    public boolean isMatch() {
+        if (flipChoice == flipResult) {
+            return true;
+        }
+        return false;
+    }
+
+    private String convertTimeToString() {
+        LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d @ hh:mm");
-        String gameCompletionTimeString = timeOfFlip.format(formatter);
-        return gameCompletionTimeString;
+        String strTimeOfFlip = time.format(formatter);
+        return strTimeOfFlip;
+    }
+
+    public String getTimeOfFlip() {
+        return timeOfFlip;
     }
 
     public int getFlipChoice() {
@@ -30,5 +40,9 @@ public class HistoryEntry {
 
     public int getFlipResult() {
         return flipResult;
+    }
+
+    public String getFlipperName() {
+        return flipperName;
     }
 }
