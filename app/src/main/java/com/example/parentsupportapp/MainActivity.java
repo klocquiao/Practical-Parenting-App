@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
- //
     private Button configureChildButton;
     private Button flipButton;
     private Button timerButton;
@@ -23,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        this.configureChildButton = (Button) findViewById(R.id.menuConfigureChild);
-        this.flipButton = (Button) findViewById(R.id.menuFlip);
-        this.timerButton = (Button) findViewById(R.id.menuTimer);
+        this.configureChildButton = findViewById(R.id.menuConfigureChild);
+        this.flipButton = findViewById(R.id.menuFlip);
+        this.timerButton = findViewById(R.id.menuTimer);
 
         this.setupButtonListeners();
     }
@@ -48,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         this.timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TimerActivity.class));
+                Intent timerIntent = TimerActivity.makeIntent(MainActivity.this);
+                startActivity(timerIntent);
             }
         });
     }

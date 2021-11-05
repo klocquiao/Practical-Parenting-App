@@ -23,13 +23,13 @@
             app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textMenuTItle"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:layout_marginTop="16dp"
             android:lineSpacingExtra="12sp"
             android:scaleY="2"
-            android:text="MENU"
+            android:text="@string/menu_title"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
