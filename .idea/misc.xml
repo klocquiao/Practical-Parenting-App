@@ -8,6 +8,14 @@
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.2015625" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_timer.xml" value="0.2015625" />
+        <entry key="app/src/main/res/layout/activity_add_child.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_child_config.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_coin_flip.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_demo.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_remove.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_timer.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_view.xml" value="0.29583333333333334" />
       </map>
     </option>
   </component>
