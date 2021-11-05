@@ -27,7 +27,7 @@ public class RemoveActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                fam.getChildren().remove(position);
+                fam.removeChild(position);
                 updateUI();
             }
         });
@@ -35,8 +35,8 @@ public class RemoveActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, RemoveActivity.class);
-
     }
+
     private void updateUI() {
         fam = Family.getInstance();
         listView = findViewById(R.id.listChildrenToRemove);

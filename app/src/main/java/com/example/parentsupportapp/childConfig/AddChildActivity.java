@@ -35,18 +35,16 @@ public class AddChildActivity extends AppCompatActivity {
             }
         });
     }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddChildActivity.class);
-
     }
 
     public void setupAddButton() {
-
         Button btn = findViewById(R.id.btnAdd);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText etFirstName = findViewById(R.id.etFirstName);
                 String str = etFirstName.getText().toString();
                 etFirstName.setHint("Enter Name");
@@ -58,7 +56,6 @@ public class AddChildActivity extends AppCompatActivity {
                 fam.addChild(str);
                 etFirstName.setText("");
                 Toast.makeText(AddChildActivity.this, "New Child Added", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
