@@ -19,7 +19,7 @@
             android:name=".childConfig.AddChildActivity"
             android:exported="true" />
         <activity
-            android:name=".childConfig.ChildConfigActivity"
+            android:name=".ChildConfigActivity"
             android:exported="true" />
         <activity
             android:name=".CoinFlipActivity"

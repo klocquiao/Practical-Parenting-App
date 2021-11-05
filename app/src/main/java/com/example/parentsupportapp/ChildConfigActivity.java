@@ -1,4 +1,4 @@
-package com.example.parentsupportapp.childConfig;
+package com.example.parentsupportapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.childConfig.AddChildActivity;
+import com.example.parentsupportapp.childConfig.RemoveActivity;
+import com.example.parentsupportapp.childConfig.ViewActivity;
 
 public class ChildConfigActivity extends AppCompatActivity {
 
