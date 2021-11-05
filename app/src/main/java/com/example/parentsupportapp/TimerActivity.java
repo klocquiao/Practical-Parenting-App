@@ -1,48 +1,68 @@
 package com.example.parentsupportapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class TimerActivity extends AppCompatActivity {
 
-    private static final long START_TIME = 300000;
+    private static final long DEFAULT_START_TIME = 300000;
     private static final long ONE_MIN = 60000;
+    private static final long TWO_MIN = 120000;
+    private static final long THREE_MIN = 180000;
+    private static final long FIVE_MIN = 300000;
+    private static final long TEN_MIN = 600000;
 
     private CountDownTimer countDownTimer;
     private TextView timerView;
     private Button startButton;
-    private Button stopButton;
+    private Button resetButton;
+    private Button customMinButton;
     private Button oneMinButton;
     private Button twoMinButton;
     private Button threeMinButton;
     private Button fiveMinButton;
     private Button tenMinButton;
-    private Button customMinButton;
     private boolean isTicking;
-    private long timeLeftInMill = START_TIME;
+    private long timeLeftInMill = DEFAULT_START_TIME;
+    private long lastSelectedTime = DEFAULT_START_TIME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        initializeButtons();
+        setupButtonListeners();
+        updateTimerTextView();
+    }
+
+    private void initializeButtons() {
         timerView = (TextView) findViewById(R.id.textViewTimer);
         startButton = (Button) findViewById(R.id.buttonStart);
-        stopButton = (Button) findViewById(R.id.buttonStop);
-        oneMinButton = (Button) findViewById(R.id.buttonOneMin);
+        resetButton = (Button) findViewById(R.id.buttonStop);
         customMinButton = (Button) findViewById(R.id.buttonCustomMin);
-
-        setupButtonListeners();
-
-        updateTimerTextView();
+        oneMinButton = (Button) findViewById(R.id.buttonOneMin);
+        twoMinButton = (Button) findViewById(R.id.buttonTwoMin);
+        threeMinButton = (Button) findViewById(R.id.buttonThreeMin);
+        fiveMinButton = (Button) findViewById(R.id.buttonFiveMin);
+        tenMinButton = (Button) findViewById(R.id.buttonTenMin);
     }
 
     private void setupButtonListeners() {
@@ -58,28 +78,87 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
-        stopButton.setOnClickListener(new View.OnClickListener() {
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timerReset();
             }
         });
 
-        oneMinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timeLeftInMill = ONE_MIN;
-                updateTimerTextView();
-                startTimer();
-            }
-        });
-
         customMinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Insert dialog box that appears asking for custom time
-
+                askForCustomTime();
                 updateTimerTextView();
+            }
+        });
+
+        setOnClickForMinButton(oneMinButton, ONE_MIN);
+        setOnClickForMinButton(twoMinButton, TWO_MIN);
+        setOnClickForMinButton(threeMinButton, THREE_MIN);
+        setOnClickForMinButton(fiveMinButton, FIVE_MIN);
+        setOnClickForMinButton(tenMinButton, TEN_MIN);
+    }
+
+    private void askForCustomTime() {
+        View input = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
+
+        final long[] extractedTime = new long[2];
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Provide time");
+        alert.setView(input);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // TODO: Have to check returned value and have to adjust create custom view to
+                // TURNS OUT everything there happens after the dialog has been destroyed.
+                // need to extract data when the ok button is pressed for the edit text, then
+                // i can use this function to store the data above.
+                // pass to alert
+                // need to validate newTime isn't too large (don't want the kids to starve)
+
+                // need to pull time out here
+                long mins = extractedTime[0];
+                long secs = extractedTime[1];
+                timeLeftInMill = (mins * 60 * 1000) + (secs * 1000);
+            }
+        });
+        alert.show();
+
+        EditText minuteText = (EditText) findViewById(R.id.editTextTimerAlertMinute);
+        EditText secondText = (EditText) findViewById(R.id.editTextTimerAlertSecond);
+
+        minuteText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                extractedTime[0] = Long.parseLong(editable.toString());
+            }
+        });
+        secondText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                extractedTime[1] = Long.parseLong(editable.toString());
             }
         });
     }
@@ -88,14 +167,17 @@ public class TimerActivity extends AppCompatActivity {
         if (isTicking) {
             Toast.makeText(TimerActivity.this, "Can't reset while running!", Toast.LENGTH_SHORT).show();
         } else {
-            timeLeftInMill = START_TIME;
+            timeLeftInMill = lastSelectedTime;
             updateTimerTextView();
+            updateUIShowButtons();
+            startButton.setText(R.string.timerActivity_start);
         }
     }
 
     private void pauseTimer() {
         countDownTimer.cancel();
         isTicking = false;
+        startButton.setText("Start");
     }
 
     private void startTimer() {
@@ -110,24 +192,75 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 // TODO: this (possibly from thread handler) is where I need to alert through a notification
                 Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
+                sendNotification();
             }
         }.start();
-        
+
+        startButton.setText(R.string.timerActivity_pause);
         isTicking = true;
+        updateUIHideButtons();
+    }
+
+    private void sendNotification() {
+    }
+
+    private void updateUIHideButtons() {
+        buttonDisappear(oneMinButton);
+        buttonDisappear(twoMinButton);
+        buttonDisappear(threeMinButton);
+        buttonDisappear(fiveMinButton);
+        buttonDisappear(tenMinButton);
+        buttonDisappear(customMinButton);
+        Guideline guideline = (Guideline) findViewById(R.id.guidelineHorizontal);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideline.getLayoutParams();
+        params.guidePercent = (float) 0.7;
+        guideline.setLayoutParams(params);
+    }
+
+    private void updateUIShowButtons() {
+        Guideline guideline = (Guideline) findViewById(R.id.guidelineHorizontal);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideline.getLayoutParams();
+        params.guidePercent = (float) 0.4;
+        guideline.setLayoutParams(params);
+        buttonAppear(oneMinButton);
+        buttonAppear(twoMinButton);
+        buttonAppear(threeMinButton);
+        buttonAppear(fiveMinButton);
+        buttonAppear(tenMinButton);
+        buttonAppear(customMinButton);
+    }
+
+    private void buttonAppear(Button button) {
+        button.setClickable(true);
+        button.setVisibility(View.VISIBLE);
+    }
+
+    private void buttonDisappear(Button button) {
+        button.setClickable(false);
+        button.setVisibility(View.GONE);
+    }
+
+    private void setOnClickForMinButton(Button btn, long time) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // safety check to make sure it doesn't start new timer while one is already ticking
+                if (!isTicking) {
+                    timeLeftInMill = time;
+                    lastSelectedTime = time;
+                    updateTimerTextView();
+                    startTimer();
+                }
+            }
+        });
     }
 
     private void updateTimerTextView() {
-        // convert timeLeftInMill into seconds
         int seconds = (int) timeLeftInMill / 1000 % 60;
-
-        // convert timeLeftInMill into minutes
         int minutes = (int) timeLeftInMill / 1000 / 60;
-
-        String timeLeft = String.format("%02d:%02d", minutes, seconds);
-
+        String timeLeft = String.format(Locale.CANADA, "%02d:%02d", minutes, seconds);
         timerView.setText(timeLeft);
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, TimerActivity.class);

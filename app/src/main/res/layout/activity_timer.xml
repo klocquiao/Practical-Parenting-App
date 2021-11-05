@@ -8,22 +8,22 @@
 
     <TextView
         android:id="@+id/textViewTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="00:00"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonStart"
-        android:layout_width="wrap_content"
-        android:layout_height="75dp"
-        android:text="Start/Pause"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Start"
         app:layout_constraintBottom_toTopOf="@+id/buttonOneMin"
         app:layout_constraintEnd_toStartOf="@+id/buttonStop"
         app:layout_constraintHorizontal_bias="0.5"
@@ -35,10 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reset"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTwoMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonStart"
-        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTimer" />
 
     <Button
         android:id="@+id/buttonOneMin"
@@ -56,10 +57,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2 Min"
+        app:layout_constraintBottom_toTopOf="@+id/buttonFiveMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonOneMin"
-        app:layout_constraintTop_toTopOf="@+id/buttonOneMin" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStop" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"
@@ -84,10 +86,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="5 Min"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCustomMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonThreeMin"
-        app:layout_constraintTop_toTopOf="@+id/buttonThreeMin" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTwoMin" />
 
     <Button
         android:id="@+id/buttonTenMin"
@@ -105,9 +108,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Custom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonTenMin"
-        app:layout_constraintTop_toTopOf="@+id/buttonTenMin" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFiveMin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
