@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+ //
     private Button configureChildButton;
     private Button flipButton;
     private Button timerButton;
