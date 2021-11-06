@@ -174,7 +174,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent getIntent(Context c) {
+    public static Intent makeIntent(Context c) {
         Intent intent = new Intent(c, CoinFlipActivity.class);
         return intent;
     }
