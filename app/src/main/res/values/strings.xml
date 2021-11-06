@@ -11,4 +11,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="timerActivity_start">Start</string>
     <string name="timerActivity_pause">Pause</string>
+
+    <!-- Main Menu -->
+    <string name="menu_title">Menu</string>
+
 </resources>
