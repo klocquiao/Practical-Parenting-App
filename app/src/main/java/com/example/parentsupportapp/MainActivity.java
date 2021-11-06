@@ -10,25 +10,47 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
-
-    Button startCFA;
+    private Button configureChildButton;
+    private Button flipButton;
+    private Button timerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.example.parentsupportapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        startCFA = (findViewById(R.id.buttonCFA));
+        this.configureChildButton = findViewById(R.id.menuConfigureChild);
+        this.flipButton = findViewById(R.id.menuFlip);
+        this.timerButton = findViewById(R.id.menuTimer);
 
-        startCFA.setOnClickListener(new View.OnClickListener() {
+        this.setupButtonListeners();
+    }
+
+    private void setupButtonListeners() {
+        this.configureChildButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent newIntent = CoinFlipActivity.getIntent(MainActivity.this);
-                startActivity(newIntent);
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ChildConfigActivity.class));
+            }
+        });
+
+        this.flipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CoinFlipActivity.class));
+            }
+        });
+
+        this.timerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent timerIntent = TimerActivity.makeIntent(MainActivity.this);
+                startActivity(timerIntent);
             }
         });
     }
+
 }
