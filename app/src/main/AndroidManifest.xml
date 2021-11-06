@@ -11,7 +11,9 @@
         android:theme="@style/Theme.ParentSupportApp">
         <activity
             android:name=".HistoryActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".HistoryActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".ChildConfigActivity"
             android:exported="true" />

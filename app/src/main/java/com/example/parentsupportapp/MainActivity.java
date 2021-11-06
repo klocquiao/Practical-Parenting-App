@@ -21,29 +21,5 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
-
-        historyManager = new HistoryManager(this);
-
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HistoryEntry testEntry = new HistoryEntry("name", 0, 0);
-                historyManager.addCoinFlipEntry(testEntry);
-                HistoryActivity.saveHistory(MainActivity.this, historyManager);
-            }
-        });
-
-        Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = HistoryActivity.getIntent(MainActivity.this);
-                startActivity(intent);
-            }
-        });
-
     }
-
-
 }

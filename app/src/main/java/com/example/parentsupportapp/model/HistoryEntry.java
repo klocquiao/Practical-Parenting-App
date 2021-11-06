@@ -6,10 +6,10 @@ import java.time.format.DateTimeFormatter;
 public class HistoryEntry {
     private String flipperName;
     private String timeOfFlip;
-    private int flipChoice;
-    private int flipResult;
+    private String flipChoice;
+    private String flipResult;
 
-    public HistoryEntry(String flipperName, int flipChoice, int flipResult) {
+    public HistoryEntry(String flipperName, String flipChoice, String flipResult) {
         this.timeOfFlip = convertTimeToString();
         this.flipperName = flipperName;
         this.flipChoice = flipChoice;
@@ -17,7 +17,7 @@ public class HistoryEntry {
     }
 
     public boolean isMatch() {
-        if (flipChoice == flipResult) {
+        if (flipChoice.matches(flipResult)) {
             return true;
         }
         return false;
@@ -34,11 +34,11 @@ public class HistoryEntry {
         return timeOfFlip;
     }
 
-    public int getFlipChoice() {
+    public String getFlipChoice() {
         return flipChoice;
     }
 
-    public int getFlipResult() {
+    public String getFlipResult() {
         return flipResult;
     }
 

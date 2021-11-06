@@ -22,7 +22,6 @@ public class HistoryManager {
         return instance;
     }
 
-
     public HistoryManager(Context context) {
         this.context = context;
         String jsonHistory = HistoryActivity.getHistory(context);

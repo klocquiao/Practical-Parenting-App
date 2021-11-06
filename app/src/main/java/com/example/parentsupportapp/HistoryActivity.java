@@ -2,13 +2,14 @@ package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,11 +31,22 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
         historyManager = HistoryManager.getInstance(this);
         populateHistoryListView();
     }
 
-    //Shared Preferences
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateHistoryListView();
+    }
+
     public static void saveHistory(Context context, HistoryManager historyManager) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -77,10 +89,10 @@ public class HistoryActivity extends AppCompatActivity {
             textFlipperName.setText(currentHistoryEntry.getFlipperName());
 
             TextView textFlipChoice = (TextView) historyListView.findViewById(R.id.textFlipChoice);
-            textFlipChoice.setText(Integer.toString(currentHistoryEntry.getFlipChoice()));
+            textFlipChoice.setText(currentHistoryEntry.getFlipChoice());
 
             TextView textFlipResult = (TextView) historyListView.findViewById(R.id.textFlipResult);
-            textFlipResult.setText(Integer.toString(currentHistoryEntry.getFlipResult()));
+            textFlipResult.setText(currentHistoryEntry.getFlipResult());
 
             ImageView imageIsMatch = (ImageView) historyListView.findViewById(R.id.imageIsMatch);
             if (currentHistoryEntry.isMatch()) {
@@ -94,7 +106,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent getIntent(Context c) {
+    public static Intent makeIntent(Context c) {
         Intent intent = new Intent(c, HistoryActivity.class);
         return intent;
     }
