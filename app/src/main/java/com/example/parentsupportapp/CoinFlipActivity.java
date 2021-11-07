@@ -79,7 +79,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinTailsImage = findViewById(R.id.tail);
         childrenSpinner = findViewById(R.id.spinnerChildren);
 
-        family = Family.getInstance();
+        family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
 
         updateUI();

@@ -23,7 +23,7 @@ public class ViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view);
 
         setupBackButton();
-        fam = Family.getInstance();
+        fam = Family.getInstance(this);
         listView = findViewById(R.id.listChildren);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ViewActivity.this, android.R.layout.simple_list_item_1,fam.getChildrenInString());
