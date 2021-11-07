@@ -22,7 +22,7 @@ import com.example.parentsupportapp.model.HistoryManager;
 import com.google.gson.Gson;
 
 public class HistoryActivity extends AppCompatActivity {
-    private HistoryManager historyManager;
+    private HistoryManager history;
     public static final String EMPTY_HISTORY = "";
     private static final String KEY_HISTORY = "HistoryKey";
     private static final String PREF_HISTORY = "HistoryPref";
@@ -37,7 +37,7 @@ public class HistoryActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        historyManager = HistoryManager.getInstance(this);
+        history = HistoryManager.getInstance(this);
         populateHistoryListView();
     }
 
@@ -70,7 +70,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private class HistoryListAdapter extends ArrayAdapter<HistoryEntry> {
         public HistoryListAdapter() {
-            super(HistoryActivity.this, R.layout.history_list_view, historyManager.getHistory());
+            super(HistoryActivity.this, R.layout.history_list_view, history.getHistory());
         }
 
         @Override
@@ -80,7 +80,7 @@ public class HistoryActivity extends AppCompatActivity {
                 historyListView = getLayoutInflater().inflate(R.layout.history_list_view, parent, false);
             }
 
-            HistoryEntry currentHistoryEntry = historyManager.getHistoryEntry(position);
+            HistoryEntry currentHistoryEntry = history.getHistoryEntry(position);
 
             TextView textTimeOfFlip = (TextView) historyListView.findViewById(R.id.textTimeOfFlip);
             textTimeOfFlip.setText(currentHistoryEntry.getTimeOfFlip());
@@ -89,10 +89,10 @@ public class HistoryActivity extends AppCompatActivity {
             textFlipperName.setText(currentHistoryEntry.getFlipperName());
 
             TextView textFlipChoice = (TextView) historyListView.findViewById(R.id.textFlipChoice);
-            textFlipChoice.setText(currentHistoryEntry.getFlipChoice());
+            textFlipChoice.setText(getString(R.string.history_choice,currentHistoryEntry.getFlipChoice()));
 
             TextView textFlipResult = (TextView) historyListView.findViewById(R.id.textFlipResult);
-            textFlipResult.setText(currentHistoryEntry.getFlipResult());
+            textFlipResult.setText(getString(R.string.history_results, currentHistoryEntry.getFlipResult()));
 
             ImageView imageIsMatch = (ImageView) historyListView.findViewById(R.id.imageIsMatch);
             if (currentHistoryEntry.isMatch()) {

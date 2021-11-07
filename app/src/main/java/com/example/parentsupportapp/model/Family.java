@@ -37,4 +37,11 @@ public class Family {
     public void removeChild(int pos) {
         this.children.remove(pos);
     }
+
+    public boolean isNoChildren() {
+        if (children.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
 }

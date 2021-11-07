@@ -16,10 +16,18 @@
     <string name="menu_title">Menu</string>
 
     <!-- Flip Activity -->
+    <string name="coin_flip_title">Coin Flip</string>
+    <string name="suggestion_header">%1$d should flip this time!</string>
     <string name="flip">Flip!</string>
     <string name="history">History</string>
-    <string name="spinner_prompt">Select...</string>
     <string name="heads">Heads</string>
     <string name="tails">Tails</string>
+
+    <!-- History Activity -->
+    <string name="history_choice">Choice: %1$s</string>
+    <string name="history_results">Results: %1$s</string>
+    <string name="history_title">Coin Flip History</string>
+
+
 
 </resources>
