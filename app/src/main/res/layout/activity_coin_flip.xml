@@ -113,7 +113,7 @@
         android:id="@+id/textFlipSuggestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="SUGGESTION"
         app:layout_constraintBottom_toTopOf="@+id/head"
         app:layout_constraintEnd_toEndOf="parent"

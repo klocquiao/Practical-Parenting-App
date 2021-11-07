@@ -57,6 +57,10 @@ public class CoinFlipActivity extends AppCompatActivity {
     private ImageView coinHeadsImage;
     private ImageView coinTailsImage;
     private Spinner childrenSpinner;
+    private Button flipButton;
+    private TextView coinFlipSuggestionText;
+    RadioGroup headsOrTailsGroup;
+
 
     private boolean isHead;
     private boolean isFlipping;
@@ -78,6 +82,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinHeadsImage = findViewById(R.id.head);
         coinTailsImage = findViewById(R.id.tail);
         childrenSpinner = findViewById(R.id.spinnerChildren);
+        flipButton = findViewById(R.id.flip);
+        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
+        headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
 
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
@@ -119,7 +126,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void getCoinFlipRecommendation() {
         TextView coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
-        String recommendation = history.getNextInQueue();
+        String recommendation = history.getNextInQueue(family.getChildren());
         if (recommendation == HistoryManager.EMPTY) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
@@ -193,12 +200,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void setupFlipButton() {
         Random random = new Random();
         Handler handler = new Handler();
-        Button flipButton = findViewById(R.id.flip);
 
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flipButton.setEnabled(false);
+                setViewInteractability(false);
                 int delay;
 
                 if (random.nextBoolean()) {
@@ -236,7 +242,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        flipButton.setEnabled(true);
+                        setViewInteractability(true);
                         if (!family.isNoChildren()) {
                             createHistoryEntry();
                             getCoinFlipRecommendation();
@@ -269,7 +275,6 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private String getChoice() {
-        RadioGroup headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
         int choiceID = headsOrTailsGroup.getCheckedRadioButtonId();
         RadioButton radioChoice = findViewById(choiceID);
         return (String) radioChoice.getText();
@@ -280,6 +285,15 @@ public class CoinFlipActivity extends AppCompatActivity {
             return HEADS;
         }
         return TAILS;
+    }
+
+    private void setViewInteractability(boolean isEnable) {
+        childrenSpinner.setEnabled(isEnable);
+        flipButton.setEnabled(isEnable);
+        headsOrTailsGroup.setEnabled(isEnable);
+        for (int i = 0; i < headsOrTailsGroup.getChildCount(); i++) {
+            ((RadioButton) headsOrTailsGroup.getChildAt(i)).setEnabled(false);
+        }
     }
 
     public static Intent makeIntent(Context c) {

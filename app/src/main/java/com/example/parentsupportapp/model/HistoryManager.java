@@ -56,12 +56,6 @@ public class HistoryManager {
             }
         }
 
-        for (int i = 0; i < priorityQueue.size(); i++) {
-            if (!isChildReal(children, priorityQueue.get(i))) {
-                priorityQueue.remove(i);
-            }
-        }
-
         HistoryActivity.saveHistoryActivityPrefs(context, this);
     }
 
@@ -71,11 +65,18 @@ public class HistoryManager {
         HistoryActivity.saveHistoryActivityPrefs(context, this);
     }
 
-    public String getNextInQueue() {
-        if (priorityQueue.isEmpty()) {
-            return EMPTY;
+    public String getNextInQueue(List<Child> children) {
+        for (int i = 0; i < priorityQueue.size(); i++) {
+            if (isChildReal(children, priorityQueue.get(i))) {
+                return priorityQueue.get(i);
+            }
+            else {
+                priorityQueue.remove(i);
+                HistoryActivity.saveHistoryActivityPrefs(context, this);
+            }
         }
-        return priorityQueue.get(0);
+
+        return EMPTY;
     }
 
     public List<String> getPriorityQueue() {
