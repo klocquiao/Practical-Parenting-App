@@ -94,4 +94,9 @@ public class ChildConfigActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static Intent makeIntent(Context c) {
+        Intent intent = new Intent(c, ChildConfigActivity.class);
+        return intent;
+    }
 }
