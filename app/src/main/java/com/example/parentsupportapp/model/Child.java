@@ -1,5 +1,7 @@
 package com.example.parentsupportapp.model;
 
+import androidx.annotation.NonNull;
+
 public class Child {
     private String firstName;
 
@@ -15,5 +17,9 @@ public class Child {
         this.firstName = firstName;
     }
 
-
+    @NonNull
+    @Override
+    public String toString() {
+        return firstName;
+    }
 }

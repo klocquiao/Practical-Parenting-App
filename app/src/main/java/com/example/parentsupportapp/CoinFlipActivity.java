@@ -20,53 +20,59 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+
+import com.example.parentsupportapp.model.Child;
+import com.example.parentsupportapp.model.Family;
 
 import java.util.Random;
 
 public class CoinFlipActivity extends AppCompatActivity {
 
+    private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
     private Animator coinFlip2Animation;
-    private AnimatorSet coinFlipAnimation;
-    private ObjectAnimator transitionUpHead;
-    private ObjectAnimator transitionUpTail;
+
     private AnimatorSet transitionUpAnimation;
-    private ObjectAnimator transitionDownHead;
-    private ObjectAnimator transitionDownTail;
     private AnimatorSet transitionDownAnimation;
     private MediaPlayer coinFlipSound;
 
     private ImageView head;
     private ImageView tail;
-    private Button flipButton;
+    private Spinner childrenSpinner;
 
     private boolean isHead;
     private boolean isFlipping;
 
-    private Random random;
-    private Handler handler;
+    private Family family;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
-
-        isHead = true;
-        random = new Random();
-        handler = new Handler();
-        head = findViewById(R.id.head);
-        tail = findViewById(R.id.tail);
-        flipButton = findViewById(R.id.flip);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
+        isHead = true;
+        head = findViewById(R.id.head);
+        tail = findViewById(R.id.tail);
+
+        family = Family.getInstance();
+
+        populateChildrenSpinner();
         setupCoinFlipAnimation();
         setupFlipButton();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateChildrenSpinner();
     }
 
     @Override
@@ -87,7 +93,19 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
     }
 
+    private void populateChildrenSpinner() {
+        childrenSpinner = (Spinner) findViewById(R.id.spinnerChildren);
+        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
+                android.R.layout.simple_spinner_item, family.getChildren());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        childrenSpinner.setAdapter(adapter);
+    }
+
     private void setupCoinFlipAnimation() {
+        coinFlipAnimation = new AnimatorSet();
+        transitionUpAnimation = new AnimatorSet();
+        transitionDownAnimation = new AnimatorSet();
+
         //Initialize animation components
         coinFlip1Animation = AnimatorInflater.loadAnimator(this,
                 R.animator.coin_flip_animator_1);
@@ -95,18 +113,16 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinFlip2Animation = AnimatorInflater.loadAnimator(this,
                 R.animator.coin_flip_animator_2);
 
-        coinFlipAnimation = new AnimatorSet();
-        transitionUpAnimation = new AnimatorSet();
-        transitionDownAnimation = new AnimatorSet();
+        coinFlipAnimation.playTogether(coinFlip1Animation, coinFlip2Animation);
 
         //Create the "up and down" animation for the coin flip
-        transitionUpHead = ObjectAnimator.ofFloat(head, "translationY", -250f);
-        transitionUpTail = ObjectAnimator.ofFloat(tail, "translationY", -250f);
+        ObjectAnimator transitionUpHead = ObjectAnimator.ofFloat(head, "translationY", -250f);
+        ObjectAnimator transitionUpTail = ObjectAnimator.ofFloat(tail, "translationY", -250f);
         transitionUpAnimation.playTogether(transitionUpHead, transitionUpTail);
         transitionUpAnimation.setInterpolator(new AnticipateOvershootInterpolator());
 
-        transitionDownHead = ObjectAnimator.ofFloat(head, "translationY", 0f);
-        transitionDownTail = ObjectAnimator.ofFloat(tail, "translationY", 0f);
+        ObjectAnimator transitionDownHead = ObjectAnimator.ofFloat(head, "translationY", 0f);
+        ObjectAnimator transitionDownTail = ObjectAnimator.ofFloat(tail, "translationY", 0f);
         transitionDownAnimation.playTogether(transitionDownHead, transitionDownTail);
         transitionDownAnimation.setInterpolator(new BounceInterpolator());
 
@@ -139,6 +155,10 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void setupFlipButton() {
+        Random random = new Random();
+        Handler handler = new Handler();
+        Button flipButton = findViewById(R.id.flip);
+
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +181,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
                 checkHeadsOrTails();
                 coinFlipSound.start();
-                coinFlipAnimation.play(coinFlip1Animation).with(coinFlip2Animation);
                 transitionUpAnimation.start();
                 transitionDownAnimation.start();
                 coinFlipAnimation.start();

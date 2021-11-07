@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/ic_baseline_check_circle_outline.xml" value="0.221875" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/ic_baseline_history.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/ic_baseline_x_circle.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_remove.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_timer.xml" value="0.2015625" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_view.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/history_list_view.xml" value="0.33" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/menu/menu_flip.xml" value="0.33" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/menu/menu_main.xml" value="0.33" />
