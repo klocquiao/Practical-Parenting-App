@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +26,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.parentsupportapp.childConfig.AddChildActivity;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
@@ -40,6 +39,12 @@ import java.util.Random;
 public class CoinFlipActivity extends AppCompatActivity {
     private static final String HEADS = "Heads";
     private static final String TAILS = "Tails";
+    public static final float ANIM_HEIGHT = -250f;
+    public static final float BASE_HEIGHT = 0f;
+    public static final int BOUNCE_INTERPOLATION_DELAY = 400;
+    public static final int EVEN_FLIPS_TIME = 1200;
+    public static final int ODD_FLIP_TIME = 1400;
+    public static final int CAM_DISTANCE = 8000;
 
     private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
@@ -77,6 +82,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance();
         history = HistoryManager.getInstance(this);
 
+        updateUI();
         setupCoinFlipAnimation();
         setupFlipButton();
     }
@@ -84,7 +90,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        populateChildrenSpinner();
+        updateUI();
     }
 
     @Override
@@ -102,6 +108,23 @@ public class CoinFlipActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateUI() {
+        history.updateQueue(family.getChildren());
+        getCoinFlipRecommendation();
+        populateChildrenSpinner();
+    }
+
+    private void getCoinFlipRecommendation() {
+        TextView coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
+        String recommendation = history.getNextInQueue();
+        if (recommendation == HistoryManager.EMPTY) {
+            coinFlipSuggestionText.setText(R.string.no_suggestion);
+        }
+        else {
+            coinFlipSuggestionText.setText(getString(R.string.suggestion_header, recommendation));
         }
     }
 
@@ -130,19 +153,19 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinFlipAnimation.playTogether(coinFlip1Animation, coinFlip2Animation);
 
         //Create the "up and down" animation for the coin flip
-        ObjectAnimator transitionUpHead = ObjectAnimator.ofFloat(coinHeadsImage, "translationY", -250f);
-        ObjectAnimator transitionUpTail = ObjectAnimator.ofFloat(coinTailsImage, "translationY", -250f);
+        ObjectAnimator transitionUpHead = ObjectAnimator.ofFloat(coinHeadsImage, "translationY", ANIM_HEIGHT);
+        ObjectAnimator transitionUpTail = ObjectAnimator.ofFloat(coinTailsImage, "translationY", ANIM_HEIGHT);
         transitionUpAnimation.playTogether(transitionUpHead, transitionUpTail);
         transitionUpAnimation.setInterpolator(new AnticipateOvershootInterpolator());
 
-        ObjectAnimator transitionDownHead = ObjectAnimator.ofFloat(coinHeadsImage, "translationY", 0f);
-        ObjectAnimator transitionDownTail = ObjectAnimator.ofFloat(coinTailsImage, "translationY", 0f);
+        ObjectAnimator transitionDownHead = ObjectAnimator.ofFloat(coinHeadsImage, "translationY", BASE_HEIGHT);
+        ObjectAnimator transitionDownTail = ObjectAnimator.ofFloat(coinTailsImage, "translationY", BASE_HEIGHT);
         transitionDownAnimation.playTogether(transitionDownHead, transitionDownTail);
         transitionDownAnimation.setInterpolator(new BounceInterpolator());
 
         //Change camera distance for head and tail images
-        coinHeadsImage.setCameraDistance(8000);
-        coinTailsImage.setCameraDistance(8000);
+        coinHeadsImage.setCameraDistance(CAM_DISTANCE);
+        coinTailsImage.setCameraDistance(CAM_DISTANCE);
 
         //Create coin flip sound
         coinFlipSound = MediaPlayer.create(this, R.raw.coinflipsound);
@@ -179,17 +202,17 @@ public class CoinFlipActivity extends AppCompatActivity {
                 int delay;
 
                 if (random.nextBoolean()) {
-                    transitionUpAnimation.setDuration(600);
-                    transitionDownAnimation.setDuration(1000);
-                    transitionDownAnimation.setStartDelay(600);
-                    delay = 1200;
+                    transitionUpAnimation.setDuration(EVEN_FLIPS_TIME / 2);
+                    transitionDownAnimation.setDuration((EVEN_FLIPS_TIME / 2) + BOUNCE_INTERPOLATION_DELAY);
+                    transitionDownAnimation.setStartDelay(EVEN_FLIPS_TIME / 2);
+                    delay = EVEN_FLIPS_TIME;
 
                 }
                 else {
-                    transitionUpAnimation.setDuration(700);
-                    transitionDownAnimation.setDuration(1100);
-                    transitionDownAnimation.setStartDelay(700);
-                    delay = 1400;
+                    transitionUpAnimation.setDuration(ODD_FLIP_TIME / 2);
+                    transitionDownAnimation.setDuration((ODD_FLIP_TIME / 2) + BOUNCE_INTERPOLATION_DELAY);
+                    transitionDownAnimation.setStartDelay(ODD_FLIP_TIME / 2);
+                    delay = ODD_FLIP_TIME;
                 }
 
                 checkHeadsOrTails();
@@ -202,9 +225,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast toast = Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-                        toast.show();
+                        Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                         coinFlipAnimation.cancel();
                         coinHeadsImage.setRotationX(0);
                         coinTailsImage.setRotationX(0);
@@ -218,9 +239,10 @@ public class CoinFlipActivity extends AppCompatActivity {
                         flipButton.setEnabled(true);
                         if (!family.isNoChildren()) {
                             createHistoryEntry();
+                            getCoinFlipRecommendation();
                         }
                     }
-                }, delay + 400);
+                }, delay + BOUNCE_INTERPOLATION_DELAY);
             }
         });
     }
@@ -243,7 +265,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         String choice = getChoice();
         HistoryEntry newEntry = new HistoryEntry(name, choice, getResults());
         history.addCoinFlipEntry(newEntry);
-        HistoryActivity.saveHistory(this, history);
+        history.queueRecentlyUsed(name);
     }
 
     private String getChoice() {

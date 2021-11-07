@@ -17,7 +17,8 @@
 
     <!-- Flip Activity -->
     <string name="coin_flip_title">Coin Flip</string>
-    <string name="suggestion_header">%1$d should flip this time!</string>
+    <string name="suggestion_header">%1$s should flip next!</string>
+    <string name="no_suggestion">No Children Currently Configured</string>
     <string name="flip">Flip!</string>
     <string name="history">History</string>
     <string name="heads">Heads</string>
