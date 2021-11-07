@@ -15,4 +15,8 @@
     <!-- Main Menu -->
     <string name="menu_title">Menu</string>
 
+    <!-- Flip Activity -->
+    <string name="flip">Flip!</string>
+    <string name="history">History</string>
+
 </resources>

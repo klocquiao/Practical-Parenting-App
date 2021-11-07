@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity {
         this.configureChildButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent flipIntent = CoinFlipActivity.makeIntent(MainActivity.this);
-                startActivity(flipIntent);
+                startActivity(new Intent(MainActivity.this, ChildConfigActivity.class));
             }
         });
 
         this.flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CoinFlipActivity.class));
+                Intent flipIntent = CoinFlipActivity.makeIntent(MainActivity.this);
+                startActivity(flipIntent);
             }
         });
 

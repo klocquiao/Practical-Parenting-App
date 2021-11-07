@@ -1,6 +1,9 @@
 package com.example.parentsupportapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -12,6 +15,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -51,13 +56,35 @@ public class CoinFlipActivity extends AppCompatActivity {
         isHead = true;
         random = new Random();
         handler = new Handler();
-
         head = findViewById(R.id.head);
         tail = findViewById(R.id.tail);
         flipButton = findViewById(R.id.flip);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
         setupCoinFlipAnimation();
         setupFlipButton();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_flip, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.actionHistory:
+                Intent historyIntent = HistoryActivity.makeIntent(this);
+                startActivity(historyIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setupCoinFlipAnimation() {
@@ -159,7 +186,6 @@ public class CoinFlipActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void checkHeadsOrTails() {
         if (isHead) {
