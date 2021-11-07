@@ -2,6 +2,7 @@ package com.example.parentsupportapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -68,5 +69,10 @@ public class ChildConfigActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public static Intent makeIntent(Context c) {
+        Intent intent = new Intent(c, ChildConfigActivity.class);
+        return intent;
     }
 }
