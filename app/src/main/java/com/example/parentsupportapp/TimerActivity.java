@@ -4,15 +4,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -158,7 +160,7 @@ public class TimerActivity extends AppCompatActivity {
     private void pauseTimer() {
         countDownTimer.cancel();
         isTicking = false;
-        startButton.setText("Start");
+        startButton.setText(R.string.timerActivity_start);
     }
 
     private void startTimer() {
@@ -171,8 +173,10 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                // TODO: this (possibly from thread handler) is where I need to alert through a notification
+                // TODO: this (R.string.timerActivity_start) is where I need to alert through a notification
                 Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
+                pauseTimer();
+                timerReset();
                 sendNotification();
             }
         }.start();
@@ -182,7 +186,35 @@ public class TimerActivity extends AppCompatActivity {
         updateUIHideButtons();
     }
 
+    public static final String CHANNEL_ID = "timerActivityChannel1";
+
     private void sendNotification() {
+        createNotificationChannel();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle("Timer Complete!")
+                .setContentText("You may free the child O_O")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
+        nm.notify(1, builder.build());
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void updateUIHideButtons() {

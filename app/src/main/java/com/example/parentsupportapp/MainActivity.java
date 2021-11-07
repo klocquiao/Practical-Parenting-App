@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent timerIntent = TimerActivity.makeIntent(MainActivity.this);
+                timerIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK); //might remove
                 startActivity(timerIntent);
             }
         });
