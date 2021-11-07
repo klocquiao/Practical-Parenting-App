@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,11 +90,6 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 askForCustomTime();
-//                lastSelectedTime = timeLeftInMill;
-//                if (!isTicking) {
-//                    startTimer();
-//                }
-//                updateTimerTextView();
             }
         });
 
@@ -124,11 +120,22 @@ public class TimerActivity extends AppCompatActivity {
                 // need to validate newTime isn't too large (don't want the kids to starve)
 
                 // need to pull time out here
-                long extractedMinutes = Long.parseLong(minuteText.getText().toString());
-                long extractedSeconds = Long.parseLong(secondText.getText().toString());
-                timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
-                lastSelectedTime = timeLeftInMill;
-                if (!isTicking) {
+                Boolean shouldStart = true;
+                String minuteString = minuteText.getText().toString();
+                String secondString = secondText.getText().toString();
+                long extractedMinutes;
+                long extractedSeconds;
+                try {
+                    extractedMinutes = Long.parseLong(minuteString);
+                    extractedSeconds = Long.parseLong(secondString);
+                    timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
+                    lastSelectedTime = timeLeftInMill;
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(TimerActivity.this, "Please provide a valid time :)", Toast.LENGTH_SHORT).show();
+                    shouldStart = false;
+                }
+                if (!isTicking && shouldStart) {
                     startTimer();
                 }
                 updateTimerTextView();
