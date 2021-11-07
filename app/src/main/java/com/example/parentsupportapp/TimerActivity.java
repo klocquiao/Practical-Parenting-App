@@ -1,5 +1,6 @@
 package com.example.parentsupportapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,6 +16,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +46,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button threeMinButton;
     private Button fiveMinButton;
     private Button tenMinButton;
+    private Vibrator vibrator;
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
@@ -53,8 +58,10 @@ public class TimerActivity extends AppCompatActivity {
 
         initializeButtons();
         setupButtonListeners();
+        initializeRemaining();
         updateTimerTextView();
     }
+
 
     private void initializeButtons() {
         timerView = (TextView) findViewById(R.id.textViewTimer);
@@ -100,6 +107,13 @@ public class TimerActivity extends AppCompatActivity {
         setOnClickForMinButton(threeMinButton, THREE_MIN);
         setOnClickForMinButton(fiveMinButton, FIVE_MIN);
         setOnClickForMinButton(tenMinButton, TEN_MIN);
+    }
+
+    private void initializeRemaining() {
+        // vibrator
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        // notification
     }
 
     private void askForCustomTime() {
@@ -171,12 +185,14 @@ public class TimerActivity extends AppCompatActivity {
                 updateTimerTextView();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onFinish() {
                 // TODO: this (R.string.timerActivity_start) is where I need to alert through a notification
                 Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
                 pauseTimer();
                 timerReset();
+                vibrateEndOfTimer();
                 sendNotification();
             }
         }.start();
@@ -184,6 +200,15 @@ public class TimerActivity extends AppCompatActivity {
         startButton.setText(R.string.timerActivity_pause);
         isTicking = true;
         updateUIHideButtons();
+    }
+
+    private void vibrateEndOfTimer() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            Log.i("Vibrator Issue", "The vibrator initialized to null.");
+        }
     }
 
     public static final String CHANNEL_ID = "timerActivityChannel1";
