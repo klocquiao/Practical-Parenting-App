@@ -61,7 +61,6 @@ public class NotificationAssistant extends ContextWrapper {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(createPendingIntent())
                 .addAction(R.drawable.ic_alarm_off_icon, "SILENCE", createAlarmSilencePendingIntent())
-                .setAutoCancel(true);
 
         return builder;
     }
