@@ -292,7 +292,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton.setEnabled(isEnable);
         headsOrTailsGroup.setEnabled(isEnable);
         for (int i = 0; i < headsOrTailsGroup.getChildCount(); i++) {
-            ((RadioButton) headsOrTailsGroup.getChildAt(i)).setEnabled(false);
+            ((RadioButton) headsOrTailsGroup.getChildAt(i)).setEnabled(isEnable);
         }
     }
 

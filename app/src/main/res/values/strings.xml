@@ -14,6 +14,8 @@
 
     <!-- Main Menu -->
     <string name="menu_title">Menu</string>
+    <string name="channel_name">Parent App Timer Channel</string>
+    <string name="channel_description">This Channel allows the timer activity in the parent app to display notifications</string>
 
     <!-- Flip Activity -->
     <string name="coin_flip_title">Coin Flip</string>
@@ -28,6 +30,11 @@
     <string name="history_choice">Choice: %1$s</string>
     <string name="history_results">Results: %1$s</string>
     <string name="history_title">Coin Flip History</string>
-
+    <string name="timer_activity_reset_btn_msg">Can\'t reset while running!</string>
+    <string name="timer_activity_timer_end_msg">TIMER COMPLETE!</string>
+    <string name="timer_alert_provide_time">Provide time</string>
+    <string name="notif_assist_timer_comp">Timer Complete!</string>
+    <string name="notif_assist_notif_text1">You may free the child O_O</string>
+    <string name="notif_assist_alarm_silence">SILENCE</string>
 
 </resources>
