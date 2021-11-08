@@ -8,8 +8,6 @@ import androidx.constraintlayout.widget.Guideline;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +34,6 @@ public class TimerActivity extends AppCompatActivity {
     private static final long FIVE_MIN = 300000;
     private static final long TEN_MIN = 600000;
 
-    private CountDownTimer countDownTimer;
     private TextView timerView;
     private Button startButton;
     private Button resetButton;
@@ -46,7 +43,11 @@ public class TimerActivity extends AppCompatActivity {
     private Button threeMinButton;
     private Button fiveMinButton;
     private Button tenMinButton;
+    private CountDownTimer countDownTimer;
     private Vibrator vibrator;
+    private NotificationAssistant notificationAssistant;
+    private NotificationCompat.Builder builder;
+    private NotificationManagerCompat manager;
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
@@ -58,7 +59,8 @@ public class TimerActivity extends AppCompatActivity {
 
         initializeButtons();
         setupButtonListeners();
-        initializeRemaining();
+        setupVibrator();
+        setupNotificationEnvironment();
         updateTimerTextView();
     }
 
@@ -109,11 +111,15 @@ public class TimerActivity extends AppCompatActivity {
         setOnClickForMinButton(tenMinButton, TEN_MIN);
     }
 
-    private void initializeRemaining() {
-        // vibrator
+    private void setupVibrator() {
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    }
 
-        // notification
+    private void setupNotificationEnvironment() {
+        notificationAssistant = new NotificationAssistant(this);
+        notificationAssistant.createNotificationChannel();
+        builder = notificationAssistant.createBuilder();
+        manager = notificationAssistant.createManager();
     }
 
     private void askForCustomTime() {
@@ -129,13 +135,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // TODO: Have to check returned value and have to adjust create custom view to
-                // TURNS OUT everything there happens after the dialog has been destroyed.
-                // need to extract data when the ok button is pressed for the edit text, then
-                // i can use this function to store the data above.
-                // pass to alert
-                // need to validate newTime isn't too large (don't want the kids to starve)
 
-                // need to pull time out here
                 Boolean shouldStart = true;
                 String minuteString = minuteText.getText().toString();
                 String secondString = secondText.getText().toString();
@@ -148,6 +148,7 @@ public class TimerActivity extends AppCompatActivity {
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {
+                    // TODO: delete this toast when remove seconds field
                     Toast.makeText(TimerActivity.this, "Please provide a valid time :)", Toast.LENGTH_SHORT).show();
                     shouldStart = false;
                 }
@@ -188,7 +189,6 @@ public class TimerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onFinish() {
-                // TODO: this (R.string.timerActivity_start) is where I need to alert through a notification
                 Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
                 pauseTimer();
                 timerReset();
@@ -203,7 +203,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void vibrateEndOfTimer() {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator.hasVibrator()) {
             vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
@@ -211,35 +210,8 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    public static final String CHANNEL_ID = "timerActivityChannel1";
-
     private void sendNotification() {
-        createNotificationChannel();
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification_icon)
-                .setContentTitle("Timer Complete!")
-                .setContentText("You may free the child O_O")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat nm = NotificationManagerCompat.from(this);
-        nm.notify(1, builder.build());
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        manager.notify(1, builder.build());
     }
 
     private void updateUIHideButtons() {

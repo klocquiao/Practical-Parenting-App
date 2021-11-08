@@ -28,6 +28,7 @@
             android:exported="true" />
         <activity
             android:name=".TimerActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
