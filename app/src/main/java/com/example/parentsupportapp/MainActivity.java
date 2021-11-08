@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        this.configureChildButton = findViewById(R.id.menuConfigureChild);
-        this.flipButton = findViewById(R.id.menuFlip);
-        this.timerButton = findViewById(R.id.menuTimer);
+        this.configureChildButton = findViewById(R.id.menu_configure_child);
+        this.flipButton = findViewById(R.id.menu_flip);
+        this.timerButton = findViewById(R.id.menu_timer);
 
         this.setupButtonListeners();
     }
