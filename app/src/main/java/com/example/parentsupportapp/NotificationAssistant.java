@@ -20,9 +20,11 @@ public class NotificationAssistant extends ContextWrapper {
 
     Notifications were setup using the developers.android tutorial at following link:
     https://developer.android.com/training/notify-user/build-notification#SimpleNotification
+    BASED DEVELOPER.ANDROID GUIDE
      */
 
     private static final String CHANNEL_ID_1 = "timerActivityChannel1";
+    private static final int REQUEST_CODE_TIMER_ACTIVITY = 0;
 
     public NotificationAssistant(Context base) {
         super(base);
@@ -58,16 +60,24 @@ public class NotificationAssistant extends ContextWrapper {
                 .setContentText("You may free the child O_O")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(createPendingIntent())
+                .addAction(R.drawable.ic_alarm_off_icon, "SILENCE", createAlarmSilencePendingIntent())
                 .setAutoCancel(true);
 
         return builder;
     }
 
-    public PendingIntent createPendingIntent() {
+    private PendingIntent createPendingIntent() {
         Intent timerActivityIntent = TimerActivity.makeIntent(this);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(timerActivityIntent);
-        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        return stackBuilder.getPendingIntent(REQUEST_CODE_TIMER_ACTIVITY, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
+    private PendingIntent createAlarmSilencePendingIntent() {
+        Intent silenceAlarmIntent = new Intent(this, TimerBroadcastReceiver.class);
+        silenceAlarmIntent.setAction("com.example.SendBroadcast");
+        silenceAlarmIntent.putExtra("Silence button ID", 7);
+        return PendingIntent.getBroadcast(this, 1, silenceAlarmIntent, 0);
+    }
 }
+

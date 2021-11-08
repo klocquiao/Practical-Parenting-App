@@ -11,6 +11,9 @@ import androidx.core.app.NotificationManagerCompat;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final long THREE_MIN = 180000;
     private static final long FIVE_MIN = 300000;
     private static final long TEN_MIN = 600000;
+    private static final int NOTIFICATION_ID = 1;
 
     private TextView timerView;
     private Button startButton;
@@ -48,6 +53,7 @@ public class TimerActivity extends AppCompatActivity {
     private NotificationAssistant notificationAssistant;
     private NotificationCompat.Builder builder;
     private NotificationManagerCompat manager;
+    private static Ringtone ringtone;
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
@@ -60,10 +66,10 @@ public class TimerActivity extends AppCompatActivity {
         initializeButtons();
         setupButtonListeners();
         setupVibrator();
+        setupRingtone();
         setupNotificationEnvironment();
         updateTimerTextView();
     }
-
 
     private void initializeButtons() {
         timerView = (TextView) findViewById(R.id.textViewTimer);
@@ -113,6 +119,19 @@ public class TimerActivity extends AppCompatActivity {
 
     private void setupVibrator() {
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    private void setupRingtone() {
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+    }
+
+    private void playRingtone() {
+        ringtone.play();
+    }
+
+    public static void stopRingtone() {
+        ringtone.stop();
     }
 
     private void setupNotificationEnvironment() {
@@ -193,6 +212,7 @@ public class TimerActivity extends AppCompatActivity {
                 pauseTimer();
                 timerReset();
                 vibrateEndOfTimer();
+                playRingtone();
                 sendNotification();
             }
         }.start();
@@ -211,7 +231,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-        manager.notify(1, builder.build());
+        manager.notify(NOTIFICATION_ID, builder.build());
     }
 
     private void updateUIHideButtons() {
