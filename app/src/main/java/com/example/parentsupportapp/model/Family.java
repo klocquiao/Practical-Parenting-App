@@ -52,13 +52,14 @@ public class Family {
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 
-    public void addChild(int i, String fName) {
-        this.children.add(i,new Child(fName));
+    public void removeChild(int pos) {
+        this.children.remove(pos);
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 
-    public void removeChild(int pos) {
-        this.children.remove(pos);
+    public void editChild(int pos, String fName) {
+        Child child = children.get(pos);
+        child.setFirstName(fName);
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 

@@ -48,8 +48,7 @@ public class EditActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String str = txt2.getText().toString();
-                                Child child = fam.getChildren().get(position);
-                                child.setFirstName(str);
+                                fam.editChild(position, str);
                                 updateUI();
                             }
                         });
