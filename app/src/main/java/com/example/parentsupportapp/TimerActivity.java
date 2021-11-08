@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
-import java.util.UUID;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -148,7 +147,7 @@ public class TimerActivity extends AppCompatActivity {
         EditText secondText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertSecond);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Provide time");
+        alert.setTitle(R.string.timer_alert_provide_time);
         alert.setView(dialogView);
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -167,8 +166,6 @@ public class TimerActivity extends AppCompatActivity {
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {
-                    // TODO: delete this toast when remove seconds field
-                    Toast.makeText(TimerActivity.this, "Please provide a valid time :)", Toast.LENGTH_SHORT).show();
                     shouldStart = false;
                 }
                 if (!isTicking && shouldStart) {
@@ -182,7 +179,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void timerReset() {
         if (isTicking) {
-            Toast.makeText(TimerActivity.this, "Can't reset while running!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_reset_btn_msg), Toast.LENGTH_SHORT).show();
         } else {
             timeLeftInMill = lastSelectedTime;
             updateTimerTextView();
@@ -208,7 +205,7 @@ public class TimerActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onFinish() {
-                Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_timer_end_msg), Toast.LENGTH_SHORT).show();
                 pauseTimer();
                 timerReset();
                 vibrateEndOfTimer();

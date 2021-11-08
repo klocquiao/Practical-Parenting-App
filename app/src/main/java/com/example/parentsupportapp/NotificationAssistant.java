@@ -14,17 +14,13 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationAssistant extends ContextWrapper {
     /*
-    In order to have access to the context and thus have access to functions like getString from
-    the project resources, we need to extends ContextWrapper. Reasoning for this found at following
-    link: https://stackoverflow.com/questions/10641144/difference-between-getcontext-getapplicationcontext-getbasecontext-and
-
-    Notifications were setup using the developers.android tutorial at following link:
+    Referenced notification setup from:
     https://developer.android.com/training/notify-user/build-notification#SimpleNotification
-    BASED DEVELOPER.ANDROID GUIDE
      */
 
     private static final String CHANNEL_ID_1 = "timerActivityChannel1";
     private static final int REQUEST_CODE_TIMER_ACTIVITY = 0;
+    public static final int REQUEST_CODE_NOTIF_BTN_SILENCE = 1;
 
     public NotificationAssistant(Context base) {
         super(base);
@@ -56,11 +52,13 @@ public class NotificationAssistant extends ContextWrapper {
     public NotificationCompat.Builder createBuilder() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID_1)
                 .setSmallIcon(R.drawable.ic_notification_icon)
-                .setContentTitle("Timer Complete!")
-                .setContentText("You may free the child O_O")
+                .setContentTitle(getString(R.string.notif_assist_timer_comp))
+                .setContentText(getString(R.string.notif_assist_notif_text1))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(createPendingIntent())
-                .addAction(R.drawable.ic_alarm_off_icon, "SILENCE", createAlarmSilencePendingIntent());
+                .addAction(R.drawable.ic_alarm_off_icon,
+                            getString(R.string.notif_assist_alarm_silence),
+                            createAlarmSilencePendingIntent());
 
         return builder;
     }
@@ -74,9 +72,8 @@ public class NotificationAssistant extends ContextWrapper {
 
     private PendingIntent createAlarmSilencePendingIntent() {
         Intent silenceAlarmIntent = new Intent(this, TimerBroadcastReceiver.class);
-        silenceAlarmIntent.setAction("com.example.SendBroadcast");
-        silenceAlarmIntent.putExtra("Silence button ID", 7);
-        return PendingIntent.getBroadcast(this, 1, silenceAlarmIntent, 0);
+        silenceAlarmIntent.setAction("com.example.parentsupportapp.Broadcast");
+        silenceAlarmIntent.putExtra("Silence button ID", 1);
+        return PendingIntent.getBroadcast(this, REQUEST_CODE_NOTIF_BTN_SILENCE, silenceAlarmIntent, 0);
     }
 }
-
