@@ -2,8 +2,11 @@ package com.example.parentsupportapp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -53,9 +56,18 @@ public class NotificationAssistant extends ContextWrapper {
                 .setSmallIcon(R.drawable.ic_notification_icon)
                 .setContentTitle("Timer Complete!")
                 .setContentText("You may free the child O_O")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(createPendingIntent())
+                .setAutoCancel(true);
 
         return builder;
+    }
+
+    public PendingIntent createPendingIntent() {
+        Intent timerActivityIntent = TimerActivity.makeIntent(this);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(timerActivityIntent);
+        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }
