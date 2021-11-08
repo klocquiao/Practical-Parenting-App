@@ -52,6 +52,11 @@ public class Family {
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 
+    public void addChild(int i, String fName) {
+        this.children.add(i,new Child(fName));
+        ChildConfigActivity.saveChildConfigPrefs(context, this);
+    }
+
     public void removeChild(int pos) {
         this.children.remove(pos);
         ChildConfigActivity.saveChildConfigPrefs(context, this);
