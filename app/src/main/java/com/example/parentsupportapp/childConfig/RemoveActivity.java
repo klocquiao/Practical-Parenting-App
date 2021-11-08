@@ -23,6 +23,7 @@ public class RemoveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
 
+        fam = Family.getInstance(this);
         updateUI();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -38,7 +39,6 @@ public class RemoveActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        fam = Family.getInstance();
         listView = findViewById(R.id.listChildrenToRemove);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RemoveActivity.this, android.R.layout.simple_list_item_1,fam.getChildrenInString());
         listView.setAdapter(arrayAdapter);

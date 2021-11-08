@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.parentsupportapp.ChildConfigActivity;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
@@ -21,7 +22,7 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        fam = Family.getInstance();
+        fam = Family.getInstance(this);
         setupBackButton();
         setupAddButton();
     }
