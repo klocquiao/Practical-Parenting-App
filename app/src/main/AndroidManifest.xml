@@ -38,7 +38,8 @@
         <activity
             android:name=".TimerActivity"
             android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

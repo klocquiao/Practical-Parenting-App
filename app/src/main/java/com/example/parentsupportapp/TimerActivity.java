@@ -1,16 +1,9 @@
 package com.example.parentsupportapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Guideline;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -25,6 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Locale;
 
@@ -61,6 +64,11 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        Toolbar toolbar = findViewById(R.id.toolbarTimer);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         initializeButtons();
         setupButtonListeners();
@@ -208,8 +216,8 @@ public class TimerActivity extends AppCompatActivity {
                 Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_timer_end_msg), Toast.LENGTH_SHORT).show();
                 pauseTimer();
                 timerReset();
-                vibrateEndOfTimer();
                 playRingtone();
+                vibrateEndOfTimer();
                 sendNotification();
             }
         }.start();
@@ -221,7 +229,12 @@ public class TimerActivity extends AppCompatActivity {
 
     private void vibrateEndOfTimer() {
         if (vibrator.hasVibrator()) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.
+                    createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE),
+                    new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .build());
         } else {
             Log.i("Vibrator Issue", "The vibrator initialized to null.");
         }
