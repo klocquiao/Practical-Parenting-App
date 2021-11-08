@@ -58,10 +58,7 @@ public class Family {
     }
 
     public boolean isNoChildren() {
-        if (children.isEmpty()) {
-            return true;
-        }
-        return false;
+        return children.isEmpty();
     }
 
     private List<Child> deserializeFamily(String jsonFamily) {

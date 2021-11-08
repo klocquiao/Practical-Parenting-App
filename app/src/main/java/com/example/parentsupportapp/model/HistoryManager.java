@@ -39,7 +39,7 @@ public class HistoryManager {
             priorityQueue = new ArrayList<>();
         }
         else {
-            priorityQueue = deserializePriority(jsonPriorityQueue);
+            priorityQueue = deserializePriorityQueue(jsonPriorityQueue);
         }
     }
 
@@ -106,7 +106,7 @@ public class HistoryManager {
         return gson.fromJson(jsonHistory, type);
     }
 
-    private List<String> deserializePriority(String jsonPriority) {
+    private List<String> deserializePriorityQueue(String jsonPriority) {
         Type type = new TypeToken<List<String>>(){}.getType();
         Gson gson = new Gson();
         return gson.fromJson(jsonPriority, type);
