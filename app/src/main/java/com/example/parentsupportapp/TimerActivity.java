@@ -1,17 +1,25 @@
 package com.example.parentsupportapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,8 +36,8 @@ public class TimerActivity extends AppCompatActivity {
     private static final long THREE_MIN = 180000;
     private static final long FIVE_MIN = 300000;
     private static final long TEN_MIN = 600000;
+    private static final int NOTIFICATION_ID = 1;
 
-    private CountDownTimer countDownTimer;
     private TextView timerView;
     private Button startButton;
     private Button resetButton;
@@ -39,6 +47,12 @@ public class TimerActivity extends AppCompatActivity {
     private Button threeMinButton;
     private Button fiveMinButton;
     private Button tenMinButton;
+    private CountDownTimer countDownTimer;
+    private Vibrator vibrator;
+    private NotificationAssistant notificationAssistant;
+    private NotificationCompat.Builder builder;
+    private NotificationManagerCompat manager;
+    private static Ringtone ringtone;
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
@@ -50,6 +64,9 @@ public class TimerActivity extends AppCompatActivity {
 
         initializeButtons();
         setupButtonListeners();
+        setupVibrator();
+        setupRingtone();
+        setupNotificationEnvironment();
         updateTimerTextView();
     }
 
@@ -89,11 +106,6 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 askForCustomTime();
-//                lastSelectedTime = timeLeftInMill;
-//                if (!isTicking) {
-//                    startTimer();
-//                }
-//                updateTimerTextView();
             }
         });
 
@@ -104,6 +116,30 @@ public class TimerActivity extends AppCompatActivity {
         setOnClickForMinButton(tenMinButton, TEN_MIN);
     }
 
+    private void setupVibrator() {
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    private void setupRingtone() {
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+    }
+
+    private void playRingtone() {
+        ringtone.play();
+    }
+
+    public static void stopRingtone() {
+        ringtone.stop();
+    }
+
+    private void setupNotificationEnvironment() {
+        notificationAssistant = new NotificationAssistant(this);
+        notificationAssistant.createNotificationChannel();
+        builder = notificationAssistant.createBuilder();
+        manager = notificationAssistant.createManager();
+    }
+
     private void askForCustomTime() {
         View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
 
@@ -111,24 +147,28 @@ public class TimerActivity extends AppCompatActivity {
         EditText secondText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertSecond);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Provide time");
+        alert.setTitle(R.string.timer_alert_provide_time);
         alert.setView(dialogView);
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // TODO: Have to check returned value and have to adjust create custom view to
-                // TURNS OUT everything there happens after the dialog has been destroyed.
-                // need to extract data when the ok button is pressed for the edit text, then
-                // i can use this function to store the data above.
-                // pass to alert
-                // need to validate newTime isn't too large (don't want the kids to starve)
 
-                // need to pull time out here
-                long extractedMinutes = Long.parseLong(minuteText.getText().toString());
-                long extractedSeconds = Long.parseLong(secondText.getText().toString());
-                timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
-                lastSelectedTime = timeLeftInMill;
-                if (!isTicking) {
+                Boolean shouldStart = true;
+                String minuteString = minuteText.getText().toString();
+                String secondString = secondText.getText().toString();
+                long extractedMinutes;
+                long extractedSeconds;
+                try {
+                    extractedMinutes = Long.parseLong(minuteString);
+                    extractedSeconds = Long.parseLong(secondString);
+                    timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
+                    lastSelectedTime = timeLeftInMill;
+                }
+                catch (NumberFormatException e) {
+                    shouldStart = false;
+                }
+                if (!isTicking && shouldStart) {
                     startTimer();
                 }
                 updateTimerTextView();
@@ -139,7 +179,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void timerReset() {
         if (isTicking) {
-            Toast.makeText(TimerActivity.this, "Can't reset while running!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_reset_btn_msg), Toast.LENGTH_SHORT).show();
         } else {
             timeLeftInMill = lastSelectedTime;
             updateTimerTextView();
@@ -151,7 +191,7 @@ public class TimerActivity extends AppCompatActivity {
     private void pauseTimer() {
         countDownTimer.cancel();
         isTicking = false;
-        startButton.setText("Start");
+        startButton.setText(R.string.timerActivity_start);
     }
 
     private void startTimer() {
@@ -162,10 +202,14 @@ public class TimerActivity extends AppCompatActivity {
                 updateTimerTextView();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.S)
             @Override
             public void onFinish() {
-                // TODO: this (possibly from thread handler) is where I need to alert through a notification
-                Toast.makeText(TimerActivity.this, "TIMER COMPLETE!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_timer_end_msg), Toast.LENGTH_SHORT).show();
+                pauseTimer();
+                timerReset();
+                vibrateEndOfTimer();
+                playRingtone();
                 sendNotification();
             }
         }.start();
@@ -175,7 +219,16 @@ public class TimerActivity extends AppCompatActivity {
         updateUIHideButtons();
     }
 
+    private void vibrateEndOfTimer() {
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            Log.i("Vibrator Issue", "The vibrator initialized to null.");
+        }
+    }
+
     private void sendNotification() {
+        manager.notify(NOTIFICATION_ID, builder.build());
     }
 
     private void updateUIHideButtons() {
