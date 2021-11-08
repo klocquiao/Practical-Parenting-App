@@ -60,7 +60,7 @@ public class NotificationAssistant extends ContextWrapper {
                 .setContentText("You may free the child O_O")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(createPendingIntent())
-                .addAction(R.drawable.ic_alarm_off_icon, "SILENCE", createAlarmSilencePendingIntent())
+                .addAction(R.drawable.ic_alarm_off_icon, "SILENCE", createAlarmSilencePendingIntent());
 
         return builder;
     }
