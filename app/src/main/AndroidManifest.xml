@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
+            android:name=".HistoryActivity"
+            android:exported="true"
+            android:label="@string/history_title"
+            android:parentActivityName=".CoinFlipActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+        <activity
             android:name=".childConfig.RemoveActivity"
             android:exported="true" />
         <activity
@@ -23,7 +29,10 @@
             android:exported="true" />
         <activity
             android:name=".CoinFlipActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/coin_flip_title"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".TimerActivity"
             android:exported="false" />
