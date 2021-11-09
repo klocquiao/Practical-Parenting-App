@@ -1,3 +1,10 @@
+/**
+ * HistoryActivity presents the list of coin flip entries to the user, taking said data
+ * from the HistoryManager. HistoryActivity also contains the sharedPreferences used by
+ * the HistoryManager to save the history entry list and priority queue after the application is
+ * terminated.
+ */
+
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
