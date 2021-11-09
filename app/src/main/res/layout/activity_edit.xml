@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/viewEdit"
-        android:text="Edit A CHILD"
+        android:text="@string/edit_a_child2"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/appBarLayoutAdd"
         android:layout_margin="20dp"/>
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/viewEditDescription"
-        android:text="Select a child to edit it"
+        android:text="@string/select_a_child_to_edit_it"
         android:layout_below="@+id/viewEdit"
         android:layout_centerHorizontal="true"/>
 

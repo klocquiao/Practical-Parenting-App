@@ -26,7 +26,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add a child"
+        android:text="@string/add_a_child"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/appBarLayoutAdd"
         android:layout_marginTop="130dp"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnRemove"
-        android:text="REMOVE A CHILD"
+        android:text="@string/remove_a_child"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/btnAddChild"
         />
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnEdit"
-        android:text="EDIT A CHILD"
+        android:text="@string/edit_a_child"
         android:layout_below="@+id/btnRemove"
         android:layout_centerHorizontal="true"/>
 
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnView"
-        android:text="VIEW ALL"
+        android:text="@string/view_all"
         android:layout_below="@+id/btnEdit"
         android:layout_centerHorizontal="true"/>
 

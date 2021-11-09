@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/viewAllChildren"
         android:layout_below="@+id/appBarLayoutAdd"
-        android:text="List of all the children"
+        android:text="@string/list_of_all_the_children"
         android:layout_centerHorizontal="true"/>
 
     <ListView

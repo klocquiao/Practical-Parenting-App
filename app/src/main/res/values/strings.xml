@@ -40,5 +40,17 @@
     <string name="notif_assist_notif_text1">You may free the child O_O</string>
     <string name="notif_assist_alarm_silence">SILENCE</string>
     <string name="title_activity_basic">BasicActivity</string>
+    <string name="add_a_child">Add a child</string>
+    <string name="remove_a_child">REMOVE A CHILD</string>
+    <string name="edit_a_child">EDIT A CHILD</string>
+    <string name="view_all">VIEW ALL</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="add">Add</string>
+    <string name="edit_a_child2">Edit A CHILD</string>
+    <string name="select_a_child_to_edit_it">Select a child to edit it</string>
+    <string name="select_a_child_to_remove_it">Select a child to remove it</string>
+    <string name="remove_a_child">REMOVE A CHILD</string>
+    <string name="list_of_all_the_children">List of all the children</string>
+    <string name="are_you_sure_you_want_to_delete_the_selected_child">Are you sure you want to delete the selected child?</string>
 
 </resources>
