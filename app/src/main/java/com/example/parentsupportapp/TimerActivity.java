@@ -1,16 +1,9 @@
 package com.example.parentsupportapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Guideline;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -25,6 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Locale;
 
@@ -61,6 +64,13 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        Toolbar toolbar = findViewById(R.id.toolbarTimer);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
 
         initializeButtons();
         setupButtonListeners();
@@ -73,7 +83,7 @@ public class TimerActivity extends AppCompatActivity {
     private void initializeButtons() {
         timerView = (TextView) findViewById(R.id.textViewTimer);
         startButton = (Button) findViewById(R.id.buttonStart);
-        resetButton = (Button) findViewById(R.id.buttonStop);
+        resetButton = (Button) findViewById(R.id.buttonReset);
         customMinButton = (Button) findViewById(R.id.buttonCustomMin);
         oneMinButton = (Button) findViewById(R.id.buttonOneMin);
         twoMinButton = (Button) findViewById(R.id.buttonTwoMin);
@@ -142,9 +152,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void askForCustomTime() {
         View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
-
         EditText minuteText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertMinute);
-        EditText secondText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertSecond);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.timer_alert_provide_time);
@@ -152,17 +160,12 @@ public class TimerActivity extends AppCompatActivity {
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // TODO: Have to check returned value and have to adjust create custom view to
-
                 Boolean shouldStart = true;
                 String minuteString = minuteText.getText().toString();
-                String secondString = secondText.getText().toString();
                 long extractedMinutes;
-                long extractedSeconds;
                 try {
                     extractedMinutes = Long.parseLong(minuteString);
-                    extractedSeconds = Long.parseLong(secondString);
-                    timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
+                    timeLeftInMill = extractedMinutes * 60 * 1000;
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {
@@ -208,8 +211,8 @@ public class TimerActivity extends AppCompatActivity {
                 Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_timer_end_msg), Toast.LENGTH_SHORT).show();
                 pauseTimer();
                 timerReset();
-                vibrateEndOfTimer();
                 playRingtone();
+                vibrateEndOfTimer();
                 sendNotification();
             }
         }.start();
@@ -221,7 +224,12 @@ public class TimerActivity extends AppCompatActivity {
 
     private void vibrateEndOfTimer() {
         if (vibrator.hasVibrator()) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.
+                    createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE),
+                    new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .build());
         } else {
             Log.i("Vibrator Issue", "The vibrator initialized to null.");
         }

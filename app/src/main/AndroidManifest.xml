@@ -19,15 +19,28 @@
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".childConfig.RemoveActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
             android:exported="true" />
         <activity
             android:name=".childConfig.ViewActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
             android:exported="true" />
         <activity
             android:name=".childConfig.AddChildActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
             android:exported="true" />
         <activity
+            android:name=".childConfig.EditActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+        android:exported="true" />
+        <activity
             android:name=".ChildConfigActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
             android:exported="true" />
         <activity
             android:name=".CoinFlipActivity"
@@ -38,7 +51,8 @@
         <activity
             android:name=".TimerActivity"
             android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

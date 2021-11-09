@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
-import com.example.parentsupportapp.model.Family;
-import com.example.parentsupportapp.model.HistoryManager;
 
 public class MainActivity extends AppCompatActivity {
     private Button configureChildButton;
@@ -23,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.main_activity_title));
 
-        Family.getInstance(this);
-        HistoryManager.getInstance(this);
-        this.configureChildButton = findViewById(R.id.buttonToChildConfig);
-        this.flipButton = findViewById(R.id.buttonToCoinFlip);
-        this.timerButton = findViewById(R.id.buttonToTimer);
+        this.configureChildButton = findViewById(R.id.buttonConfigChild);
+        this.flipButton = findViewById(R.id.buttonFlipCoin);
+        this.timerButton = findViewById(R.id.buttonTimer);
 
         this.setupButtonListeners();
     }

@@ -13,65 +13,48 @@
         android:theme="@style/Theme.ParentSupportApp.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appBarLayout2" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <Button
-        android:id="@+id/buttonToChildConfig"
-        android:layout_width="100dp"
+        android:id="@+id/buttonTimer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/menu_config_child"
-        app:layout_constraintBottom_toTopOf="@+id/buttonToCoinFlip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/buttonToCoinFlip"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_flip"
-        app:layout_constraintBottom_toTopOf="@+id/buttonToTimer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToChildConfig" />
-
-    <Button
-        android:id="@+id/buttonToTimer"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_timer"
+        android:text="Timer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToCoinFlip" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFlipCoin" />
 
-    <TextView
-        android:id="@+id/textMainMenu"
+    <Button
+        android:id="@+id/buttonConfigChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view"
-        android:textAlignment="center"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonToChildConfig"
+        android:text="Child Config"
+        app:layout_constraintBottom_toTopOf="@+id/buttonFlipCoin"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
+    <Button
+        android:id="@+id/buttonFlipCoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flip Coing"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonConfigChild" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

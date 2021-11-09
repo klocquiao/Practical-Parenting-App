@@ -58,6 +58,12 @@ public class Family {
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 
+    public void editChild(int pos, String fName) {
+        Child child = children.get(pos);
+        child.setFirstName(fName);
+        ChildConfigActivity.saveChildConfigPrefs(context, this);
+    }
+
     public boolean isNoChildren() {
         return children.isEmpty();
     }
