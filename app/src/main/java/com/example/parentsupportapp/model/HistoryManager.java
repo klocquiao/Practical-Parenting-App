@@ -1,3 +1,10 @@
+/**
+ * HistoryManager manages coin flip history entries and the priority queue.
+ * It allows a new entry to be added to a list of history entries whenever the correlated function is called.]
+ * It also keeps track of who has and who hasn't flipped recently.
+ * It calls HistoryActivity sharedPrefs whenever either the priority queue or the list of history entries is modified.
+ */
+
 package com.example.parentsupportapp.model;
 
 import android.content.Context;

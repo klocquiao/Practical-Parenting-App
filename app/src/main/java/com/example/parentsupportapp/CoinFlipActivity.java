@@ -1,3 +1,11 @@
+/**
+ * CoinFlipActivity allows the user to flip a coin for making decisions. It allows the user
+ * to choose from a list of children (if there is any) and then let them decide whether
+ * they want to choose heads or tails. Flipping the coin will play a realistic coin flip animation
+ * and then will clearly display the results. The coin flips associated data is then saved in the history.
+ * Lastly the app will make a suggestion as to who should go next based on least recently flipped.
+ */
+
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;

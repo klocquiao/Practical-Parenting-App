@@ -1,3 +1,9 @@
+/**
+ * HistoryEntry contains data concerning coin flips.
+ * This includes the time of flip, the flip name, the flip choice, and the results of the flip.
+ * These entries are to be stored in a list of entries that exists in a history manager object.
+ */
+
 package com.example.parentsupportapp.model;
 
 import java.time.LocalDateTime;
