@@ -17,6 +17,10 @@ import android.widget.ListView;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
+/**
+ * Remove Activity removes any existing child completely
+ * from the family singleton object
+ */
 public class RemoveActivity extends AppCompatActivity {
 
     private ListView listView;

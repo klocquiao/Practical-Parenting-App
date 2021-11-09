@@ -13,6 +13,10 @@ import android.widget.ListView;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
+/**
+ * View activity helps to view all the children that
+ * have been added to the app
+ */
 public class ViewActivity extends AppCompatActivity {
 
     private ListView listView;

@@ -22,6 +22,9 @@ import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 
+/**
+ * edit activity edits a existing a child in the family
+ */
 public class EditActivity extends AppCompatActivity {
 
     private ListView listView;
