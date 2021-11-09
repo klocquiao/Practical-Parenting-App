@@ -24,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
 
-        this.configureChildButton = findViewById(R.id.menuConfigureChild);
-        this.flipButton = findViewById(R.id.menuFlip);
-        this.timerButton = findViewById(R.id.menuTimer);
         Family.getInstance(this);
         HistoryManager.getInstance(this);
+        this.configureChildButton = findViewById(R.id.buttonToChildConfig);
+        this.flipButton = findViewById(R.id.buttonToCoinFlip);
+        this.timerButton = findViewById(R.id.buttonToTimer);
 
         this.setupButtonListeners();
     }
