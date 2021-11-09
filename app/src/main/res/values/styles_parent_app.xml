@@ -1,0 +1,13 @@
+<!-- Referenced this guide for styles: https://developer.android.com/guide/topics/ui/look-and-feel/themes-->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TimerButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:color">#00288D</item>
+        <item name="android:background">@drawable/timer_activity_button</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">110dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#EDEDED</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

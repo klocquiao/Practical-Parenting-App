@@ -4,64 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".TimerActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.ParentSupportApp.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTimer"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#084CD8"
+            app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:id="@+id/textViewTimer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="00:00"
-        android:textSize="80sp"
+        android:text="@string/timerActivity_zero_time"
+        android:textColor="#EDEDED"
+        android:textSize="90sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonStart"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="Start"
+        style="@style/TimerButton"
+        android:text="@string/timerActivity_start"
         app:layout_constraintBottom_toTopOf="@+id/buttonOneMin"
-        app:layout_constraintEnd_toStartOf="@+id/buttonStop"
+        app:layout_constraintEnd_toStartOf="@+id/buttonReset"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal" />
 
-    <Button
-        android:id="@+id/buttonStop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reset"
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
+        android:id="@+id/buttonReset"
+        android:text="@string/timerActivity_reset"
         app:layout_constraintBottom_toTopOf="@+id/buttonTwoMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonStart"
         app:layout_constraintTop_toBottomOf="@+id/textViewTimer" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonOneMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1 Min"
+        android:text="@string/timerActivity_1min"
         app:layout_constraintBottom_toTopOf="@+id/buttonThreeMin"
         app:layout_constraintEnd_toStartOf="@+id/buttonTwoMin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonTwoMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2 Min"
+        android:text="@string/timerActivity_2min"
         app:layout_constraintBottom_toTopOf="@+id/buttonFiveMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonOneMin"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStop" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonReset" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"
@@ -70,44 +86,40 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.40" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonThreeMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3 Min"
+        android:text="@string/timerActivity_3min"
         app:layout_constraintBottom_toTopOf="@+id/buttonTenMin"
         app:layout_constraintEnd_toStartOf="@+id/buttonFiveMin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonOneMin" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonFiveMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5 Min"
+        android:text="@string/timerActivity_5min"
         app:layout_constraintBottom_toTopOf="@+id/buttonCustomMin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonThreeMin"
         app:layout_constraintTop_toBottomOf="@+id/buttonTwoMin" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonTenMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10 Min"
+        android:text="@string/timerActivity_10min"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCustomMin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonThreeMin" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/TimerButton"
         android:id="@+id/buttonCustomMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Custom"
+        android:text="@string/timerActivity_custom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
