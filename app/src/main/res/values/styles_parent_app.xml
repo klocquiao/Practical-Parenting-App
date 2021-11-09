@@ -1,3 +1,4 @@
+<!-- Referenced this guide for styles: https://developer.android.com/guide/topics/ui/look-and-feel/themes-->
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TimerButton" parent="@style/Widget.AppCompat.Button">
