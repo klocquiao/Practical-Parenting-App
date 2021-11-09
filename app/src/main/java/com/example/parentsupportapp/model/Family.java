@@ -1,6 +1,7 @@
 package com.example.parentsupportapp.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.parentsupportapp.ChildConfigActivity;
 import com.example.parentsupportapp.HistoryActivity;
@@ -72,5 +73,4 @@ public class Family {
         Gson gson = new Gson();
         return gson.fromJson(jsonFamily, type);
     }
-
 }

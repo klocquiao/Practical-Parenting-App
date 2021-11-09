@@ -1,6 +1,7 @@
 package com.example.parentsupportapp.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.parentsupportapp.HistoryActivity;
 import com.google.gson.Gson;
@@ -48,11 +49,15 @@ public class HistoryManager {
         HistoryActivity.saveHistoryActivityPrefs(context, this);
     }
 
-    public void updateQueue(List<Child> children) {
-        for (int i = 0; i < children.size(); i++) {
-            String childName = children.get(i).toString();
-            if (!priorityQueue.contains(childName)) {
-                priorityQueue.add(0, childName);
+    public void updateQueue(List<String> strChildren) {
+        for (int i = 0; i < strChildren.size(); i++) {
+            if (!priorityQueue.contains(strChildren.get(i))) {
+                priorityQueue.add(0, strChildren.get(i));
+            }
+        }
+        for (int j = 0; j < priorityQueue.size(); j++) {
+            if (!strChildren.contains(priorityQueue.get(j))) {
+                priorityQueue.remove(j);
             }
         }
 
@@ -65,18 +70,11 @@ public class HistoryManager {
         HistoryActivity.saveHistoryActivityPrefs(context, this);
     }
 
-    public String getNextInQueue(List<Child> children) {
-        for (int i = 0; i < priorityQueue.size(); i++) {
-            if (isChildReal(children, priorityQueue.get(i))) {
-                return priorityQueue.get(i);
-            }
-            else {
-                priorityQueue.remove(i);
-                HistoryActivity.saveHistoryActivityPrefs(context, this);
-            }
+    public String getNextInQueue() {
+        if (priorityQueue.isEmpty()) {
+            return EMPTY;
         }
-
-        return EMPTY;
+        return priorityQueue.get(0);
     }
 
     public List<String> getPriorityQueue() {
@@ -89,15 +87,6 @@ public class HistoryManager {
 
     public HistoryEntry getHistoryEntry(int position) {
        return history.get(position);
-    }
-
-    public boolean isChildReal(List<Child> children, String childName) {
-        for (int i = 0; i < children.size(); i++) {
-            if (childName == children.get(i).toString()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private List<HistoryEntry> deserializeHistory(String jsonHistory) {

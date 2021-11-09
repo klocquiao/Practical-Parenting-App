@@ -6,32 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".childConfig.AddChildActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayoutAdd"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.ParentSupportApp.AppBarOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:text="back" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tbAdd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
-    </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
+        android:id="@+id/etFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etFirstName"
-        android:hint="@string/enter_name"
-        android:textAlignment="center"
-        android:layout_marginHorizontal="40dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"/>
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="100dp"
+        android:hint="Enter Name"
+        android:minHeight="48dp"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnAdd"
@@ -39,5 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/etFirstName"
         android:layout_centerHorizontal="true"
-        android:text="@string/add" />
+        android:layout_marginTop="21dp"
+        android:text="Add" />
 </RelativeLayout>

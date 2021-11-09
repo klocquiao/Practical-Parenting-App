@@ -54,13 +54,15 @@ public class CoinFlipActivity extends AppCompatActivity {
     private AnimatorSet transitionDownAnimation;
     private MediaPlayer coinFlipSound;
 
+    private Handler handler;
+    private Random random;
+
     private ImageView coinHeadsImage;
     private ImageView coinTailsImage;
     private Spinner childrenSpinner;
     private Button flipButton;
     private TextView coinFlipSuggestionText;
-    RadioGroup headsOrTailsGroup;
-
+    private RadioGroup headsOrTailsGroup;
 
     private boolean isHead;
     private boolean isFlipping;
@@ -79,12 +81,15 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         isHead = true;
 
-        coinHeadsImage = findViewById(R.id.head);
-        coinTailsImage = findViewById(R.id.tail);
+        coinHeadsImage = findViewById(R.id.imageHead);
+        coinTailsImage = findViewById(R.id.imageTail);
         childrenSpinner = findViewById(R.id.spinnerChildren);
-        flipButton = findViewById(R.id.flip);
         coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
         headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
+        flipButton = findViewById(R.id.buttonFlip);
+
+        random = new Random();
+        handler = new Handler();
 
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
@@ -119,14 +124,14 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        history.updateQueue(family.getChildren());
+        history.updateQueue(family.getChildrenInString());
         getCoinFlipRecommendation();
         populateChildrenSpinner();
     }
 
     private void getCoinFlipRecommendation() {
-        TextView coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
-        String recommendation = history.getNextInQueue(family.getChildren());
+        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
+        String recommendation = history.getNextInQueue();
         if (recommendation == HistoryManager.EMPTY) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
@@ -198,9 +203,6 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void setupFlipButton() {
-        Random random = new Random();
-        Handler handler = new Handler();
-
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
