@@ -26,7 +26,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <Button
-        android:id="@+id/flip"
+        android:id="@+id/buttonFlip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -34,12 +34,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/radioGroupHeadsOrTails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/head"
+        app:layout_constraintStart_toStartOf="@+id/imageHead"
         app:layout_constraintTop_toTopOf="@+id/spinnerChildren"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/head"
+        android:id="@+id/imageHead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
@@ -50,15 +50,15 @@
         app:srcCompat="@drawable/head" />
 
     <ImageView
-        android:id="@+id/tail"
+        android:id="@+id/imageTail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
-        app:layout_constraintBottom_toBottomOf="@+id/head"
-        app:layout_constraintEnd_toEndOf="@+id/head"
+        app:layout_constraintBottom_toBottomOf="@+id/imageHead"
+        app:layout_constraintEnd_toEndOf="@+id/imageHead"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/head"
-        app:layout_constraintTop_toTopOf="@+id/head"
+        app:layout_constraintStart_toStartOf="@+id/imageHead"
+        app:layout_constraintTop_toTopOf="@+id/imageHead"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/tail" />
 
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="SUGGESTION"
-        app:layout_constraintBottom_toTopOf="@+id/head"
+        app:layout_constraintBottom_toTopOf="@+id/imageHead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
