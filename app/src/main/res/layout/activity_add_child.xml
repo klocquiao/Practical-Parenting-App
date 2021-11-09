@@ -42,5 +42,5 @@
         android:layout_below="@+id/etFirstName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:text="@string/add" />
+        android:text="Add" />
 </RelativeLayout>

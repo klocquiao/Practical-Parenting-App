@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextNewName"
         android:layout_marginHorizontal="20dp"
-        android:hint="Enter new name"/>
+        android:hint="@string/enter_new_name"/>
 
 </RelativeLayout>

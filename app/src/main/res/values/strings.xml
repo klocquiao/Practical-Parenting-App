@@ -46,6 +46,17 @@
     <string name="timerActivity_custom">Custom</string>
     <string name="timerActivity_zero_time">00:00</string>
     <string name="timer_alert_min_hint">MM</string>
+    <string name="list_of_all_the_children">list_of_all_the_children</string>
+    <string name="enter_name">enter_name</string>
+    <string name="add">add</string>
+    <string name="add_a_child">add_a_child</string>
+    <string name="remove_a_child">remove_a_child</string>
+    <string name="edit_a_child">edit_a_child</string>
+    <string name="view_all">view_all</string>
+    <string name="edit_a_child2">Edit A Child</string>
+    <string name="select_a_child_to_edit_it">Select a child to edit it</string>
+    <string name="are_you_sure_you_want_to_delete_the_selected_child">Are you sure you want to delete the selected child?</string>
+    <string name="enter_new_name">Enter new name</string>
 
 
 </resources>
