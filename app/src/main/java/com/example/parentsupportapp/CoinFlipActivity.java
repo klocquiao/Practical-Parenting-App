@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,12 +81,12 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         isHead = true;
 
-        coinHeadsImage = findViewById(R.id.head);
-        coinTailsImage = findViewById(R.id.tail);
+        coinHeadsImage = findViewById(R.id.imageHead);
+        coinTailsImage = findViewById(R.id.imageTail);
         childrenSpinner = findViewById(R.id.spinnerChildren);
         coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
         headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
-        flipButton = findViewById(R.id.flip);
+        flipButton = findViewById(R.id.buttonFlip);
 
         random = new Random();
         handler = new Handler();
