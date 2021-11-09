@@ -12,6 +12,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Family class models a class that keeps a record of various child objects
+ */
 public class Family {
     private List<Child> children;
     private static Family instance;

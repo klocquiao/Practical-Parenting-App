@@ -19,6 +19,10 @@ import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryManager;
 import com.google.gson.Gson;
 
+/**
+ * child config activity is the menu containing all the options
+ * to configure the children
+ */
 public class ChildConfigActivity extends AppCompatActivity {
     public static final String EMPTY_PREF = "";
     private static final String KEY_FAMILY = "FamilyKey";

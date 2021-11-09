@@ -2,6 +2,10 @@ package com.example.parentsupportapp.model;
 
 import androidx.annotation.NonNull;
 
+/**
+ * this child class models a child that has a first name
+ * and can be used to configure
+ */
 public class Child {
     private String firstName;
 

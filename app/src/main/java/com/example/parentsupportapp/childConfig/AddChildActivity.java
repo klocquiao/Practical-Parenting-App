@@ -14,6 +14,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
+/**
+ * Add child activity models adding a new new child to the
+ * configuration
+ */
+
 public class AddChildActivity extends AppCompatActivity {
     private Family fam;
 
