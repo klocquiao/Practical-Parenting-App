@@ -26,9 +26,9 @@
 
     <Button
         android:id="@+id/buttonTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Timer"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/timer_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -37,9 +37,9 @@
 
     <Button
         android:id="@+id/buttonConfigChild"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Child Config"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/child_config_title"
         app:layout_constraintBottom_toTopOf="@+id/buttonFlipCoin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,9 +48,9 @@
 
     <Button
         android:id="@+id/buttonFlipCoin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flip Coing"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/coin_flip_title"
         app:layout_constraintBottom_toTopOf="@+id/buttonTimer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
