@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
@@ -24,7 +22,6 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-
         Toolbar toolbar = findViewById(R.id.tbAdd);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
@@ -34,13 +31,11 @@ public class AddChildActivity extends AppCompatActivity {
         setupAddButton();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddChildActivity.class);
@@ -54,11 +49,9 @@ public class AddChildActivity extends AppCompatActivity {
                 EditText etFirstName = findViewById(R.id.etFirstName);
                 String str = etFirstName.getText().toString();
                 etFirstName.setHint("Enter Name");
-
                 if (checkName(str, etFirstName) == -1){
                     return;
                 }
-
                 fam.addChild(str);
                 etFirstName.setText("");
                 Toast.makeText(AddChildActivity.this, "New Child Added", Toast.LENGTH_SHORT).show();

@@ -11,7 +11,4 @@
         android:layout_marginHorizontal="20dp"
         android:hint="Enter new name"/>
 
-
-
-
 </RelativeLayout>

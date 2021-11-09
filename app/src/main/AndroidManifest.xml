@@ -48,8 +48,6 @@
             android:label="@string/coin_flip_title"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
-
-
         <activity
             android:name=".TimerActivity"
             android:exported="false"
@@ -61,7 +59,6 @@
             android:theme="@style/Theme.ParentSupportApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

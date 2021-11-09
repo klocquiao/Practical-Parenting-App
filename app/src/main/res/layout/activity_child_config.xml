@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ChildConfigActivity">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayoutAdd"
         android:layout_width="match_parent"
@@ -22,15 +21,15 @@
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
-
     </com.google.android.material.appbar.AppBarLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add a child"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/appBarLayoutAdd"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="130dp"
         android:layout_centerVertical="true"
         android:id="@+id/btnAddChild"
         />
@@ -51,6 +50,7 @@
         android:text="EDIT A CHILD"
         android:layout_below="@+id/btnRemove"
         android:layout_centerHorizontal="true"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
