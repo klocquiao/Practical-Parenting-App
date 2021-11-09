@@ -8,6 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
+import com.example.parentsupportapp.model.Family;
+import com.example.parentsupportapp.model.HistoryManager;
 
 public class MainActivity extends AppCompatActivity {
     private Button configureChildButton;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         this.configureChildButton = findViewById(R.id.menuConfigureChild);
         this.flipButton = findViewById(R.id.menuFlip);
         this.timerButton = findViewById(R.id.menuTimer);
+        Family.getInstance(this);
+        HistoryManager.getInstance(this);
 
         this.setupButtonListeners();
     }
