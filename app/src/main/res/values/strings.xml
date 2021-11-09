@@ -57,6 +57,12 @@
     <string name="select_a_child_to_edit_it">Select a child to edit it</string>
     <string name="are_you_sure_you_want_to_delete_the_selected_child">Are you sure you want to delete the selected child?</string>
     <string name="enter_new_name">Enter new name</string>
+    <string name="timer_title">Timer</string>
+    <string name="child_config_title">Child Config</string>
+    <string name="child_config_add_child">Add a child</string>
+    <string name="child_config_remove_child">Remove a child</string>
+    <string name="child_config_edit_child">Edit a child</string>
+    <string name="child_config_view_all">View all</string>
 
 
 </resources>
