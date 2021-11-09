@@ -1,16 +1,18 @@
 package com.example.parentsupportapp.childConfig;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.parentsupportapp.ChildConfigActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 
@@ -22,20 +24,23 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
+
+        Toolbar toolbar = findViewById(R.id.tbAdd);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
         fam = Family.getInstance(this);
-        setupBackButton();
         setupAddButton();
     }
 
-    public void setupBackButton() {
-        Button btn = findViewById(R.id.btnBack);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddChildActivity.class);

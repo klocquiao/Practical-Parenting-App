@@ -36,5 +36,6 @@
     <string name="notif_assist_timer_comp">Timer Complete!</string>
     <string name="notif_assist_notif_text1">You may free the child O_O</string>
     <string name="notif_assist_alarm_silence">SILENCE</string>
+    <string name="title_activity_basic">BasicActivity</string>
 
 </resources>

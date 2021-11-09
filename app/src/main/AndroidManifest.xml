@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.parentsupportapp">
-    
+
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -13,6 +13,8 @@
         android:theme="@style/Theme.ParentSupportApp">
         <activity
             android:name=".childConfig.EditActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".HistoryActivity"
@@ -22,15 +24,23 @@
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".childConfig.RemoveActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".childConfig.ViewActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".childConfig.AddChildActivity"
+            android:parentActivityName=".ChildConfigActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ChildConfigActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".CoinFlipActivity"
@@ -38,10 +48,12 @@
             android:label="@string/coin_flip_title"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+
+
         <activity
             android:name=".TimerActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -53,10 +65,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".TimerBroadcastReceiver" android:exported="true">
+
+        <receiver
+            android:name=".TimerBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
     </application>
