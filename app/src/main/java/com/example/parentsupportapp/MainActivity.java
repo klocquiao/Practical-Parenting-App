@@ -1,3 +1,10 @@
+/**
+ * The MainActivity class handles the model for the main/initial menu
+ * It consists of three buttons for three different activities
+ * The setupButtonListeners method is set so that on click of each of the three
+ * buttons it will shift to the respective activities.
+ */
+
 package com.example.parentsupportapp;
 
 import android.content.Intent;
