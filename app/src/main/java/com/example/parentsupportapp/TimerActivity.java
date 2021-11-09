@@ -67,7 +67,9 @@ public class TimerActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTimer);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
 
         initializeButtons();
@@ -81,7 +83,7 @@ public class TimerActivity extends AppCompatActivity {
     private void initializeButtons() {
         timerView = (TextView) findViewById(R.id.textViewTimer);
         startButton = (Button) findViewById(R.id.buttonStart);
-        resetButton = (Button) findViewById(R.id.buttonStop);
+        resetButton = (Button) findViewById(R.id.buttonReset);
         customMinButton = (Button) findViewById(R.id.buttonCustomMin);
         oneMinButton = (Button) findViewById(R.id.buttonOneMin);
         twoMinButton = (Button) findViewById(R.id.buttonTwoMin);
@@ -150,9 +152,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private void askForCustomTime() {
         View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
-
         EditText minuteText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertMinute);
-        EditText secondText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertSecond);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.timer_alert_provide_time);
@@ -160,17 +160,12 @@ public class TimerActivity extends AppCompatActivity {
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // TODO: Have to check returned value and have to adjust create custom view to
-
                 Boolean shouldStart = true;
                 String minuteString = minuteText.getText().toString();
-                String secondString = secondText.getText().toString();
                 long extractedMinutes;
-                long extractedSeconds;
                 try {
                     extractedMinutes = Long.parseLong(minuteString);
-                    extractedSeconds = Long.parseLong(secondString);
-                    timeLeftInMill = (extractedMinutes * 60 * 1000) + (extractedSeconds * 1000);
+                    timeLeftInMill = extractedMinutes * 60 * 1000;
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {

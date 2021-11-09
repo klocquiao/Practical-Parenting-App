@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
@@ -21,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.main_activity_title));
 
-        this.configureChildButton = findViewById(R.id.menuConfigureChild);
-        this.flipButton = findViewById(R.id.menuFlip);
-        this.timerButton = findViewById(R.id.menuTimer);
+        this.configureChildButton = findViewById(R.id.buttonConfigChild);
+        this.flipButton = findViewById(R.id.buttonFlipCoin);
+        this.timerButton = findViewById(R.id.buttonTimer);
 
         this.setupButtonListeners();
     }

@@ -36,6 +36,16 @@
     <string name="notif_assist_timer_comp">Timer Complete!</string>
     <string name="notif_assist_notif_text1">You may free the child O_O</string>
     <string name="notif_assist_alarm_silence">SILENCE</string>
+    <string name="main_activity_title">Parent Support App</string>
+    <string name="timerActivity_reset">Reset</string>
+    <string name="timerActivity_1min">1 Min</string>
+    <string name="timerActivity_2min">2 Min</string>
+    <string name="timerActivity_3min">3 Min</string>
+    <string name="timerActivity_5min">5 Min</string>
+    <string name="timerActivity_10min">10 Min</string>
+    <string name="timerActivity_custom">Custom</string>
+    <string name="timerActivity_zero_time">00:00</string>
+    <string name="timer_alert_min_hint">MM</string>
 
 
 </resources>
