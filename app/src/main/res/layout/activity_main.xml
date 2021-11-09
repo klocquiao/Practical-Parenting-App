@@ -72,41 +72,41 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="213dp"
+                android:layout_height="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/menuConfigureChild"
+                android:id="@+id/menu_configure_child"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Configure Child"
+                android:text="@string/menu_config_child"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/menuFlip"
+                android:id="@+id/menu_flip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Flip" />
+                android:text="@string/menu_flip" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="30dp" />
 
             <Button
-                android:id="@+id/menuTimer"
+                android:id="@+id/menu_timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Timer"
+                android:text="@string/menu_timer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

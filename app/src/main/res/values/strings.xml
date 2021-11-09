@@ -14,6 +14,9 @@
 
     <!-- Main Menu -->
     <string name="menu_title">Menu</string>
+    <string name="menu_config_child">CONFIG CHILD</string>
+    <string name="menu_flip">FLIP</string>
+    <string name="menu_timer">TIMER</string>
     <string name="channel_name">Parent App Timer Channel</string>
     <string name="channel_description">This Channel allows the timer activity in the parent app to display notifications</string>
 
