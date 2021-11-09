@@ -6,14 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".childConfig.AddChildActivity">
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutAdd"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
-        android:text="back" />
+        android:theme="@style/Theme.ParentSupportApp.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
         android:id="@+id/etFirstName"
@@ -23,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="100dp"
-        android:hint="Enter Name"
+        android:hint="@string/enter_name"
         android:minHeight="48dp"
         android:textAlignment="center" />
 
@@ -34,5 +42,5 @@
         android:layout_below="@+id/etFirstName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:text="Add" />
+        android:text="@string/add" />
 </RelativeLayout>
