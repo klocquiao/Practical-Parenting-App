@@ -57,7 +57,7 @@ public class AddChildActivity extends AppCompatActivity {
                 if (checkName(str, etFirstName) == -1){
                     return;
                 }
-                fam.addChild(str);
+                fam.addChild(checkString(str));
                 etFirstName.setText("");
                 Toast.makeText(AddChildActivity.this, "New Child Added", Toast.LENGTH_SHORT).show();
             }
@@ -71,4 +71,19 @@ public class AddChildActivity extends AppCompatActivity {
         }
         return 0;
     }
+
+
+    private String checkString(String str) {
+        str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
+        String temp = "";
+        for (int i = 0; i < str.length();i++) {
+            if (str.charAt(i) == 32){
+                continue;
+            }
+            temp += str.charAt(i);
+        }
+        return temp;
+    }
+
+
 }
