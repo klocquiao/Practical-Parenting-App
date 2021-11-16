@@ -52,7 +52,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     public static final int BOUNCE_INTERPOLATION_DELAY = 400;
     public static final int EVEN_FLIPS_TIME = 1200;
     public static final int ODD_FLIP_TIME = 1400;
-    public static final int CAM_DISTANCE = 8000;
+    public static final int CAM_DISTANCE = 10000;
 
     private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
@@ -89,12 +89,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         isHead = true;
 
-        coinHeadsImage = findViewById(R.id.imageHead);
-        coinTailsImage = findViewById(R.id.imageTail);
-        childrenSpinner = findViewById(R.id.spinnerChildren);
-        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
-        headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
-        flipButton = findViewById(R.id.buttonFlip);
+        initializeViews();
 
         random = new Random();
         handler = new Handler();
@@ -129,6 +124,15 @@ public class CoinFlipActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void initializeViews() {
+        coinHeadsImage = findViewById(R.id.imageHead);
+        coinTailsImage = findViewById(R.id.imageTail);
+        childrenSpinner = findViewById(R.id.spinnerChildren);
+        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
+        headsOrTailsGroup = findViewById(R.id.radioGroupHeadsOrTails);
+        flipButton = findViewById(R.id.buttonFlip);
     }
 
     private void updateUI() {
@@ -194,7 +198,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (isFlipping) {
-                    checkHeadsOrTails();
+                    updateCoinFlipAnimation();
                     coinFlipAnimation.start();
                 }
             }
@@ -214,45 +218,34 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setViewInteractability(false);
+                setViewInteraction(false);
                 int delay;
 
                 if (random.nextBoolean()) {
-                    transitionUpAnimation.setDuration(EVEN_FLIPS_TIME / 2);
-                    transitionDownAnimation.setDuration((EVEN_FLIPS_TIME / 2) + BOUNCE_INTERPOLATION_DELAY);
-                    transitionDownAnimation.setStartDelay(EVEN_FLIPS_TIME / 2);
-                    delay = EVEN_FLIPS_TIME;
-
+                    delay = getDelay(EVEN_FLIPS_TIME);
                 }
                 else {
-                    transitionUpAnimation.setDuration(ODD_FLIP_TIME / 2);
-                    transitionDownAnimation.setDuration((ODD_FLIP_TIME / 2) + BOUNCE_INTERPOLATION_DELAY);
-                    transitionDownAnimation.setStartDelay(ODD_FLIP_TIME / 2);
-                    delay = ODD_FLIP_TIME;
+                    delay = getDelay(ODD_FLIP_TIME);
                 }
 
-                checkHeadsOrTails();
-                coinFlipSound.start();
-                transitionUpAnimation.start();
-                transitionDownAnimation.start();
-                coinFlipAnimation.start();
+                updateCoinFlipAnimation();
+                startCoinFlipAnimation();
 
-                //Wait for coin flip animation to finish
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                         coinFlipAnimation.cancel();
                         coinHeadsImage.setRotationX(0);
                         coinTailsImage.setRotationX(0);
+                        setHeadsOrTails();
+                        Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                     }
                 }, delay);
 
-                //Wait for bounce interpolation to finish
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        setViewInteractability(true);
+                        setViewInteraction(true);
                         if (!family.isNoChildren()) {
                             createHistoryEntry();
                             getCoinFlipRecommendation();
@@ -263,16 +256,39 @@ public class CoinFlipActivity extends AppCompatActivity {
         });
     }
 
-    private void checkHeadsOrTails() {
+    private void startCoinFlipAnimation() {
+        coinFlipSound.start();
+        transitionUpAnimation.start();
+        transitionDownAnimation.start();
+        coinFlipAnimation.start();
+    }
+
+    private int getDelay(int flipTime) {
+        transitionUpAnimation.setDuration(flipTime / 2);
+        transitionDownAnimation.setDuration((flipTime / 2) + BOUNCE_INTERPOLATION_DELAY);
+        transitionDownAnimation.setStartDelay(flipTime / 2);
+        int delay = flipTime;
+
+        return delay;
+    }
+
+    private void updateCoinFlipAnimation() {
         if (isHead) {
             coinFlip1Animation.setTarget(coinHeadsImage);
             coinFlip2Animation.setTarget(coinTailsImage);
-            isHead = false;
         }
         else {
             coinFlip1Animation.setTarget(coinTailsImage);
             coinFlip2Animation.setTarget(coinHeadsImage);
+        }
+    }
+
+    private void setHeadsOrTails() {
+        if (coinHeadsImage.getAlpha() == 1) {
             isHead = true;
+        }
+        if (coinTailsImage.getAlpha() == 1) {
+            isHead = false;
         }
     }
 
@@ -297,7 +313,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         return TAILS;
     }
 
-    private void setViewInteractability(boolean isEnable) {
+    private void setViewInteraction(boolean isEnable) {
         childrenSpinner.setEnabled(isEnable);
         flipButton.setEnabled(isEnable);
         headsOrTailsGroup.setEnabled(isEnable);
