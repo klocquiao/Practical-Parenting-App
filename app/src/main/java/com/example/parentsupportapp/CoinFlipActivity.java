@@ -173,8 +173,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         if (family.isNoChildren()) {
             childrenSpinner.setVisibility(View.GONE);
         }
-        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
-                android.R.layout.simple_spinner_item, family.getChildren());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         childrenSpinner.setAdapter(adapter);
     }
@@ -263,6 +263,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                         if (!family.isNoChildren()) {
                             createHistoryEntry();
                             getCoinFlipRecommendation();
+                            populateChildrenSpinner();
                         }
                     }
                 }, 2000);
