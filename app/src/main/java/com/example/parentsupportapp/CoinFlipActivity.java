@@ -20,6 +20,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,18 +42,24 @@ import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
+import com.example.parentsupportapp.model.PriorityQueue;
+import com.google.gson.Gson;
 
 import java.util.Random;
 
 public class CoinFlipActivity extends AppCompatActivity {
-    private static final String HEADS = "Heads";
-    private static final String TAILS = "Tails";
+    private static final String KEY_PRIORITY = "CoinFlipPriorityKey";
+    private static final String PREF_PRIORITY = "CoinFlipActivityPref";
+
     public static final float ANIM_HEIGHT = -250f;
     public static final float BASE_HEIGHT = 0f;
     public static final int BOUNCE_INTERPOLATION_DELAY = 400;
     public static final int EVEN_FLIPS_TIME = 1200;
     public static final int ODD_FLIP_TIME = 1400;
     public static final int CAM_DISTANCE = 8000;
+
+    private static final String HEADS = "Heads";
+    private static final String TAILS = "Tails";
 
     private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
@@ -77,6 +84,8 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private Family family;
     private HistoryManager history;
+    private PriorityQueue coinFlipPriorityQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +110,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
+        coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
 
         updateUI();
         setupCoinFlipAnimation();
@@ -114,6 +124,12 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        saveHistoryActivityPrefs(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_flip, menu);
         return true;
@@ -121,7 +137,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.actionHistory:
                 Intent historyIntent = HistoryActivity.makeIntent(this);
                 startActivity(historyIntent);
@@ -132,18 +148,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        history.updateQueue(family.getChildrenInString());
+        coinFlipPriorityQueue.updateQueue(family.getChildrenInString());
         getCoinFlipRecommendation();
         populateChildrenSpinner();
     }
 
     private void getCoinFlipRecommendation() {
         coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
-        String recommendation = history.getNextInQueue();
+        String recommendation = coinFlipPriorityQueue.getNextInQueue();
         if (recommendation == HistoryManager.EMPTY) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
-        }
-        else {
+        } else {
             coinFlipSuggestionText.setText(getString(R.string.suggestion_header, recommendation));
         }
     }
@@ -223,8 +238,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                     transitionDownAnimation.setStartDelay(EVEN_FLIPS_TIME / 2);
                     delay = EVEN_FLIPS_TIME;
 
-                }
-                else {
+                } else {
                     transitionUpAnimation.setDuration(ODD_FLIP_TIME / 2);
                     transitionDownAnimation.setDuration((ODD_FLIP_TIME / 2) + BOUNCE_INTERPOLATION_DELAY);
                     transitionDownAnimation.setStartDelay(ODD_FLIP_TIME / 2);
@@ -268,8 +282,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             coinFlip1Animation.setTarget(coinHeadsImage);
             coinFlip2Animation.setTarget(coinTailsImage);
             isHead = false;
-        }
-        else {
+        } else {
             coinFlip1Animation.setTarget(coinTailsImage);
             coinFlip2Animation.setTarget(coinHeadsImage);
             isHead = true;
@@ -281,7 +294,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         String choice = getChoice();
         HistoryEntry newEntry = new HistoryEntry(name, choice, getResults());
         history.addCoinFlipEntry(newEntry);
-        history.queueRecentlyUsed(name);
+        coinFlipPriorityQueue.queueRecentlyUsed(name);
     }
 
     private String getChoice() {
@@ -309,5 +322,19 @@ public class CoinFlipActivity extends AppCompatActivity {
     public static Intent makeIntent(Context c) {
         Intent intent = new Intent(c, CoinFlipActivity.class);
         return intent;
+    }
+
+    public static String getPriorityQueue(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        return prefs.getString(KEY_PRIORITY, PriorityQueue.EMPTY);
+    }
+
+    private void saveHistoryActivityPrefs(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String jsonPriority = gson.toJson(coinFlipPriorityQueue.getPriorityQueue());
+        editor.putString(KEY_PRIORITY, jsonPriority);
+        editor.apply();
     }
 }
