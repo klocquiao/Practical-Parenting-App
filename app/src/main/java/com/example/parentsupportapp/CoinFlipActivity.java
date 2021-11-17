@@ -175,7 +175,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void populateChildrenSpinner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        adapter.setDropDownViewResource(R.layout.flipper_row);
         childrenSpinner.setAdapter(adapter);
         adapter.remove(NOBODY);
         if (family.isNoChildren()) {
