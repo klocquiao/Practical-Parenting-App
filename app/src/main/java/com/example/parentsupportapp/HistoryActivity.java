@@ -30,9 +30,7 @@ import com.google.gson.Gson;
 
 public class HistoryActivity extends AppCompatActivity {
     private HistoryManager history;
-    public static final String EMPTY_PREF = "";
     private static final String KEY_HISTORY = "HistoryKey";
-    private static final String KEY_PRIORITY = "PriorityKey";
     private static final String PREF_HISTORY = "HistoryActivityPref";
 
     @Override
@@ -60,20 +58,13 @@ public class HistoryActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String jsonHistory = gson.toJson(historyManager.getHistory());
-        String jsonPriority = gson.toJson(historyManager.getPriorityQueue());
-        editor.putString(KEY_PRIORITY, jsonPriority);
         editor.putString(KEY_HISTORY, jsonHistory);
         editor.apply();
     }
 
     public static String getHistoryEntries(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
-        return prefs.getString(KEY_HISTORY, EMPTY_PREF);
-    }
-
-    public static String getPriorityQueue(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
-        return prefs.getString(KEY_PRIORITY, EMPTY_PREF);
+        return prefs.getString(KEY_HISTORY, HistoryManager.EMPTY);
     }
 
     private void populateHistoryListView() {
