@@ -31,7 +31,7 @@ public class AddTaskActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        temp = TaskManager.getInstance();
+        temp = TaskManager.getInstance(this);
         setupAddButton();
     }
 

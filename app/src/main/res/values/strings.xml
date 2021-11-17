@@ -30,6 +30,7 @@
     <string name="add_task">Add</string>
     <string name="remove_task">Remove</string>
     <string name="edit_task">Edit</string>
+    <string name="view_task">View</string>
 
 
     <!-- History Activity -->

@@ -45,9 +45,20 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="@string/edit_task"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonViewTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonRemoveTask" />
+
+    <Button
+        android:id="@+id/buttonViewTask"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/view_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditTask" />
 </androidx.constraintlayout.widget.ConstraintLayout>

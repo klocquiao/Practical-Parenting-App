@@ -24,18 +24,18 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/viewAllChildren"
+        android:id="@+id/viewAllTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appBarLayoutAdd"
         android:layout_centerHorizontal="true"
-        android:text="list of all the children" />
+        android:text="list of all the tasks" />
 
     <ListView
-        android:id="@+id/listChildren"
+        android:id="@+id/listTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewAllChildren"
+        android:layout_below="@+id/viewAllTask"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
