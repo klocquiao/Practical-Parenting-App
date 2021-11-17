@@ -12,6 +12,7 @@
     <string name="timerActivity_pause">Pause</string>
 
     <!-- Main Menu -->
+    <string name="task_title">Task</string>
     <string name="menu_title">Menu</string>
     <string name="channel_name">Parent App Timer Channel</string>
     <string name="channel_description">This Channel allows the timer activity in the parent app to display notifications</string>
@@ -24,6 +25,12 @@
     <string name="history">History</string>
     <string name="heads">Heads</string>
     <string name="tails">Tails</string>
+
+    <!-- Task Activity -->
+    <string name="add_task">Add</string>
+    <string name="remove_task">Remove</string>
+    <string name="edit_task">Edit</string>
+
 
     <!-- History Activity -->
     <string name="history_choice">Choice: %1$s</string>
