@@ -15,7 +15,7 @@ public class PriorityQueue {
     public static final String EMPTY = "";
 
     public PriorityQueue(String jsonString) {
-        if (jsonString == EMPTY) {
+        if (jsonString.matches(EMPTY)) {
             priorityQueue = new ArrayList<>();
         }
         else {

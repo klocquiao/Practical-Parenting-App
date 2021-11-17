@@ -35,7 +35,7 @@ public class HistoryManager {
         this.context = context;
         String jsonHistory = HistoryActivity.getHistoryEntries(context);
 
-        if (jsonHistory == EMPTY) {
+        if (jsonHistory.matches(EMPTY)) {
             history = new ArrayList<>();
         }
         else {

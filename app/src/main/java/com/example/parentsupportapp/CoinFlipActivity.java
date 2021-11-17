@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -161,7 +162,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void getCoinFlipRecommendation() {
         coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
         String recommendation = coinFlipPriorityQueue.getNextInQueue();
-        if (recommendation == HistoryManager.EMPTY) {
+        if (recommendation.matches(HistoryManager.EMPTY)) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
         else {
@@ -176,6 +177,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        childrenSpinner.setPrompt("Select the next flipper...");
         childrenSpinner.setAdapter(adapter);
     }
 
@@ -318,7 +320,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton.setEnabled(isEnable);
         headsOrTailsGroup.setEnabled(isEnable);
         for (int i = 0; i < headsOrTailsGroup.getChildCount(); i++) {
-            ((RadioButton) headsOrTailsGroup.getChildAt(i)).setEnabled(isEnable);
+            (headsOrTailsGroup.getChildAt(i)).setEnabled(isEnable);
         }
     }
 

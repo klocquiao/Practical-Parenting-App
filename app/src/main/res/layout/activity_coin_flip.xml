@@ -74,7 +74,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+        android:spinnerMode="dialog" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
