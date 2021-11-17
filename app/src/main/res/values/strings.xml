@@ -24,6 +24,7 @@
     <string name="history">History</string>
     <string name="heads">Heads</string>
     <string name="tails">Tails</string>
+    <string name="spinner_prompt">"Select the next flipper..."</string>
 
     <!-- History Activity -->
     <string name="history_choice">Choice: %1$s</string>

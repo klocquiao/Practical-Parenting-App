@@ -54,6 +54,8 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String HEADS = "Heads";
     private static final String TAILS = "Tails";
+    private static final String NOBODY = "Nobody";
+
     public static final float BASE_HEIGHT = 0f;
     public static final float ANIM_HEIGHT = -250f;
     public static final int TRANSITION_TIME = 1300;
@@ -176,9 +178,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        childrenSpinner.setPrompt("Select the next flipper...");
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         childrenSpinner.setAdapter(adapter);
+        adapter.remove(NOBODY);
+        adapter.add(NOBODY);
     }
 
     private void setupCoinFlipAnimation() {
@@ -262,7 +265,8 @@ public class CoinFlipActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                         setViewInteraction(true);
-                        if (!family.isNoChildren()) {
+                        String name = childrenSpinner.getSelectedItem().toString();
+                        if (!coinFlipPriorityQueue.isEmpty() && !name.matches(NOBODY)) {
                             createHistoryEntry();
                             getCoinFlipRecommendation();
                             populateChildrenSpinner();

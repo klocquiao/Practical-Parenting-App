@@ -52,6 +52,15 @@ public class PriorityQueue {
         return priorityQueue;
     }
 
+    public boolean isEmpty() {
+        if (priorityQueue.size() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private List<String> deserializePriorityQueue(String jsonPriority) {
         Type type = new TypeToken<List<String>>(){}.getType();
         Gson gson = new Gson();
