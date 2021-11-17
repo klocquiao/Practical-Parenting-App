@@ -6,8 +6,6 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,7 +33,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 /**
  * Add child activity models adding a new new child to the
@@ -54,8 +51,6 @@ public class AddChildActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
-
-        //
 
         cameraPermission = new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -81,8 +76,6 @@ public class AddChildActivity extends AppCompatActivity {
             }
         });
 
-
-        //
 
         Toolbar toolbar = findViewById(R.id.tbAdd);
         setSupportActionBar(toolbar);
@@ -116,7 +109,7 @@ public class AddChildActivity extends AppCompatActivity {
                     return;
                 }
                 String port = saveToInternalStorage(img);
-                Child child = new Child(checkString(str), port);
+                Child child = new Child(correctString(str), port);
                 fam.getChildren().add(child);
                 etFirstName.setText("");
                 Toast.makeText(AddChildActivity.this, "New Child Added", Toast.LENGTH_SHORT).show();
@@ -132,20 +125,9 @@ public class AddChildActivity extends AppCompatActivity {
         return 0;
     }
 
-
-    private String checkString(String str) {
+    private String correctString(String str) {
         str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
         str = str.replace(" ", "");
-        /*
-        String temp = "";
-        for (int i = 0; i < str.length();i++) {
-            if (str.charAt(i) == 32){
-                continue;
-            }
-            temp += str.charAt(i);
-        }
-
-         */
         return str;
     }
 

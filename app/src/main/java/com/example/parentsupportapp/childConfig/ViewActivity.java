@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.example.parentsupportapp.R;
@@ -45,7 +43,7 @@ public class ViewActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
         //
         ImageView img = findViewById(R.id.imgTester);
-        loadImageFromStorage(fam.getChildren().get(0).getPortrait(),img);
+        loadImageFromStorage(fam.getChildren().get(0).getPortraitPath(),img);
         //
     }
 
@@ -53,7 +51,7 @@ public class ViewActivity extends AppCompatActivity {
         return new Intent(context, ViewActivity.class);
     }
 
-    private void loadImageFromStorage(String path, ImageView img)
+    public void loadImageFromStorage(String path, ImageView img)
     {
 
         try {
