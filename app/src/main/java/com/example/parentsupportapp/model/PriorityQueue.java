@@ -24,16 +24,12 @@ public class PriorityQueue {
     }
 
     public void updateQueue(List<String> strChildren) {
-        for (int i = 0; i < strChildren.size(); i++) {
-            if (!priorityQueue.contains(strChildren.get(i))) {
-                priorityQueue.add(0, strChildren.get(i));
+        for (String str: strChildren) {
+            if (!priorityQueue.contains(str)) {
+                priorityQueue.add(0, str);
             }
         }
-        for (int j = 0; j < priorityQueue.size(); j++) {
-            if (!strChildren.contains(priorityQueue.get(j))) {
-                priorityQueue.remove(j);
-            }
-        }
+        priorityQueue.removeIf(str -> !strChildren.contains(str));
     }
 
     public void queueRecentlyUsed(String childName) {
@@ -59,6 +55,18 @@ public class PriorityQueue {
         else {
             return false;
         }
+    }
+
+    public int getSize() {
+        return priorityQueue.size();
+    }
+
+    public String get(int pos) {
+        return priorityQueue.get(pos);
+    }
+
+    public void remove(String str) {
+        priorityQueue.remove(str);
     }
 
     private List<String> deserializePriorityQueue(String jsonPriority) {

@@ -110,6 +110,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
         coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
+        coinFlipPriorityQueue.updateQueue(family.getChildrenInString());
 
         updateUI();
         setupCoinFlipAnimation();
@@ -125,6 +126,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        coinFlipPriorityQueue.remove(NOBODY);
         saveHistoryActivityPrefs(this);
     }
 
@@ -156,13 +158,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        coinFlipPriorityQueue.updateQueue(family.getChildrenInString());
         getCoinFlipRecommendation();
         populateChildrenSpinner();
     }
 
     private void getCoinFlipRecommendation() {
-        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
         String recommendation = coinFlipPriorityQueue.getNextInQueue();
         if (recommendation.matches(HistoryManager.EMPTY)) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
@@ -173,15 +173,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void populateChildrenSpinner() {
-        if (family.isNoChildren()) {
-            childrenSpinner.setVisibility(View.GONE);
-        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         childrenSpinner.setAdapter(adapter);
         adapter.remove(NOBODY);
-        adapter.add(NOBODY);
+        if (family.isNoChildren()) {
+            childrenSpinner.setVisibility(View.GONE);
+        }
+        else {
+            adapter.add(NOBODY);
+        }
     }
 
     private void setupCoinFlipAnimation() {
@@ -268,8 +270,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                         String name = childrenSpinner.getSelectedItem().toString();
                         if (!coinFlipPriorityQueue.isEmpty() && !name.matches(NOBODY)) {
                             createHistoryEntry();
-                            getCoinFlipRecommendation();
-                            populateChildrenSpinner();
+                            updateUI();
                         }
                     }
                 }, 2000);
