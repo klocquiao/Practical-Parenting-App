@@ -9,6 +9,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.parentsupportapp.taskConfig.AddTaskActivity;
+import com.example.parentsupportapp.taskConfig.EditTaskActivity;
+import com.example.parentsupportapp.taskConfig.RemoveTaskActivity;
+
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -38,17 +42,17 @@ public class TaskActivity extends AppCompatActivity {
     private void setUpButtonListeners() {
 
         this.buttonAddTask.setOnClickListener(v -> {
-            Intent addTaskIntent = ChildConfigActivity.makeIntent(TaskActivity.this);
+            Intent addTaskIntent = AddTaskActivity.makeIntent(TaskActivity.this);
             startActivity(addTaskIntent);
         });
 
         this.buttonRemoveTask.setOnClickListener(v -> {
-            Intent removeTaskIntent = ChildConfigActivity.makeIntent(TaskActivity.this);
+            Intent removeTaskIntent = RemoveTaskActivity.makeIntent(TaskActivity.this);
             startActivity(removeTaskIntent);
         });
 
         this.buttonEditTask.setOnClickListener(v -> {
-            Intent editTaskIntent = ChildConfigActivity.makeIntent(TaskActivity.this);
+            Intent editTaskIntent = EditTaskActivity.makeIntent(TaskActivity.this);
             startActivity(editTaskIntent);
         });
     }

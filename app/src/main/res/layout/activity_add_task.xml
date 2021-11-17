@@ -24,23 +24,24 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
-        android:id="@+id/etFirstName"
+        android:id="@+id/enterName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="100dp"
-        android:hint="Enter a name"
+        android:hint="Enter the name of the task"
         android:minHeight="48dp"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/buttonAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etFirstName"
+        android:layout_below="@+id/enterName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:text="Add" />
+        android:text="@string/add_task" />
 </RelativeLayout>
+

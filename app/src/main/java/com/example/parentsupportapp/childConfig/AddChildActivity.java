@@ -27,7 +27,7 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        Toolbar toolbar = findViewById(R.id.tbAdd);
+        Toolbar toolbar = findViewById(R.id.toolBarAddTask);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
