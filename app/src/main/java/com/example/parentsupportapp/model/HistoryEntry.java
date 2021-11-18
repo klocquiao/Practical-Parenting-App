@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HistoryEntry {
-    private String flipperName;
+    private Child flipperChild;
     private String timeOfFlip;
     private String flipChoice;
     private String flipResult;
 
-    public HistoryEntry(String flipperName, String flipChoice, String flipResult) {
+    public HistoryEntry(Child flipperChild, String flipChoice, String flipResult) {
         this.timeOfFlip = convertTimeToString();
-        this.flipperName = flipperName;
+        this.flipperChild = flipperChild;
         this.flipChoice = flipChoice;
         this.flipResult = flipResult;
     }
@@ -49,6 +49,6 @@ public class HistoryEntry {
     }
 
     public String getFlipperName() {
-        return flipperName;
+        return flipperChild.toString();
     }
 }
