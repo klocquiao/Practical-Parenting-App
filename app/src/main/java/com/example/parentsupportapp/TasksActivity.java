@@ -2,13 +2,17 @@ package com.example.parentsupportapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +53,7 @@ public class TasksActivity extends AppCompatActivity {
         setupButtonListeners();
         
         populateListView();
+        registerClickCallback();
     }
 
     private void populateListView() {
@@ -57,6 +62,7 @@ public class TasksActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    // TODO: possibly refactor out this entire class (will need to use it in another activity)
     private class TaskListAdapter extends ArrayAdapter<Child> {
         public TaskListAdapter() {
             super(TasksActivity.this, R.layout.task_item_view, children);
@@ -69,11 +75,21 @@ public class TasksActivity extends AppCompatActivity {
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.task_item_view, parent, false);
             }
-            // find the child to work with
-            Child currChild = children.get(position);
 
+            // TODO: Replace the child with the appropriate task
+            Child currChild = children.get(position);
             // fill the view
             ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
+
+            Bitmap bitmap = BitmapFactory.decodeFile(currChild.getPortraitPath());
+            if (bitmap == null) {
+                imageView.setImageResource(R.drawable.ic_baseline_broken_image_24);
+            } else {
+                imageView.setImageBitmap(bitmap);
+            }
+
+            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textView.setText(currChild.getFirstName());
 
             return itemView;
         }
@@ -99,6 +115,17 @@ public class TasksActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void registerClickCallback() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                // NOTE: position gives position of thing clicked.
+                // TODO: have to implement the functionality when an item in the list view is clicked.
+
             }
         });
     }
