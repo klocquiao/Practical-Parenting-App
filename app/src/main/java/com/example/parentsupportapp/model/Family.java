@@ -1,13 +1,20 @@
 package com.example.parentsupportapp.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.parentsupportapp.ChildConfigActivity;
 import com.example.parentsupportapp.HistoryActivity;
+import com.example.parentsupportapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,4 +83,6 @@ public class Family {
         Gson gson = new Gson();
         return gson.fromJson(jsonFamily, type);
     }
+
+
 }
