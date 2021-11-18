@@ -3,6 +3,10 @@ package com.example.parentsupportapp.tasksConfig;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +28,25 @@ public class AddTaskActivity extends AppCompatActivity {
             actionbar.setTitle("Add Task");
         }
 
+        setupButton();
+    }
+
+    private void setupButton() {
+        Button button = findViewById(R.id.buttonConfirmAddTask);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = findViewById(R.id.editTextTaskName);
+                String extractedText = editText.getText().toString();
+                if (extractedText.equals("")) {
+                    Toast.makeText(AddTaskActivity.this, "Please provide a task name :) !", Toast.LENGTH_SHORT).show();
+                } else {
+                    // TODO: Here I need the task manager. Create task, then add new task to task manager.
+
+                    Toast.makeText(AddTaskActivity.this, "New Task Added!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public static Intent makeIntent(Context context) {
