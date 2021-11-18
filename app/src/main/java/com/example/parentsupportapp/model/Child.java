@@ -8,17 +8,28 @@ import androidx.annotation.NonNull;
  */
 public class Child {
     private String firstName;
+    private String portraitPath;
 
     public Child(String fName) {
         this.firstName = fName;
+    }
+    public Child(String fName, String port) {
+        this.firstName = fName;
+        this.portraitPath = port;
     }
 
     public String getFirstName() {
         return firstName;
     }
+    public String getPortraitPath() {
+        return portraitPath;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+    public void setPortraitPath(String port) {
+        this.portraitPath = port;
     }
 
     @NonNull
