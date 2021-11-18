@@ -54,7 +54,6 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String HEADS = "Heads";
     private static final String TAILS = "Tails";
-    private static final String NOBODY = "Nobody";
 
     public static final float BASE_HEIGHT = 0f;
     public static final float ANIM_HEIGHT = -250f;
@@ -88,6 +87,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private int delay;
 
     private Family family;
+    private Child nobody;
     private HistoryManager history;
     private PriorityQueue coinFlipPriorityQueue;
 
@@ -110,7 +110,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
         coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
-        coinFlipPriorityQueue.updateQueue(family.getChildrenInString());
+        coinFlipPriorityQueue.updateQueue(family.getChildren());
+        nobody = new Child("Nobody");
 
         updateUI();
         setupCoinFlipAnimation();
@@ -126,7 +127,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        coinFlipPriorityQueue.remove(NOBODY);
+        coinFlipPriorityQueue.remove(nobody);
         saveHistoryActivityPrefs(this);
     }
 
@@ -158,8 +159,8 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        getCoinFlipRecommendation();
         populateChildrenSpinner();
+        getCoinFlipRecommendation();
     }
 
     private void getCoinFlipRecommendation() {
@@ -173,16 +174,16 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void populateChildrenSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
                 android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
         adapter.setDropDownViewResource(R.layout.flipper_row);
         childrenSpinner.setAdapter(adapter);
-        adapter.remove(NOBODY);
+        adapter.remove(nobody);
         if (family.isNoChildren()) {
             childrenSpinner.setVisibility(View.GONE);
         }
         else {
-            adapter.add(NOBODY);
+            adapter.add(nobody);
         }
     }
 
@@ -267,8 +268,8 @@ public class CoinFlipActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                         setViewInteraction(true);
-                        String name = childrenSpinner.getSelectedItem().toString();
-                        if (!coinFlipPriorityQueue.isEmpty() && !name.matches(NOBODY)) {
+                        Child child = (Child) childrenSpinner.getSelectedItem();
+                        if (!coinFlipPriorityQueue.isEmpty() && child != nobody) {
                             createHistoryEntry();
                             updateUI();
                         }
@@ -300,11 +301,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void createHistoryEntry() {
-        String name = childrenSpinner.getSelectedItem().toString();
+        Child child = (Child) childrenSpinner.getSelectedItem();
         String choice = getChoice();
-        HistoryEntry newEntry = new HistoryEntry(name, choice, getResults());
+        HistoryEntry newEntry = new HistoryEntry(child, choice, getResults());
         history.addCoinFlipEntry(newEntry);
-        coinFlipPriorityQueue.queueRecentlyUsed(name);
+        coinFlipPriorityQueue.queueRecentlyUsed(child);
     }
 
     private String getChoice() {
