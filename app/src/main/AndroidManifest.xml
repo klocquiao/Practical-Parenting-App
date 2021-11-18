@@ -18,14 +18,17 @@
         <activity
             android:name=".tasksConfig.RemoveTaskActivity"
             android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".tasksConfig.EditTaskActivity"
             android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".tasksConfig.AddTaskActivity"
             android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".TasksActivity"
