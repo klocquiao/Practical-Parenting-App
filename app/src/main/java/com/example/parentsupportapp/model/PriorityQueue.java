@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriorityQueue {
-    private List<String> priorityQueue;
+    private List<Child> priorityQueue;
     public static final String EMPTY = "";
 
     public PriorityQueue(String jsonString) {
-        if (jsonString == EMPTY) {
+        if (jsonString.matches(EMPTY)) {
             priorityQueue = new ArrayList<>();
         }
         else {
@@ -23,37 +23,46 @@ public class PriorityQueue {
         }
     }
 
-    public void updateQueue(List<String> strChildren) {
-        for (int i = 0; i < strChildren.size(); i++) {
-            if (!priorityQueue.contains(strChildren.get(i))) {
-                priorityQueue.add(0, strChildren.get(i));
+    public void updateQueue(List<Child> children) {
+        for (Child child: children) {
+            if (!priorityQueue.contains(child)) {
+                priorityQueue.add(0, child);
             }
         }
-        for (int j = 0; j < priorityQueue.size(); j++) {
-            if (!strChildren.contains(priorityQueue.get(j))) {
-                priorityQueue.remove(j);
-            }
-        }
+        priorityQueue.removeIf(str -> !children.contains(str));
     }
 
-    public void queueRecentlyUsed(String childName) {
-        priorityQueue.remove(childName);
-        priorityQueue.add(childName);
+    public void queueRecentlyUsed(Child child) {
+        priorityQueue.remove(child);
+        priorityQueue.add(child);
     }
 
     public String getNextInQueue() {
         if (priorityQueue.isEmpty()) {
             return EMPTY;
         }
-        return priorityQueue.get(0);
+        return priorityQueue.get(0).toString();
     }
 
-    public List<String> getPriorityQueue() {
+    public List<Child> getPriorityQueue() {
         return priorityQueue;
     }
 
-    private List<String> deserializePriorityQueue(String jsonPriority) {
-        Type type = new TypeToken<List<String>>(){}.getType();
+    public boolean isEmpty() {
+        if (priorityQueue.size() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void remove(Child child) {
+        priorityQueue.remove(child);
+    }
+
+    private List<Child> deserializePriorityQueue(String jsonPriority) {
+        Type type = new TypeToken<List<Child>>(){}.getType();
         Gson gson = new Gson();
         return gson.fromJson(jsonPriority, type);
     }
