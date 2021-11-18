@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.model.Family;
+import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
+import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
+import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class TasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
-        Toolbar toolbar = findViewById(R.id.appBarLayoutTasks);
+        Toolbar toolbar = findViewById(R.id.toolbarTasks);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
@@ -46,19 +49,21 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private void setupButtonListeners() {
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
+        setOnClickBehaviour(addTaskButton, AddTaskActivity.makeIntent(this));
+        setOnClickBehaviour(editTaskButton, EditTaskActivity.makeIntent(this));
+        setOnClickBehaviour(removeTaskButton, RemoveTaskActivity.makeIntent(this));
+    }
+
+    private void setOnClickBehaviour(Button button, Intent intent) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(intent);
             }
         });
     }
 
-    private void setOnClickBehaviour(Button button, Intent intent) {
-
-    }
-
     public static Intent makeIntent(Context context) {
-        return new Intent(context, TimerActivity.class);
+        return new Intent(context, TasksActivity.class);
     }
 }

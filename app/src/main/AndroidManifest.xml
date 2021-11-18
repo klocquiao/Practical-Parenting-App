@@ -12,8 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
-            android:name=".TasksActivity"
+            android:name=".tasksConfig.RemoveTaskActivity"
+            android:parentActivityName=".TasksActivity"
             android:exported="false" />
+        <activity
+            android:name=".tasksConfig.EditTaskActivity"
+            android:parentActivityName=".TasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tasksConfig.AddTaskActivity"
+            android:parentActivityName=".TasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TasksActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".HistoryActivity"
             android:exported="true"

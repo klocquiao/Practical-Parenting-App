@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarTimer"
+            android:id="@+id/toolbarTasks"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#084CD8"
