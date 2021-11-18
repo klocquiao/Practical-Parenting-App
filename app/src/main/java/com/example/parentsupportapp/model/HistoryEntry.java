@@ -51,4 +51,8 @@ public class HistoryEntry {
     public String getFlipperName() {
         return flipperChild.toString();
     }
+    public String getFlipperImage() {
+        return flipperChild.getPortraitPath();
+    }
+
 }

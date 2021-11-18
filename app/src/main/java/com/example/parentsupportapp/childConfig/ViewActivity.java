@@ -51,7 +51,7 @@ public class ViewActivity extends AppCompatActivity {
         return new Intent(context, ViewActivity.class);
     }
 
-    public void loadImageFromStorage(String path, ImageView img)
+    public static void loadImageFromStorage(String path, ImageView img)
     {
 
         try {

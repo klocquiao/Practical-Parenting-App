@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
 import com.google.gson.Gson;
@@ -106,6 +107,10 @@ public class HistoryActivity extends AppCompatActivity {
             else {
                 imageIsMatch.setImageResource(R.drawable.ic_baseline_x_circle);
             }
+
+            ImageView imageChild = (ImageView) historyListView.findViewById(R.id.imagePastFlipper);
+            ViewActivity.loadImageFromStorage(currentHistoryEntry.getFlipperImage(), imageChild);
+
 
             return historyListView;
         }

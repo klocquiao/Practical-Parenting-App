@@ -110,7 +110,7 @@ public class AddChildActivity extends AppCompatActivity {
                 }
                 String port = saveToInternalStorage(img);
                 Child child = new Child(correctString(str), port);
-                fam.getChildren().add(child);
+                fam.addChild(child);
                 etFirstName.setText("");
                 Toast.makeText(AddChildActivity.this, "New Child Added", Toast.LENGTH_SHORT).show();
             }

@@ -60,6 +60,10 @@ public class PriorityQueue {
     public void remove(Child child) {
         priorityQueue.remove(child);
     }
+    public Child getChild(int pos) {
+        return priorityQueue.get(pos);
+    }
+
 
     private List<Child> deserializePriorityQueue(String jsonPriority) {
         Type type = new TypeToken<List<Child>>(){}.getType();
