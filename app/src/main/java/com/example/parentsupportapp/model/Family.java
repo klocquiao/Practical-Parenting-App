@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * Family class models a class that keeps a record of various child objects
  */
+
 public class Family {
     private List<Child> children;
     private static Family instance;
@@ -58,8 +59,8 @@ public class Family {
         return ls;
     }
 
-    public void addChild(String fName) {
-        this.children.add(new Child(fName));
+    public void addChild(Child child) {
+        this.children.add(child);
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 

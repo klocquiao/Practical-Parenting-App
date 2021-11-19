@@ -62,6 +62,10 @@
     <string name="child_config_remove_child">Remove a child</string>
     <string name="child_config_edit_child">Edit a child</string>
     <string name="child_config_view_all">View all</string>
+    <string name="add_child_activity_enter_name">Enter Name</string>
+    <string name="add_child_activity_added_toast">New Child Added</string>
+    <string name="add_child_activity_enter_error">Enter again!</string>
 
+    <!-- Add Child Activity -->
 
 </resources>
