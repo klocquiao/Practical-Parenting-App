@@ -16,6 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
+            android:name=".tasksConfig.RemoveTaskActivity"
+            android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".tasksConfig.EditTaskActivity"
+            android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".tasksConfig.AddTaskActivity"
+            android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".TasksActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".HistoryActivity"
             android:exported="true"
             android:label="@string/history_title"
@@ -71,10 +91,12 @@
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
 
-        <receiver android:name=".TimerBroadcastReceiver" android:exported="true">
+        <receiver
+            android:name=".TimerBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
     </application>
