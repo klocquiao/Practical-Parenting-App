@@ -20,6 +20,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,12 +42,18 @@ import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
+import com.example.parentsupportapp.model.PriorityQueue;
+import com.google.gson.Gson;
 
 import java.util.Random;
 
 public class CoinFlipActivity extends AppCompatActivity {
+    private static final String KEY_PRIORITY = "CoinFlipPriorityKey";
+    private static final String PREF_PRIORITY = "CoinFlipActivityPref";
+
     private static final String HEADS = "Heads";
     private static final String TAILS = "Tails";
+
     public static final float BASE_HEIGHT = 0f;
     public static final float ANIM_HEIGHT = -250f;
     public static final int TRANSITION_TIME = 1300;
@@ -79,7 +86,9 @@ public class CoinFlipActivity extends AppCompatActivity {
     private int delay;
 
     private Family family;
+    private Child nobody;
     private HistoryManager history;
+    private PriorityQueue coinFlipPriorityQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +108,9 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(this);
+        coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
+        coinFlipPriorityQueue.updateQueue(family.getChildren());
+        nobody = new Child("Nobody");
 
         updateUI();
         setupCoinFlipAnimation();
@@ -109,6 +121,13 @@ public class CoinFlipActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        coinFlipPriorityQueue.remove(nobody);
+        saveHistoryActivityPrefs(this);
     }
 
     @Override
@@ -139,15 +158,13 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        history.updateQueue(family.getChildrenInString());
-        getCoinFlipRecommendation();
         populateChildrenSpinner();
+        getCoinFlipRecommendation();
     }
 
     private void getCoinFlipRecommendation() {
-        coinFlipSuggestionText = findViewById(R.id.textFlipSuggestion);
-        String recommendation = history.getNextInQueue();
-        if (recommendation == HistoryManager.EMPTY) {
+        String recommendation = coinFlipPriorityQueue.getNextInQueue();
+        if (recommendation.matches(HistoryManager.EMPTY)) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
         else {
@@ -156,13 +173,17 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void populateChildrenSpinner() {
+        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
+                android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        childrenSpinner.setAdapter(adapter);
+        adapter.remove(nobody);
         if (family.isNoChildren()) {
             childrenSpinner.setVisibility(View.GONE);
         }
-        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
-                android.R.layout.simple_spinner_item, family.getChildren());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        childrenSpinner.setAdapter(adapter);
+        else {
+            adapter.add(nobody);
+        }
     }
 
     private void setupCoinFlipAnimation() {
@@ -246,9 +267,10 @@ public class CoinFlipActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(CoinFlipActivity.this, getResults(), Toast.LENGTH_SHORT).show();
                         setViewInteraction(true);
-                        if (!family.isNoChildren()) {
+                        Child child = (Child) childrenSpinner.getSelectedItem();
+                        if (!coinFlipPriorityQueue.isEmpty() && child != nobody) {
                             createHistoryEntry();
-                            getCoinFlipRecommendation();
+                            updateUI();
                         }
                     }
                 }, 2000);
@@ -278,11 +300,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void createHistoryEntry() {
-        String name = childrenSpinner.getSelectedItem().toString();
+        Child child = (Child) childrenSpinner.getSelectedItem();
         String choice = getChoice();
-        HistoryEntry newEntry = new HistoryEntry(name, choice, getResults());
+        HistoryEntry newEntry = new HistoryEntry(child, choice, getResults());
         history.addCoinFlipEntry(newEntry);
-        history.queueRecentlyUsed(name);
+        coinFlipPriorityQueue.queueRecentlyUsed(child);
     }
 
     private String getChoice() {
@@ -303,12 +325,26 @@ public class CoinFlipActivity extends AppCompatActivity {
         flipButton.setEnabled(isEnable);
         headsOrTailsGroup.setEnabled(isEnable);
         for (int i = 0; i < headsOrTailsGroup.getChildCount(); i++) {
-            ((RadioButton) headsOrTailsGroup.getChildAt(i)).setEnabled(isEnable);
+            (headsOrTailsGroup.getChildAt(i)).setEnabled(isEnable);
         }
     }
 
     public static Intent makeIntent(Context c) {
         Intent intent = new Intent(c, CoinFlipActivity.class);
         return intent;
+    }
+
+    public static String getPriorityQueue(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        return prefs.getString(KEY_PRIORITY, PriorityQueue.EMPTY);
+    }
+
+    private void saveHistoryActivityPrefs(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String jsonPriority = gson.toJson(coinFlipPriorityQueue.getPriorityQueue());
+        editor.putString(KEY_PRIORITY, jsonPriority);
+        editor.apply();
     }
 }

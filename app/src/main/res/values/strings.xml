@@ -70,6 +70,11 @@
     <string name="child_config_remove_child">Remove a child</string>
     <string name="child_config_edit_child">Edit a child</string>
     <string name="child_config_view_all">View all</string>
+    <string name="title_activity_tasks">TasksActivity</string>
+    <string name="tasks_title">Tasks</string>
+    <string name="tasks_layout_add">Add</string>
+    <string name="tasks_layout_edit">Edit</string>
+    <string name="tasks_layout_remove">Remove</string>
     <string name="enter_name_of_task">Enter name of task</string>
     <string name="select_a_task_to_edit_it">Select a task to edit it.</string>
     <string name="enter_task_name">Enter task name</string>

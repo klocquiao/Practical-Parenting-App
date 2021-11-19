@@ -23,17 +23,33 @@
             app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imgAddChild"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/appBarLayoutAdd"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/default_portrait"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="15dp"
+        android:id="@+id/tvAddName"
+        android:text="Name : "
+        android:layout_below="@+id/imgAddChild"
+        android:layout_toLeftOf="@+id/etFirstName"
+        android:layout_marginTop="29dp"
+        />
     <EditText
         android:id="@+id/etFirstName"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="100dp"
-        android:hint="Enter a name"
-        android:minHeight="48dp"
-        android:textAlignment="center" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/imgAddChild"/>
 
     <Button
         android:id="@+id/btnAdd"

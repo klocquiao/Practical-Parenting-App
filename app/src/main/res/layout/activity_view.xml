@@ -23,22 +23,25 @@
             app:popupTheme="@style/Theme.ParentSupportApp.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/imgTester"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/appBarLayoutAdd"/>
     <TextView
-        android:id="@+id/viewAllChildren"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appBarLayoutAdd"
-        android:layout_centerHorizontal="true"
-        android:text="list of all the children" />
+        android:id="@+id/viewAllChildren"
+        android:layout_below="@+id/imgTester"
+        android:text="list of all the children"
+        android:layout_centerHorizontal="true"/>
 
     <ListView
-        android:id="@+id/listChildren"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewAllChildren"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp" />
+        android:id="@+id/listChildren"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/viewAllChildren"/>
 
 </RelativeLayout>
