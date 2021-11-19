@@ -1,6 +1,7 @@
 package com.example.parentsupportapp.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * this child class models a child that has a first name
@@ -35,5 +36,24 @@ public class Child {
     @Override
     public String toString() {
         return firstName;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Child other = (Child) obj;
+        if (this.firstName.matches(other.getFirstName())) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
