@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.R;
-import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.model.TaskManager;
 
 public class ViewTaskActivity extends AppCompatActivity {
@@ -21,18 +20,20 @@ public class ViewTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
 
-        Toolbar toolbar = findViewById(R.id.tbView);
+        Toolbar toolbar = findViewById(R.id.toolbar4);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         TaskManager temp = TaskManager.getInstance(this);
         ListView listView = findViewById(R.id.listTask);
-        listView.setAdapter(new ArrayAdapter<String>(ViewTaskActivity.this, android.R.layout.simple_list_item_1, temp.getTaskAsString()));
+        listView.setAdapter(new ArrayAdapter<>(ViewTaskActivity.this, android.R.layout.simple_list_item_1, temp.getTaskAsString()));
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, ViewActivity.class);
+        return new Intent(context, ViewTaskActivity.class);
     }
 
 }

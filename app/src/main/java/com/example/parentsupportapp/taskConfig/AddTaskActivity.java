@@ -24,7 +24,7 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        Toolbar toolbar = findViewById(R.id.toolBarAddTask);
+        Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -44,9 +44,9 @@ public class AddTaskActivity extends AppCompatActivity {
     public void setupAddButton () {
         Button button = findViewById(R.id.buttonAddTask);
         button.setOnClickListener(v -> {
-            EditText name = findViewById(R.id.enterName);
+            EditText name = findViewById(R.id.addTaskName);
             String name2 = name.getText().toString();
-            name.setHint("Enter a name for the task");
+            name.setHint("Enter name of task");
             if(!checkName(name2, name)) {
                 return;
             }

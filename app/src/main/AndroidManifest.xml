@@ -18,6 +18,26 @@
             android:parentActivityName=".CoinFlipActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
+            android:name=".taskConfig.RemoveTaskActivity"
+            android:parentActivityName=".TaskActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".taskConfig.ViewTaskActivity"
+            android:parentActivityName=".TaskActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".taskConfig.EditTaskActivity"
+            android:parentActivityName=".TaskActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".taskConfig.AddTaskActivity"
+            android:parentActivityName=".TaskActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="true" />
+        <activity
             android:name=".childConfig.RemoveActivity"
             android:parentActivityName=".ChildConfigActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
