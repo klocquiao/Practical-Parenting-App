@@ -58,8 +58,8 @@ public class Family {
         return ls;
     }
 
-    public void addChild(String fName) {
-        this.children.add(new Child(fName));
+    public void addChild(Child child) {
+        this.children.add(child);
         ChildConfigActivity.saveChildConfigPrefs(context, this);
     }
 
