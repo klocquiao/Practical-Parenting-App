@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".TaskActivity">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBarTask"
         android:layout_width="409dp"

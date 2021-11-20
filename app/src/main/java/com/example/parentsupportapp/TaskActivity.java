@@ -64,9 +64,4 @@ public class TaskActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, TaskActivity.class);
     }
-
-
-
-
-
 }
