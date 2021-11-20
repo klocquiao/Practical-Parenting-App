@@ -290,7 +290,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 Child currentChild = (Child) childrenSpinner.getSelectedItem();
-                ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), flipperImage);
+                ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), flipperImage, CoinFlipActivity.this);
             }
 
             @Override
@@ -383,7 +383,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             textFlipperName.setText(currentChild.getFirstName());
 
             ImageView imageFlipper = (ImageView) row.findViewById(R.id.imageRowFlipper);
-            ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), imageFlipper);
+            ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), imageFlipper, CoinFlipActivity.this);
 
             return row;
         }

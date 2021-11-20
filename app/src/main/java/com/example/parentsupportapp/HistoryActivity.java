@@ -109,7 +109,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
 
             ImageView imageChild = (ImageView) historyListView.findViewById(R.id.imagePastFlipper);
-            ViewActivity.loadImageFromStorage(currentHistoryEntry.getFlipperImage(), imageChild);
+            ViewActivity.loadImageFromStorage(currentHistoryEntry.getFlipperImage(), imageChild, HistoryActivity.this);
 
 
             return historyListView;
