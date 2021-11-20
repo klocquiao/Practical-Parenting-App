@@ -9,10 +9,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.parentsupportapp.taskConfig.AddTaskActivity;
-import com.example.parentsupportapp.taskConfig.EditTaskActivity;
-import com.example.parentsupportapp.taskConfig.RemoveTaskActivity;
-import com.example.parentsupportapp.taskConfig.ViewTaskActivity;
+import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
+import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
+import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
+//import com.example.parentsupportapp.tasksConfig.ViewTaskActivity;
 
 
 public class TaskActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class TaskActivity extends AppCompatActivity {
     private void setUpButtonListeners() {
 
         this.buttonViewTask.setOnClickListener(v -> {
-            startActivity(ViewTaskActivity.makeIntent(TaskActivity.this));
+            //startActivity(ViewTaskActivity.makeIntent(TaskActivity.this));
         });
 
         this.buttonAddTask.setOnClickListener(v -> {
