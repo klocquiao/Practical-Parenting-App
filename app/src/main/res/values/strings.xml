@@ -63,6 +63,15 @@
     <string name="child_config_remove_child">Remove a child</string>
     <string name="child_config_edit_child">Edit a child</string>
     <string name="child_config_view_all">View all</string>
+    <string name="title_activity_tasks">TasksActivity</string>
+    <string name="tasks_title">Tasks</string>
+    <string name="tasks_layout_add">Add</string>
+    <string name="tasks_layout_edit">Edit</string>
+    <string name="tasks_layout_remove">Remove</string>
+    <string name="add_child_activity_enter_name">Enter Name</string>
+    <string name="add_child_activity_added_toast">New Child Added</string>
+    <string name="add_child_activity_enter_error">Enter again!</string>
 
+    <!-- Add Child Activity -->
 
 </resources>

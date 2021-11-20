@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button configureChildButton;
     private Button flipButton;
     private Button timerButton;
+    private Button tasksButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         this.configureChildButton = findViewById(R.id.buttonConfigChild);
         this.flipButton = findViewById(R.id.buttonFlipCoin);
         this.timerButton = findViewById(R.id.buttonTimer);
+        this.tasksButton = findViewById(R.id.buttonTasks);
 
         this.setupButtonListeners();
     }
@@ -61,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent timerIntent = TimerActivity.makeIntent(MainActivity.this);
                 startActivity(timerIntent);
+            }
+        });
+
+        this.tasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent taskIntent = TasksActivity.makeIntent(MainActivity.this);
+                startActivity(taskIntent);
             }
         });
     }

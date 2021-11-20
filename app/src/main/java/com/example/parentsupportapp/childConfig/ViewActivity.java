@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
+import com.example.parentsupportapp.model.SaveImage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,30 +42,16 @@ public class ViewActivity extends AppCompatActivity {
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ViewActivity.this, android.R.layout.simple_list_item_1,fam.getChildrenInString());
         listView.setAdapter(arrayAdapter);
-        //
-        ImageView img = findViewById(R.id.imgTester);
-        loadImageFromStorage(fam.getChildren().get(0).getPortraitPath(),img);
-        //
     }
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ViewActivity.class);
     }
 
-    public static void loadImageFromStorage(String path, ImageView img)
-    {
-
-        try {
-            File f=new File(path, "profile.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            //img=(ImageView)findViewById(R.id.imgPicker);
-            img.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
+    public static void loadImageFromStorage(String path, ImageView img, Context context) {
+        Bitmap bitmap = new SaveImage(context).
+                setFileName(path).
+                load();
+        img.setImageBitmap(bitmap);
     }
-
 }

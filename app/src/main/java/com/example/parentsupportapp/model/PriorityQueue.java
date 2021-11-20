@@ -29,7 +29,7 @@ public class PriorityQueue {
                 priorityQueue.add(0, child);
             }
         }
-        priorityQueue.removeIf(str -> !children.contains(str));
+        priorityQueue.removeIf(child -> !children.contains(child));
     }
 
     public void queueRecentlyUsed(Child child) {
