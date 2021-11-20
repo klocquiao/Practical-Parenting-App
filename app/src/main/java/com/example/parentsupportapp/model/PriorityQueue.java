@@ -14,13 +14,14 @@ public class PriorityQueue {
     private List<Child> priorityQueue;
     public static final String EMPTY = "";
 
-    public PriorityQueue(String jsonString) {
+    public PriorityQueue(List<Child> children, String jsonString) {
         if (jsonString.matches(EMPTY)) {
             priorityQueue = new ArrayList<>();
         }
         else {
             priorityQueue = deserializePriorityQueue(jsonString);
         }
+        updateQueue(children);
     }
 
     public void updateQueue(List<Child> children) {
@@ -30,6 +31,16 @@ public class PriorityQueue {
             }
         }
         priorityQueue.removeIf(child -> !children.contains(child));
+        updateChildObjects(children);
+    }
+
+    public void updateChildObjects(List<Child> children) {
+        for (int i = 0; i < priorityQueue.size(); i++) {
+            int index = children.indexOf(priorityQueue.get(i));
+            if (index != -1) {
+                priorityQueue.set(i, children.get(index));
+            }
+        }
     }
 
     public void queueRecentlyUsed(Child child) {
@@ -60,10 +71,10 @@ public class PriorityQueue {
     public void remove(Child child) {
         priorityQueue.remove(child);
     }
+
     public Child getChild(int pos) {
         return priorityQueue.get(pos);
     }
-
 
     private List<Child> deserializePriorityQueue(String jsonPriority) {
         Type type = new TypeToken<List<Child>>(){}.getType();

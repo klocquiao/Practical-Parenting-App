@@ -113,9 +113,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         handler = new Handler();
 
         family = Family.getInstance(this);
-        history = HistoryManager.getInstance(this);
-        coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
-        coinFlipPriorityQueue.updateQueue(family.getChildren());
+        history = HistoryManager.getInstance(family.getChildren(), this);
+        coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
         nobody = new Child("Nobody");
 
         updateUI();

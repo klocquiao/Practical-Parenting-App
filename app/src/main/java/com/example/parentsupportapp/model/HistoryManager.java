@@ -20,14 +20,15 @@ import java.util.List;
 
 public class HistoryManager {
     public static final String EMPTY = "";
-    private List<HistoryEntry> history;
+    private static List<HistoryEntry> history;
     private static HistoryManager instance;
     private static Context context;
 
-    public static HistoryManager getInstance(Context context) {
+    public static HistoryManager getInstance(List<Child> children, Context context) {
         if (instance == null) {
             instance = new HistoryManager(context);
         }
+        updateChildObjects(children);
         return instance;
     }
 
@@ -40,6 +41,15 @@ public class HistoryManager {
         }
         else {
             history = deserializeHistory(jsonHistory);
+        }
+    }
+
+    private static void updateChildObjects(List<Child> children) {
+        for (HistoryEntry entry: history) {
+            int index = children.indexOf(entry.getFlipper());
+            if (index != -1) {
+                entry.setFlipper(children.get(index));
+            }
         }
     }
 
