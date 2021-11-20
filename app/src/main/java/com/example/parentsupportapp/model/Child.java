@@ -7,16 +7,15 @@ import androidx.annotation.Nullable;
  * this child class models a child that has a first name
  * and can be used to configure
  */
+
 public class Child {
+    public static final String PNG = ".png";
     private String firstName;
     private String portraitPath;
 
     public Child(String fName) {
         this.firstName = fName;
-    }
-    public Child(String fName, String port) {
-        this.firstName = fName;
-        this.portraitPath = port;
+        this.portraitPath = fName + PNG;
     }
 
     public String getFirstName() {
