@@ -32,7 +32,6 @@
     <string name="edit_task">Edit</string>
     <string name="view_task">View</string>
 
-
     <!-- History Activity -->
     <string name="history_choice">Choice: %1$s</string>
     <string name="history_results">Results: %1$s</string>
@@ -80,6 +79,5 @@
     <string name="enter_task_name">Enter task name</string>
     <string name="list_of_all_the_tasks">List of all the tasks</string>
     <string name="select_a_task_to_remove_it">Select a task to remove it.</string>
-
 
 </resources>
