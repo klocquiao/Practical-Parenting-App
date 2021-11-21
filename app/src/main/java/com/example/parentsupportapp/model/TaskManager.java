@@ -12,18 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskManager {
-
-    private ArrayList<Task> taskArray;
+    private static ArrayList<Task> taskArray;
     private static TaskManager instance;
-    private Context context;
+    private static Context context;
     private static final String EMPTY_PREF = "";
-    private static final String KEY_Task = "TaskKey";
+    private static final String KEY_TASK = "TaskKey";
     private static final String PREF_TASK = "TaskPref";
+
+    public static TaskManager getInstance(List<Child> children, Context context) {
+        if (instance == null) {
+            instance = new TaskManager(context);
+        }
+
+        updatePriorityQueues(children);
+        return instance;
+    }
 
     private TaskManager (Context context) {
         this.context = context;
         String jsonTaskManager = getTask(context);
-        if(jsonTaskManager == EMPTY_PREF) {
+
+        if (jsonTaskManager == EMPTY_PREF) {
             taskArray = new ArrayList<>();
         }
         else {
@@ -31,27 +40,18 @@ public class TaskManager {
         }
     }
 
-    public static TaskManager getInstance(Context context) {
-        if (instance == null) {
-            instance = new TaskManager(context);
+    public static void updatePriorityQueues(List<Child> children) {
+        for (Task task: taskArray) {
+            task.getPriorityQueue().updateQueue(children);
         }
-        return instance;
     }
 
     public ArrayList<Task> getTaskArray() {
         return taskArray;
     }
 
-    public List<String> getTaskAsString() {
-        List<String> arr = new ArrayList<>();
-        for(int i = 0 ; i < this.taskArray.size() ; i++) {
-            arr.add(this.taskArray.get(i).getName());
-        }
-        return arr;
-    }
-
-    public void addTask (String name) {
-        this.taskArray.add(new Task(name));
+    public void addTask (List<Child> children, String taskName) {
+        this.taskArray.add(new Task(taskName, new PriorityQueue(children, EMPTY_PREF)));
         saveTaskSharedPrefs(context, this);
     }
 
@@ -61,7 +61,7 @@ public class TaskManager {
     }
 
     public void editTask (int index, String name) {
-        this.taskArray.get(index).setName(name);
+        this.taskArray.get(index).setTaskName(name);
         saveTaskSharedPrefs(context, this);
     }
 
@@ -70,17 +70,16 @@ public class TaskManager {
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String jsonTask = gson.toJson(temp.getTaskArray());
-        editor.putString(KEY_Task, jsonTask);
+        editor.putString(KEY_TASK, jsonTask);
         editor.apply();
     }
 
     public static String getTask(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
-        return pref.getString(KEY_Task, EMPTY_PREF);
+        return pref.getString(KEY_TASK, EMPTY_PREF);
     }
 
     private ArrayList<Task> deserializeTaskArray (String jsonTask) {
         return new Gson().fromJson(jsonTask, new TypeToken<Task>(){}.getType());
     }
-
 }
