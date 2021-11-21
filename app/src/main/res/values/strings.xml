@@ -25,6 +25,7 @@
     <string name="history">History</string>
     <string name="heads">Heads</string>
     <string name="tails">Tails</string>
+    <string name="spinner_prompt">"Select the next flipper..."</string>
 
     <!-- Task Activity -->
     <string name="add_task">Add</string>
