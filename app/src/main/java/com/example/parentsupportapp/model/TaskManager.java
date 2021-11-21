@@ -4,10 +4,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.example.parentsupportapp.TasksActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +18,8 @@ public class TaskManager {
     private static ArrayList<Task> taskArray;
     private static TaskManager instance;
     private static Context context;
-    private static final String EMPTY_PREF = "";
-    private static final String KEY_TASK = "TaskKey";
-    private static final String PREF_TASK = "TaskPref";
+
+    public static final String EMPTY = "";
 
     public static TaskManager getInstance(List<Child> children, Context context) {
         if (instance == null) {
@@ -30,9 +32,9 @@ public class TaskManager {
 
     private TaskManager (Context context) {
         this.context = context;
-        String jsonTaskManager = getTask(context);
+        String jsonTaskManager = TasksActivity.getTaskFromSharedPreferences(context);
 
-        if (jsonTaskManager == EMPTY_PREF) {
+        if (jsonTaskManager.matches(EMPTY)) {
             taskArray = new ArrayList<>();
         }
         else {
@@ -51,35 +53,27 @@ public class TaskManager {
     }
 
     public void addTask (List<Child> children, String taskName) {
-        this.taskArray.add(new Task(taskName, new PriorityQueue(children, EMPTY_PREF)));
-        saveTaskSharedPrefs(context, this);
+        this.taskArray.add(new Task(taskName, new PriorityQueue(children, EMPTY)));
+        TasksActivity.saveTaskSharedPrefs(context, this);
     }
 
     public void removeTask (int index) {
         this.taskArray.remove(index);
-        saveTaskSharedPrefs(context, this);
+        TasksActivity.saveTaskSharedPrefs(context, this);
     }
 
     public void editTask (int index, String name) {
         this.taskArray.get(index).setTaskName(name);
-        saveTaskSharedPrefs(context, this);
+        TasksActivity.saveTaskSharedPrefs(context, this);
     }
 
-    private static void saveTaskSharedPrefs(Context context, TaskManager temp) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String jsonTask = gson.toJson(temp.getTaskArray());
-        editor.putString(KEY_TASK, jsonTask);
-        editor.apply();
-    }
-
-    public static String getTask(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
-        return pref.getString(KEY_TASK, EMPTY_PREF);
+    public Task getTask(int pos) {
+        return taskArray.get(pos);
     }
 
     private ArrayList<Task> deserializeTaskArray (String jsonTask) {
-        return new Gson().fromJson(jsonTask, new TypeToken<Task>(){}.getType());
+        Type type = new TypeToken<List<Task>>(){}.getType();
+        Gson gson = new Gson();
+        return gson.fromJson(jsonTask, type);
     }
 }

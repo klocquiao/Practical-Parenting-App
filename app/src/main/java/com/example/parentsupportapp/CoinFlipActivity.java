@@ -171,7 +171,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void getCoinFlipRecommendation() {
         String recommendation = coinFlipPriorityQueue.getNextInQueue().toString();
-        if (recommendation.matches(HistoryManager.EMPTY)) {
+        if (recommendation.matches(nobody.getFirstName())) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
         else {
