@@ -22,20 +22,25 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
+import com.example.parentsupportapp.model.Task;
+import com.example.parentsupportapp.model.TaskManager;
 import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
 import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
 import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
 
-    private Family fam;
     private Button addTaskButton;
     private Button editTaskButton;
     private Button removeTaskButton;
     private ListView listView;
+    private Family fam;
     private List<Child> children;
+    private TaskManager taskManager;
+    private ArrayList<Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,45 +61,6 @@ public class TasksActivity extends AppCompatActivity {
         registerClickCallback();
     }
 
-    private void populateListView() {
-        // array adapter
-        ArrayAdapter<Child> adapter = new TaskListAdapter();
-        listView.setAdapter(adapter);
-    }
-
-    // TODO: possibly refactor out this entire class (will need to use it in another activity)
-    private class TaskListAdapter extends ArrayAdapter<Child> {
-        public TaskListAdapter() {
-            super(TasksActivity.this, R.layout.task_item_view, children);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View itemView = convertView;
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.task_item_view, parent, false);
-            }
-
-            // TODO: Replace the child with the appropriate task
-            Child currChild = children.get(position);
-            // fill the view
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
-
-            Bitmap bitmap = BitmapFactory.decodeFile(currChild.getPortraitPath());
-            if (bitmap == null) {
-                imageView.setImageResource(R.drawable.ic_baseline_broken_image_24);
-            } else {
-                imageView.setImageBitmap(bitmap);
-            }
-
-            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textView.setText(currChild.getFirstName());
-
-            return itemView;
-        }
-    }
-
     private void initializeFields() {
         addTaskButton = findViewById(R.id.buttonAddTask);
         editTaskButton = findViewById(R.id.buttonEditTask);
@@ -102,6 +68,8 @@ public class TasksActivity extends AppCompatActivity {
         fam = Family.getInstance(this);
         listView = findViewById(R.id.listViewTasks);
         children = fam.getChildren();
+        taskManager = TaskManager.getInstance(this);
+        tasks = taskManager.getTaskArray();
     }
 
     private void setupButtonListeners() {
@@ -128,6 +96,45 @@ public class TasksActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void populateListView() {
+        // array adapter
+        ArrayAdapter<Task> adapter = new TaskListAdapter();
+        listView.setAdapter(adapter);
+    }
+
+    // TODO: possibly refactor out this entire class (will need to use it in another activity)
+    private class TaskListAdapter extends ArrayAdapter<Task> {
+        public TaskListAdapter() {
+            super(TasksActivity.this, R.layout.task_item_adapter_view, tasks);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
+            }
+
+            // TODO: Replace the child with the appropriate task
+            Child currChild = children.get(position);
+            // fill the view don't need the view here. Here i need the childs name
+            ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
+
+            Bitmap bitmap = BitmapFactory.decodeFile(currChild.getPortraitPath());
+            if (bitmap == null) {
+                imageView.setImageResource(R.drawable.ic_baseline_broken_image_24);
+            } else {
+                imageView.setImageBitmap(bitmap);
+            }
+
+            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textView.setText(currChild.getFirstName());
+
+            return itemView;
+        }
     }
 
     public static Intent makeIntent(Context context) {
