@@ -27,6 +27,7 @@ public class Family {
     private List<Child> children;
     private static Family instance;
     private static Context context;
+    public static final String EMPTY = "";
 
     public static Family getInstance(Context context) {
         if (instance == null) {
@@ -39,7 +40,7 @@ public class Family {
         this.context = context;
         String jsonFamily = ChildConfigActivity.getFamily(context);
 
-        if (jsonFamily == ChildConfigActivity.EMPTY_PREF) {
+        if (jsonFamily.matches(EMPTY)) {
             children = new ArrayList<>();
         }
         else {
@@ -84,6 +85,4 @@ public class Family {
         Gson gson = new Gson();
         return gson.fromJson(jsonFamily, type);
     }
-
-
 }

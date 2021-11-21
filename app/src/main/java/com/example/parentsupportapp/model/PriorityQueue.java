@@ -48,15 +48,15 @@ public class PriorityQueue {
         priorityQueue.add(child);
     }
 
-    public String getNextInQueue() {
-        if (priorityQueue.isEmpty()) {
-            return EMPTY;
-        }
-        return priorityQueue.get(0).toString();
-    }
-
     public List<Child> getPriorityQueue() {
         return priorityQueue;
+    }
+
+    public Child getNextInQueue() {
+        if (priorityQueue.isEmpty()) {
+            return new Child("Nobody");
+        }
+        return priorityQueue.get(0);
     }
 
     public boolean isEmpty() {
