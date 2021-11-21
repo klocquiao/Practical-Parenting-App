@@ -70,6 +70,10 @@ public class TasksActivity extends AppCompatActivity {
         children = fam.getChildren();
         taskManager = TaskManager.getInstance(this);
         tasks = taskManager.getTaskArray();
+
+        //// for testing purposese
+        //taskManager.addTask("Hello");
+        //taskManager.addTask("World");
     }
 
     private void setupButtonListeners() {
@@ -118,11 +122,16 @@ public class TasksActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
             }
 
-            // TODO: Replace the child with the appropriate task
-            Child currChild = children.get(position);
-            // fill the view don't need the view here. Here i need the childs name
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
+            // The task info
+            Task currTask = tasks.get(position);
+            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textView.setText(currTask.getName());
 
+
+            // will remove this imageView
+            ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
+            // need to replace the child here afterwards aswell
+            Child currChild = children.get(position);
             Bitmap bitmap = BitmapFactory.decodeFile(currChild.getPortraitPath());
             if (bitmap == null) {
                 imageView.setImageResource(R.drawable.ic_baseline_broken_image_24);
@@ -130,8 +139,6 @@ public class TasksActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
             }
 
-            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textView.setText(currChild.getFirstName());
 
             return itemView;
         }

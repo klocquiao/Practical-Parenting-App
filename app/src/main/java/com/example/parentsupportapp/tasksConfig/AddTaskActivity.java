@@ -13,8 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.model.TaskManager;
 
 public class AddTaskActivity extends AppCompatActivity {
+
+    private TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class AddTaskActivity extends AppCompatActivity {
             actionbar.setTitle("Add Task");
         }
 
+        taskManager = TaskManager.getInstance(this);
         setupButton();
     }
 
@@ -42,6 +46,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     Toast.makeText(AddTaskActivity.this, "Please provide a task name :) !", Toast.LENGTH_SHORT).show();
                 } else {
                     // TODO: Here I need the task manager. Create task, then add new task to task manager.
+                    taskManager.addTask(extractedText);
 
                     Toast.makeText(AddTaskActivity.this, "New Task Added!!", Toast.LENGTH_SHORT).show();
                 }
