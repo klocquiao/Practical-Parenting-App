@@ -9,6 +9,7 @@
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,11 +25,14 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
@@ -75,6 +80,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private ImageView coinHeadsImage;
     private ImageView coinTailsImage;
+    private ImageView flipperImage;
     private Spinner childrenSpinner;
     private Button flipButton;
     private TextView coinFlipSuggestionText;
@@ -107,14 +113,14 @@ public class CoinFlipActivity extends AppCompatActivity {
         handler = new Handler();
 
         family = Family.getInstance(this);
-        history = HistoryManager.getInstance(this);
-        coinFlipPriorityQueue = new PriorityQueue(getPriorityQueue(this));
-        coinFlipPriorityQueue.updateQueue(family.getChildren());
+        history = HistoryManager.getInstance(family.getChildren(), this);
+        coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
         nobody = new Child("Nobody");
 
         updateUI();
         setupCoinFlipAnimation();
         setupFlipButton();
+        setupSpinner();
     }
 
     @Override
@@ -149,6 +155,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        flipperImage = findViewById(R.id.imageFlipper);
         coinHeadsImage = findViewById(R.id.imageHead);
         coinTailsImage = findViewById(R.id.imageTail);
         childrenSpinner = findViewById(R.id.spinnerChildren);
@@ -163,8 +170,8 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void getCoinFlipRecommendation() {
-        String recommendation = coinFlipPriorityQueue.getNextInQueue();
-        if (recommendation.matches(HistoryManager.EMPTY)) {
+        String recommendation = coinFlipPriorityQueue.getNextInQueue().toString();
+        if (recommendation.matches(nobody.getFirstName())) {
             coinFlipSuggestionText.setText(R.string.no_suggestion);
         }
         else {
@@ -173,13 +180,12 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void populateChildrenSpinner() {
-        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this,
-                android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Child> adapter = new PrioritySpinnerAdapter();
         childrenSpinner.setAdapter(adapter);
         adapter.remove(nobody);
         if (family.isNoChildren()) {
-            childrenSpinner.setVisibility(View.GONE);
+            childrenSpinner.setVisibility(View.INVISIBLE);
+            flipperImage.setVisibility(View.INVISIBLE);
         }
         else {
             adapter.add(nobody);
@@ -278,6 +284,20 @@ public class CoinFlipActivity extends AppCompatActivity {
         });
     }
 
+    private void setupSpinner() {
+        childrenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Child currentChild = (Child) childrenSpinner.getSelectedItem();
+                ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), flipperImage, CoinFlipActivity.this);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+    }
+
     private void startCoinFlipAnimation() {
         coinFlipSound.start();
         transitionUpAnimation.start();
@@ -346,5 +366,25 @@ public class CoinFlipActivity extends AppCompatActivity {
         String jsonPriority = gson.toJson(coinFlipPriorityQueue.getPriorityQueue());
         editor.putString(KEY_PRIORITY, jsonPriority);
         editor.apply();
+    }
+
+    private class PrioritySpinnerAdapter extends ArrayAdapter<Child> {
+        public PrioritySpinnerAdapter() {
+            super(CoinFlipActivity.this, android.R.layout.simple_spinner_item, coinFlipPriorityQueue.getPriorityQueue());
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View row = View.inflate(CoinFlipActivity.this, R.layout.flipper_row, null);
+            Child currentChild = coinFlipPriorityQueue.getChild(position);
+
+            TextView textFlipperName = (TextView) row.findViewById(R.id.textRowFlipper);
+            textFlipperName.setText(currentChild.getFirstName());
+
+            ImageView imageFlipper = (ImageView) row.findViewById(R.id.imageRowFlipper);
+            ViewActivity.loadImageFromStorage(currentChild.getPortraitPath(), imageFlipper, CoinFlipActivity.this);
+
+            return row;
+        }
     }
 }

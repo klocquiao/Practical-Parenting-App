@@ -48,7 +48,19 @@ public class HistoryEntry {
         return flipResult;
     }
 
+    public Child getFlipper() {
+        return flipperChild;
+    }
+
     public String getFlipperName() {
         return flipperChild.toString();
+    }
+
+    public String getFlipperImage() {
+        return flipperChild.getPortraitPath();
+    }
+
+    public void setFlipper(Child child) {
+        this.flipperChild = child;
     }
 }

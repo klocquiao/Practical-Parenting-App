@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button flipButton;
     private Button timerButton;
     private Button tasksButton;
+    private Button helpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         this.flipButton = findViewById(R.id.buttonFlipCoin);
         this.timerButton = findViewById(R.id.buttonTimer);
         this.tasksButton = findViewById(R.id.buttonTasks);
+        this.helpButton = findViewById(R.id.buttonHelp);
 
         this.setupButtonListeners();
     }
@@ -72,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent taskIntent = TasksActivity.makeIntent(MainActivity.this);
                 startActivity(taskIntent);
+            }
+        });
+
+        this.helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
+                startActivity(helpIntent);
             }
         });
     }

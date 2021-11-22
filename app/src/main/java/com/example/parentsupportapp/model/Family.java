@@ -18,6 +18,7 @@ public class Family {
     private List<Child> children;
     private static Family instance;
     private static Context context;
+    public static final String EMPTY = "";
 
     public static Family getInstance(Context context) {
         if (instance == null) {
@@ -30,7 +31,7 @@ public class Family {
         this.context = context;
         String jsonFamily = ViewActivity.getFamily(context);
 
-        if (jsonFamily == ViewActivity.EMPTY_PREF) {
+        if (jsonFamily.matches(EMPTY)) {
             children = new ArrayList<>();
         }
         else {
