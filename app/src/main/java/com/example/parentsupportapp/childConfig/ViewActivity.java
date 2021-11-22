@@ -31,14 +31,17 @@ import java.util.List;
  * View activity helps to view all the children that
  * have been added to the app
  */
+
 public class ViewActivity extends AppCompatActivity {
     public static final String EMPTY_PREF = "";
     private static final String KEY_FAMILY = "FamilyKey";
     private static final String PREF_CHILD_CONFIG = "ChildConfigPref";
+    public static final String EXTRA_POSITION = "intVariableName";
     private ListView listView;
     private Family fam;
     private List<Child> children;
     private FloatingActionButton fabAddChild;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +79,8 @@ public class ViewActivity extends AppCompatActivity {
         listViewChildren.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent myIntent = new Intent(ViewActivity.this, EditRemoveChildActivity.class);
-                myIntent.putExtra("intVariableName", position);
+                myIntent.putExtra(EXTRA_POSITION, position);
                 startActivity(myIntent);
                 populateListView();
             }

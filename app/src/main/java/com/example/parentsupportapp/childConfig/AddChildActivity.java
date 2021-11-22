@@ -38,8 +38,11 @@ import com.example.parentsupportapp.model.SaveImage;
  */
 
 public class AddChildActivity extends AppCompatActivity {
-    private Family fam;
-    public ImageView pick;
+    public static final int REQUEST_CODE_GALLERY = 1;
+    public static final int REQUEST_CODE_CAMERA = 2;
+    public static final int MIN_SDK = 23;
+    private Family family;
+    public ImageView imgChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +54,14 @@ public class AddChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        fam = Family.getInstance(this);
-        setupAddButton();
+        family = Family.getInstance(this);
+        setupAddBtn();
         setupImageBtn();
     }
 
     private void setupImageBtn() {
-        pick = (ImageView) findViewById(R.id.imgAddChild);
-        pick.setOnClickListener(new View.OnClickListener() {
+        imgChild = findViewById(R.id.imgAddChild);
+        imgChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePhoto();
@@ -99,13 +102,13 @@ public class AddChildActivity extends AppCompatActivity {
 
     private void takePictureFromGallery() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickPhoto, 1);
+        startActivityForResult(pickPhoto, REQUEST_CODE_GALLERY);
     }
 
     private void takePictureFromCamera() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePicture.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePicture, 2);
+            startActivityForResult(takePicture, REQUEST_CODE_CAMERA);
         }
     }
 
@@ -116,20 +119,20 @@ public class AddChildActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImageUri = data.getData();
-                    pick.setImageURI(selectedImageUri);
+                    imgChild.setImageURI(selectedImageUri);
                 }
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
-                    Bitmap bitmapImage = (Bitmap) bundle.get("data");
-                    pick.setImageBitmap(bitmapImage);
+                    Bitmap bitmapImage = (Bitmap) bundle.get(getString(R.string.child_config_data));
+                    imgChild.setImageBitmap(bitmapImage);
                 }
         }
     }
 
     private boolean checkAndRequestPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= MIN_SDK) {
             int cameraPermission = ActivityCompat.checkSelfPermission(AddChildActivity.this, Manifest.permission.CAMERA);
             if (cameraPermission == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(AddChildActivity.this, new String[]{Manifest.permission.CAMERA},20);
@@ -145,7 +148,7 @@ public class AddChildActivity extends AppCompatActivity {
         if (requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             takePictureFromCamera();
         } else {
-            Toast.makeText(AddChildActivity.this, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddChildActivity.this, getText(R.string.child_config_deny_permission), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -159,7 +162,7 @@ public class AddChildActivity extends AppCompatActivity {
         return new Intent(context, AddChildActivity.class);
     }
 
-    public void setupAddButton() {
+    public void setupAddBtn() {
         ImageView img = findViewById(R.id.imgAddChild);
         Button btn = findViewById(R.id.btnAdd);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +177,7 @@ public class AddChildActivity extends AppCompatActivity {
                 Child child = new Child(correctString(str));
                 saveToInternalStorage(img, child.getPortraitPath(), AddChildActivity.this);
 
-                fam.addChild(child);
+                family.addChild(child);
                 finish();
             }
         });
@@ -191,7 +194,6 @@ public class AddChildActivity extends AppCompatActivity {
 
     private String correctString(String str) {
         str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
-        //str = str.replace(" ", "");
         return str;
     }
 

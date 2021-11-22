@@ -32,14 +32,16 @@ import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
 
-import org.w3c.dom.Text;
-
 public class EditRemoveChildActivity extends AppCompatActivity {
+    public static final int REQUEST_CODE_GALLERY = 1;
+    public static final int REQUEST_CODE_CAMERA = 2;
+    public static final int MIN_SDK = 23;
+    public static final String EXTRA_POSITION = "intVariableName";
 
     private int position;
-    private ImageView img;
-    private EditText editText;
-    private Family fam;
+    private ImageView imageViewEditChild;
+    private EditText editTextNewChildName;
+    private Family family;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,10 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        fam = Family.getInstance(this);
+        family = Family.getInstance(this);
 
         Intent mIntent = getIntent();
-        position = mIntent.getIntExtra("intVariableName", 0);
+        position = mIntent.getIntExtra(EXTRA_POSITION, 0);
 
         setupChild();
         setupSaveButton();
@@ -69,12 +71,12 @@ public class EditRemoveChildActivity extends AppCompatActivity {
             public void onClick(View v) {
                 View dialogView = getLayoutInflater().inflate(R.layout.remove_message_layout, null);
                 android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(EditRemoveChildActivity.this);
-                alert.setTitle("Confirm")
+                alert.setTitle(getString(R.string.child_config_confirm))
                         .setView(dialogView)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                fam.removeChild(position);
+                                family.removeChild(position);
                                 finish();
                             }
                         })
@@ -89,7 +91,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
     }
 
     private void setupImageBtn() {
-        img.setOnClickListener(new View.OnClickListener() {
+        imageViewEditChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePhoto();
@@ -119,6 +121,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
                 }
             }
         });
+
         btnViewGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,13 +133,13 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private void takePictureFromGallery() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickPhoto, 1);
+        startActivityForResult(pickPhoto, REQUEST_CODE_GALLERY);
     }
 
     private void takePictureFromCamera() {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePicture.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePicture, 2);
+            startActivityForResult(takePicture, REQUEST_CODE_CAMERA);
         }
     }
 
@@ -147,20 +150,20 @@ public class EditRemoveChildActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImageUri = data.getData();
-                    img.setImageURI(selectedImageUri);
+                    imageViewEditChild.setImageURI(selectedImageUri);
                 }
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
-                    Bitmap bitmapImage = (Bitmap) bundle.get("data");
-                    img.setImageBitmap(bitmapImage);
+                    Bitmap bitmapImage = (Bitmap) bundle.get(getString(R.string.child_config_data));
+                    imageViewEditChild.setImageBitmap(bitmapImage);
                 }
         }
     }
 
     private boolean checkAndRequestPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= MIN_SDK) {
             int cameraPermission = ActivityCompat.checkSelfPermission(EditRemoveChildActivity.this, Manifest.permission.CAMERA);
             if (cameraPermission == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(EditRemoveChildActivity.this, new String[]{Manifest.permission.CAMERA},20);
@@ -176,27 +179,27 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         if (requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             takePictureFromCamera();
         } else {
-            Toast.makeText(EditRemoveChildActivity.this, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditRemoveChildActivity.this, getString(R.string.child_config_deny_permission), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setupSaveButton() {
-        img = findViewById(R.id.imgEditRemoveChild);
-        editText = findViewById(R.id.editTextName);
+        imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
+        editTextNewChildName = findViewById(R.id.editTextName);
 
         Button btnSave = findViewById(R.id.btnEditChild);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = editText.getText().toString();
-                if (checkName(str, editText) == -1){
+                String str = editTextNewChildName.getText().toString();
+                if (checkName(str, editTextNewChildName) == -1){
                     return;
                 }
                 Child child = new Child(correctString(str));
-                saveToInternalStorage(img, child.getPortraitPath(), EditRemoveChildActivity.this);
+                saveToInternalStorage(imageViewEditChild, child.getPortraitPath(), EditRemoveChildActivity.this);
 
-                fam.getChildren().remove(position);
-                fam.getChildren().add(position, child);
+                family.getChildren().remove(position);
+                family.getChildren().add(position, child);
                 finish();
             }
         });
@@ -213,7 +216,6 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private String correctString(String str) {
         str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
-        //str = str.replace(" ", "");
         return str;
     }
 
@@ -226,12 +228,12 @@ public class EditRemoveChildActivity extends AppCompatActivity {
     }
 
     private void setupChild() {
-        Child child = fam.getChildren().get(position);
-        img = findViewById(R.id.imgEditRemoveChild);
-        loadImageFromStorage(child.getPortraitPath(), img, EditRemoveChildActivity.this);
+        Child child = family.getChildren().get(position);
+        imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
+        loadImageFromStorage(child.getPortraitPath(), imageViewEditChild, EditRemoveChildActivity.this);
 
-        editText = findViewById(R.id.editTextName);
-        editText.setText(child.getFirstName());
+        editTextNewChildName = findViewById(R.id.editTextName);
+        editTextNewChildName.setText(child.getFirstName());
     }
 
     public static Intent makeIntent(Context context) {
