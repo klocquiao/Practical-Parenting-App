@@ -3,8 +3,6 @@ package com.example.parentsupportapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.childConfig.ViewActivity;
-import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
@@ -30,8 +27,6 @@ import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
 import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
 import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
 import com.google.gson.Gson;
-
-import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -80,7 +75,7 @@ public class TasksActivity extends AppCompatActivity {
     // TODO: possibly refactor out this entire class (will need to use it in another activity)
     private class TaskListAdapter extends ArrayAdapter<Task> {
         public TaskListAdapter() {
-            super(TasksActivity.this, R.layout.task_item_view, taskManager.getTaskArray());
+            super(TasksActivity.this, R.layout.task_item_adapter_view, taskManager.getTaskArray());
         }
 
         @NonNull
@@ -88,7 +83,7 @@ public class TasksActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.task_item_view, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
             }
 
             // TODO: Replace the child with the appropriate task
@@ -97,12 +92,11 @@ public class TasksActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
             ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
 
-            TextView textView1 = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textView1.setText(currentTask.getNextChildInQueueName());
+            TextView textViewTask = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textViewTask.setText(currentTask.getTaskName());
 
-            TextView textView2 = (TextView) itemView.findViewById(R.id.textTaskName);
-            textView2.setText(currentTask.getTaskName());
-
+            TextView textViewChildName = (TextView) itemView.findViewById(R.id.textViewTaskChildName);
+            textViewChildName.setText(currentTask.getNextChildInQueueName());
 
             return itemView;
         }

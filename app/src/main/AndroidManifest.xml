@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
+            android:name=".tasksConfig.ViewTaskActivity"
+            android:exported="false"
+            android:parentActivityName=".TasksActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+        <activity
             android:name=".tasksConfig.RemoveTaskActivity"
             android:exported="false"
             android:parentActivityName=".TasksActivity"
