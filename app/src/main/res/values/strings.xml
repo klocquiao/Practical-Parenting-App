@@ -25,6 +25,7 @@
     <string name="history">History</string>
     <string name="heads">Heads</string>
     <string name="tails">Tails</string>
+    <string name="spinner_prompt">"Select the next flipper..."</string>
 
     <!-- Task Activity -->
     <string name="add_task">Add</string>
@@ -85,5 +86,14 @@
     <string name="select_a_task_to_remove_it">Select a task to remove it.</string>
 
     <!-- Add Child Activity -->
+
+    <!-- Help Activity -->
+    <string name="help_sources">
+        Sources:
+         Coin images: <a href="https://en.wikipedia.org/wiki/File:Quarter_Reverse_2010.png">Tails</a>
+        , <a href="https://en.wikipedia.org/wiki/File:Quarter_Obverse_2010.png">Heads</a>
+    </string>
+    <string name="help_app_created_msg">App created by team Carbon!!</string>
+    <string name="main_help">Help</string>
 
 </resources>

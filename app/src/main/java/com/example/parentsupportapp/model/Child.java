@@ -2,6 +2,7 @@ package com.example.parentsupportapp.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import java.util.UUID;
 
 /**
  * this child class models a child that has a first name
@@ -12,15 +13,22 @@ public class Child {
     public static final String PNG = ".png";
     private String firstName;
     private String portraitPath;
+    private String uniqueID;
 
     public Child(String fName) {
         this.firstName = fName;
-        this.portraitPath = fName + PNG;
+        this.uniqueID = UUID.randomUUID().toString();
+        this.portraitPath = this.uniqueID + PNG;
     }
 
     public String getFirstName() {
         return firstName;
     }
+
+    public String getUniqueID() {
+        return uniqueID;
+    }
+
     public String getPortraitPath() {
         return portraitPath;
     }
@@ -43,13 +51,11 @@ public class Child {
         if (obj == null) {
             return false;
         }
-
         if (obj.getClass() != this.getClass()) {
             return false;
         }
-
         final Child other = (Child) obj;
-        if (this.firstName.matches(other.getFirstName())) {
+        if (this.uniqueID.matches(other.getUniqueID())) {
             return true;
         }
         else {

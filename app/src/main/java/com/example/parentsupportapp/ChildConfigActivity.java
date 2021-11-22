@@ -23,8 +23,8 @@ import com.google.gson.Gson;
  * child config activity is the menu containing all the options
  * to configure the children
  */
+
 public class ChildConfigActivity extends AppCompatActivity {
-    public static final String EMPTY_PREF = "";
     private static final String KEY_FAMILY = "FamilyKey";
     private static final String PREF_CHILD_CONFIG = "ChildConfigPref";
     private Family family;
@@ -80,8 +80,6 @@ public class ChildConfigActivity extends AppCompatActivity {
         });
     }
 
-
-
     public static void saveChildConfigPrefs(Context context, Family family) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_CHILD_CONFIG, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -93,7 +91,7 @@ public class ChildConfigActivity extends AppCompatActivity {
 
     public static String getFamily(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_CHILD_CONFIG, MODE_PRIVATE);
-        return prefs.getString(KEY_FAMILY, EMPTY_PREF);
+        return prefs.getString(KEY_FAMILY, Family.EMPTY);
     }
 
     private void setupViewButton() {

@@ -2,6 +2,7 @@ package com.example.parentsupportapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
@@ -27,20 +29,21 @@ import com.example.parentsupportapp.model.TaskManager;
 import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
 import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
 import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
 
+    private Family fam;
+    private TaskManager taskManager;
     private Button addTaskButton;
     private Button editTaskButton;
     private Button removeTaskButton;
     private ListView listView;
-    private Family fam;
-    private List<Child> children;
-    private TaskManager taskManager;
-    private ArrayList<Task> tasks;
+
+    private static final String KEY_TASK = "TaskKey";
+    private static final String PREF_TASK = "TaskPref";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +64,57 @@ public class TasksActivity extends AppCompatActivity {
         registerClickCallback();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateListView();
+        registerClickCallback();
+    }
+
+    private void populateListView() {
+        // array adapter
+        ArrayAdapter<Task> adapter = new TaskListAdapter();
+        listView.setAdapter(adapter);
+    }
+
+    // TODO: possibly refactor out this entire class (will need to use it in another activity)
+    private class TaskListAdapter extends ArrayAdapter<Task> {
+        public TaskListAdapter() {
+            super(TasksActivity.this, R.layout.task_item_view, taskManager.getTaskArray());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.task_item_view, parent, false);
+            }
+
+            // TODO: Replace the child with the appropriate task
+            Task currentTask = taskManager.getTask(position);
+            // fill the view
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
+            ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
+
+            TextView textView1 = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textView1.setText(currentTask.getNextChildInQueueName());
+
+            TextView textView2 = (TextView) itemView.findViewById(R.id.textTaskName);
+            textView2.setText(currentTask.getTaskName());
+
+
+            return itemView;
+        }
+    }
+
     private void initializeFields() {
+        fam = Family.getInstance(this);
+        taskManager = TaskManager.getInstance(fam.getChildren(), this);
         addTaskButton = findViewById(R.id.buttonAddTask);
         editTaskButton = findViewById(R.id.buttonEditTask);
         removeTaskButton = findViewById(R.id.buttonRemoveTask);
-        fam = Family.getInstance(this);
         listView = findViewById(R.id.listViewTasks);
-        children = fam.getChildren();
-        taskManager = TaskManager.getInstance(this);
-        tasks = taskManager.getTaskArray();
-
     }
 
     private void setupButtonListeners() {
@@ -99,49 +143,21 @@ public class TasksActivity extends AppCompatActivity {
         });
     }
 
-    private void populateListView() {
-        // array adapter
-        ArrayAdapter<Task> adapter = new TaskListAdapter();
-        listView.setAdapter(adapter);
-    }
-
-    // TODO: possibly refactor out this entire class (will need to use it in another activity)
-    private class TaskListAdapter extends ArrayAdapter<Task> {
-        public TaskListAdapter() {
-            super(TasksActivity.this, R.layout.task_item_adapter_view, tasks);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View itemView = convertView;
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
-            }
-
-            // The task info
-            Task currTask = tasks.get(position);
-            TextView textView = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textView.setText(currTask.getName());
-
-
-            // will remove this imageView
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.imageViewTaskItem);
-            // need to replace the child here afterwards aswell
-            Child currChild = children.get(position);
-            Bitmap bitmap = BitmapFactory.decodeFile(currChild.getPortraitPath());
-            if (bitmap == null) {
-                imageView.setImageResource(R.drawable.ic_baseline_broken_image_24);
-            } else {
-                imageView.setImageBitmap(bitmap);
-            }
-
-
-            return itemView;
-        }
-    }
-
     public static Intent makeIntent(Context context) {
         return new Intent(context, TasksActivity.class);
+    }
+
+    public static void saveTaskSharedPrefs(Context context, TaskManager temp) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String jsonTask = gson.toJson(temp.getTaskArray());
+        editor.putString(KEY_TASK, jsonTask);
+        editor.apply();
+    }
+
+    public static String getTaskFromSharedPreferences(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
+        return pref.getString(KEY_TASK, TaskManager.EMPTY);
     }
 }

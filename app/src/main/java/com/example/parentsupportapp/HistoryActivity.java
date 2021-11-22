@@ -24,12 +24,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
 import com.google.gson.Gson;
 
 public class HistoryActivity extends AppCompatActivity {
     private HistoryManager history;
+    private Family children;
     private static final String KEY_HISTORY = "HistoryKey";
     private static final String PREF_HISTORY = "HistoryActivityPref";
 
@@ -43,7 +46,8 @@ public class HistoryActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        history = HistoryManager.getInstance(this);
+        children = Family.getInstance(this);
+        history = HistoryManager.getInstance(children.getChildren(), this);
         populateHistoryListView();
     }
 
@@ -106,6 +110,10 @@ public class HistoryActivity extends AppCompatActivity {
             else {
                 imageIsMatch.setImageResource(R.drawable.ic_baseline_x_circle);
             }
+
+            ImageView imageChild = (ImageView) historyListView.findViewById(R.id.imagePastFlipper);
+            ViewActivity.loadImageFromStorage(currentHistoryEntry.getFlipperImage(), imageChild, HistoryActivity.this);
+
 
             return historyListView;
         }
