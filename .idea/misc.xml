@@ -67,6 +67,7 @@
         <entry key="app/src/main/res/layout/activity_view_task.xml" value="0.33" />
         <entry key="app/src/main/res/layout/basic_list_item_view.xml" value="0.2536231884057971" />
         <entry key="app/src/main/res/layout/content_tasks.xml" value="0.13072916666666667" />
+        <entry key="app/src/main/res/layout/edit_message_layout.xml" value="0.2536231884057971" />
         <entry key="app/src/main/res/layout/remove_message_layout.xml" value="0.22" />
         <entry key="app/src/main/res/layout/task_item_adapter_view.xml" value="0.20471014492753623" />
         <entry key="app/src/main/res/layout/task_item_basic_view.xml" value="0.20471014492753623" />
