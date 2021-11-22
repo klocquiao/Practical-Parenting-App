@@ -1,10 +1,5 @@
 package com.example.parentsupportapp.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-
 public class Task {
     private String name;
     private PriorityQueue childQueue;
@@ -24,6 +19,11 @@ public class Task {
 
     public String getNextChildInQueueImage() {
         return childQueue.getNextInQueue().getPortraitPath();
+    }
+
+    public void moveFirstChildToBack() {
+        Child firstChild = childQueue.getNextInQueue();
+        childQueue.queueRecentlyUsed(firstChild);
     }
 
     public String getTaskName() {

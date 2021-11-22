@@ -26,11 +26,13 @@ import com.example.parentsupportapp.model.TaskManager;
 import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
 import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
 import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
+import com.example.parentsupportapp.tasksConfig.ViewTaskActivity;
 import com.google.gson.Gson;
 
 public class TasksActivity extends AppCompatActivity {
 
-    private Family fam;
+    public static final String TASK_POSITION = "clickedTaskPosition";
+    private Family family;
     private TaskManager taskManager;
     private Button addTaskButton;
     private Button editTaskButton;
@@ -103,8 +105,8 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private void initializeFields() {
-        fam = Family.getInstance(this);
-        taskManager = TaskManager.getInstance(fam.getChildren(), this);
+        family = Family.getInstance(this);
+        taskManager = TaskManager.getInstance(family.getChildren(), this);
         addTaskButton = findViewById(R.id.buttonAddTask);
         editTaskButton = findViewById(R.id.buttonEditTask);
         removeTaskButton = findViewById(R.id.buttonRemoveTask);
@@ -132,6 +134,9 @@ public class TasksActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 // NOTE: position gives position of thing clicked.
                 // TODO: have to implement the functionality when an item in the list view is clicked.
+                Intent viewTaskIntent = ViewTaskActivity.makeIntent(TasksActivity.this);
+                viewTaskIntent.putExtra(TASK_POSITION, position);
+                startActivity(viewTaskIntent);
 
             }
         });
