@@ -72,7 +72,7 @@ public class RemoveTaskActivity extends AppCompatActivity {
     private void confirmationPopup(int position) {
         View dialogView = getLayoutInflater().inflate(R.layout.remove_task_message_layout, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(RemoveTaskActivity.this);
-        alert.setTitle("Confirm Task Removal")
+        alert.setTitle(R.string.remove_task_removal_message)
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override

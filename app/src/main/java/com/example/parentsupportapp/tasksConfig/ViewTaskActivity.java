@@ -24,10 +24,6 @@ public class ViewTaskActivity extends AppCompatActivity {
     private Family family;
     private TaskManager taskManager;
     private Task currentTask;
-    private TextView textViewChildName;
-    private TextView textViewTaskName;
-    private ImageView imageViewChildImage;
-    private Button confirmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +34,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         ActionBar actionBar =  getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.view_task_title);
         }
         
         initializeVariables();

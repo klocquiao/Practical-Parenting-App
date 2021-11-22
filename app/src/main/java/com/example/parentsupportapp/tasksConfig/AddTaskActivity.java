@@ -29,7 +29,7 @@ public class AddTaskActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setTitle("Add Task");
+            actionbar.setTitle(R.string.add_task_title);
         }
 
         family = Family.getInstance(this);

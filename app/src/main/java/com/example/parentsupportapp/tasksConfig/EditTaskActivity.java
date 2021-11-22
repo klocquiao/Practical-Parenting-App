@@ -38,7 +38,7 @@ public class EditTaskActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setTitle("Edit Task");
+            actionbar.setTitle(R.string.edit_task_title);
         }
 
         initializeVariables();
@@ -77,7 +77,7 @@ public class EditTaskActivity extends AppCompatActivity {
         View dialogView = getLayoutInflater().inflate(R.layout.edit_message_layout, null);
         EditText editText = (EditText)dialogView.findViewById(R.id.editTextNewName);
         AlertDialog.Builder alert = new AlertDialog.Builder(EditTaskActivity.this);
-        alert.setTitle("Edit Task Name")
+        alert.setTitle(R.string.edit_task_alert_title)
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -86,7 +86,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
                         if (newName.equals("")) {
                             Toast.makeText(EditTaskActivity.this,
-                                    "Please provide a new task name!",
+                                    getString(R.string.edit_task_alert_message),
                                     Toast.LENGTH_SHORT)
                                     .show();
                         } else {

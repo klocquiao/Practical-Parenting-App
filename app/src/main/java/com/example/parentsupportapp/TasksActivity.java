@@ -80,36 +80,6 @@ public class TasksActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    // TODO: possibly refactor out this entire class (will need to use it in another activity)
-    private class TaskListAdapter extends ArrayAdapter<Task> {
-        public TaskListAdapter() {
-            super(TasksActivity.this, R.layout.task_item_adapter_view, taskManager.getTaskArray());
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View itemView = convertView;
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
-            }
-
-            // TODO: Replace the child with the appropriate task
-            Task currentTask = taskManager.getTask(position);
-            // fill the view
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
-            ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
-
-            TextView textViewTask = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textViewTask.setText(currentTask.getTaskName());
-
-            TextView textViewChildName = (TextView) itemView.findViewById(R.id.textViewTaskChildName);
-            textViewChildName.setText(currentTask.getNextChildInQueueName());
-
-            return itemView;
-        }
-    }
-
     private void initializeFields() {
         family = Family.getInstance(this);
         taskManager = TaskManager.getInstance(family.getChildren(), this);
@@ -138,8 +108,6 @@ public class TasksActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                // NOTE: position gives position of thing clicked.
-                // TODO: have to implement the functionality when an item in the list view is clicked.
                 Intent viewTaskIntent = ViewTaskActivity.makeIntent(TasksActivity.this);
                 viewTaskIntent.putExtra(TASK_POSITION, position);
                 startActivity(viewTaskIntent);
@@ -165,4 +133,32 @@ public class TasksActivity extends AppCompatActivity {
         SharedPreferences pref = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
         return pref.getString(KEY_TASK, TaskManager.EMPTY);
     }
+
+    private class TaskListAdapter extends ArrayAdapter<Task> {
+        public TaskListAdapter() {
+            super(TasksActivity.this, R.layout.task_item_adapter_view, taskManager.getTaskArray());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
+            }
+            Task currentTask = taskManager.getTask(position);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
+            ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
+
+            TextView textViewTask = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textViewTask.setText(currentTask.getTaskName());
+
+            TextView textViewChildName = (TextView) itemView.findViewById(R.id.textViewTaskChildName);
+            textViewChildName.setText(currentTask.getNextChildInQueueName());
+
+            return itemView;
+        }
+    }
+
 }

@@ -97,5 +97,11 @@
     <string name="main_help">Help</string>
     <string name="remove_task_activity_title">Remove Task</string>
     <string name="remove_task_alert_message">Are you certain that you wish to remove the selected task?</string>
+    <string name="view_task_title">Task Details</string>
+    <string name="add_task_title">Add Task</string>
+    <string name="remove_task_removal_message">Confirm Task Removal</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="edit_task_alert_title">Edit Task Name</string>
+    <string name="edit_task_alert_message">Please provide a new task name!</string>
 
 </resources>
