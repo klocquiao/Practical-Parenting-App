@@ -1,20 +1,11 @@
 package com.example.parentsupportapp.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.widget.ImageView;
 
-import com.example.parentsupportapp.ChildConfigActivity;
-import com.example.parentsupportapp.HistoryActivity;
-import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +28,9 @@ public class Family {
 
     private Family(Context context){
         this.context = context;
-        String jsonFamily = ChildConfigActivity.getFamily(context);
+        String jsonFamily = ViewActivity.getFamily(context);
 
-        if (jsonFamily == ChildConfigActivity.EMPTY_PREF) {
+        if (jsonFamily == ViewActivity.EMPTY_PREF) {
             children = new ArrayList<>();
         }
         else {
@@ -61,18 +52,18 @@ public class Family {
 
     public void addChild(Child child) {
         this.children.add(child);
-        ChildConfigActivity.saveChildConfigPrefs(context, this);
+        ViewActivity.saveChildConfigPrefs(context, this);
     }
 
     public void removeChild(int pos) {
         this.children.remove(pos);
-        ChildConfigActivity.saveChildConfigPrefs(context, this);
+        ViewActivity.saveChildConfigPrefs(context, this);
     }
 
     public void editChild(int pos, String fName) {
         Child child = children.get(pos);
         child.setFirstName(fName);
-        ChildConfigActivity.saveChildConfigPrefs(context, this);
+        ViewActivity.saveChildConfigPrefs(context, this);
     }
 
     public boolean isNoChildren() {
@@ -84,6 +75,4 @@ public class Family {
         Gson gson = new Gson();
         return gson.fromJson(jsonFamily, type);
     }
-
-
 }

@@ -1,32 +1,44 @@
 package com.example.parentsupportapp.childConfig;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * View activity helps to view all the children that
  * have been added to the app
  */
 public class ViewActivity extends AppCompatActivity {
-
+    public static final String EMPTY_PREF = "";
+    private static final String KEY_FAMILY = "FamilyKey";
+    private static final String PREF_CHILD_CONFIG = "ChildConfigPref";
     private ListView listView;
     private Family fam;
+    private List<Child> children;
+    private FloatingActionButton fabAddChild;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +50,51 @@ public class ViewActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         fam = Family.getInstance(this);
-        listView = findViewById(R.id.listChildren);
+        children = fam.getChildren();
+        listView = findViewById(R.id.listViewChildren);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(ViewActivity.this, android.R.layout.simple_list_item_1,fam.getChildrenInString());
-        listView.setAdapter(arrayAdapter);
+        populateListView();
+        registerClickCallback();
+        setupFabAddButton();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateListView();
+        registerClickCallback();
+    }
+
+    public void populateListView() {
+        ArrayAdapter<Child> adapter = new MyListAdapter();
+        ListView listViewChildren = findViewById(R.id.listViewChildren);
+        listViewChildren.setAdapter(adapter);
+    }
+
+    private void registerClickCallback() {
+        ListView listViewChildren = findViewById(R.id.listViewChildren);
+        listViewChildren.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent myIntent = new Intent(ViewActivity.this, EditRemoveChildActivity.class);
+                myIntent.putExtra("intVariableName", position);
+                startActivity(myIntent);
+                populateListView();
+            }
+        });
+    }
+
+    private void setupFabAddButton() {
+        fabAddChild = findViewById(R.id.fabAddChild);
+        fabAddChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddChildActivity.makeIntent(ViewActivity.this);
+                startActivity(intent);
+                populateListView();
+            }
+        });
     }
 
     public static Intent makeIntent(Context context) {
@@ -53,5 +106,44 @@ public class ViewActivity extends AppCompatActivity {
                 setFileName(path).
                 load();
         img.setImageBitmap(bitmap);
+    }
+
+    private class MyListAdapter extends ArrayAdapter<Child> {
+        public MyListAdapter() {
+            super(ViewActivity.this, R.layout.child_view_layout, fam.getChildren());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.child_view_layout, parent, false);
+            }
+
+            Child currentChild = children.get(position);
+
+            ImageView img = itemView.findViewById(R.id.imgViewChild);
+            loadImageFromStorage(currentChild.getPortraitPath(),img,ViewActivity.this);
+
+            TextView textView = itemView.findViewById(R.id.textViewName);
+            textView.setText(currentChild.getFirstName());
+
+            return itemView;
+        }
+    }
+
+    public static void saveChildConfigPrefs(Context context, Family family) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_CHILD_CONFIG, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String jsonFamily = gson.toJson(family.getChildren());
+        editor.putString(KEY_FAMILY, jsonFamily);
+        editor.apply();
+    }
+
+    public static String getFamily(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_CHILD_CONFIG, MODE_PRIVATE);
+        return prefs.getString(KEY_FAMILY, EMPTY_PREF);
     }
 }

@@ -2,6 +2,7 @@ package com.example.parentsupportapp.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import java.util.UUID;
 
 /**
  * this child class models a child that has a first name
@@ -15,7 +16,7 @@ public class Child {
 
     public Child(String fName) {
         this.firstName = fName;
-        this.portraitPath = fName + PNG;
+        this.portraitPath = UUID.randomUUID().toString() + PNG;
     }
 
     public String getFirstName() {
