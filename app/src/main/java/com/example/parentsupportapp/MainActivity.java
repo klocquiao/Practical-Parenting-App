@@ -15,6 +15,7 @@ import android.widget.Button;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         this.configureChildButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent childIntent = ChildConfigActivity.makeIntent(MainActivity.this);
+                Intent childIntent = ViewActivity.makeIntent(MainActivity.this);
                 startActivity(childIntent);
             }
         });
