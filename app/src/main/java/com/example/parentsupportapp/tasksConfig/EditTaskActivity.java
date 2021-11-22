@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.TasksActivity;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
@@ -90,6 +91,7 @@ public class EditTaskActivity extends AppCompatActivity {
                                     .show();
                         } else {
                             taskManager.getTask(position).setTaskName(newName);
+                            TasksActivity.saveTaskSharedPrefs(EditTaskActivity.this, taskManager);
                             updateUI();
                         }
                     }

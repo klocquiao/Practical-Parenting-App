@@ -68,6 +68,12 @@ public class TasksActivity extends AppCompatActivity {
         registerClickCallback();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveTaskSharedPrefs(this, taskManager);
+    }
+
     private void populateListView() {
         // array adapter
         ArrayAdapter<Task> adapter = new TaskListAdapter();
