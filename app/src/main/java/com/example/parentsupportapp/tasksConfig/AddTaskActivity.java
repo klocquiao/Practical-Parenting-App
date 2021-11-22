@@ -50,6 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 } else {
                     taskManager.addTask(family.getChildren(), extractedText);
                     Toast.makeText(AddTaskActivity.this, "New Task Added!!", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

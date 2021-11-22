@@ -74,7 +74,6 @@ public class ViewTaskActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // When confirmed child has had their turn, move the child to the back.
                 currentTask.moveFirstChildToBack();
                 finish();
             }

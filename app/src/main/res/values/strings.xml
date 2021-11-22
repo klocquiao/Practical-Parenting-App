@@ -95,5 +95,7 @@
     </string>
     <string name="help_app_created_msg">App created by team Carbon!!</string>
     <string name="main_help">Help</string>
+    <string name="remove_task_activity_title">Remove Task</string>
+    <string name="remove_task_alert_message">Are you certain that you wish to remove the selected task?</string>
 
 </resources>
