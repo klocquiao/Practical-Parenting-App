@@ -71,9 +71,6 @@ public class TasksActivity extends AppCompatActivity {
         taskManager = TaskManager.getInstance(this);
         tasks = taskManager.getTaskArray();
 
-        //// for testing purposese
-        //taskManager.addTask("Hello");
-        //taskManager.addTask("World");
     }
 
     private void setupButtonListeners() {
