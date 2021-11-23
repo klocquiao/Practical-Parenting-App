@@ -1,0 +1,4 @@
+Kyle: Scrum Master
+Damir: Repo Manager
+Mohammed: Product Owner
+Yatik: Teammate
