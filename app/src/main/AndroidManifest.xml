@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.parentsupportapp">
-    
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -19,6 +19,11 @@
             android:name=".childConfig.EditRemoveChildActivity"
             android:exported="true"
             android:parentActivityName=".childConfig.ViewActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+        <activity
+            android:name=".tasksConfig.ViewTaskActivity"
+            android:exported="false"
+            android:parentActivityName=".TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".tasksConfig.RemoveTaskActivity"
@@ -70,6 +75,7 @@
         <activity
             android:name=".HelpActivity"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"

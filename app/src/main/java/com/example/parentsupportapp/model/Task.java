@@ -30,6 +30,11 @@ public class Task {
         return childQueue.getNextInQueue().getPortraitPath();
     }
 
+    public void moveFirstChildToBack() {
+        Child firstChild = childQueue.getNextInQueue();
+        childQueue.queueRecentlyUsed(firstChild);
+    }
+
     public String getTaskName() {
         return this.name;
     }

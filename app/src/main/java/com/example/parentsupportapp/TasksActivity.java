@@ -3,8 +3,6 @@ package com.example.parentsupportapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.childConfig.ViewActivity;
-import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
 import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
 import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
 import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
+import com.example.parentsupportapp.tasksConfig.ViewTaskActivity;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -42,7 +40,8 @@ import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
 
-    private Family fam;
+    public static final String TASK_POSITION = "clickedTaskPosition";
+    private Family family;
     private TaskManager taskManager;
     private Button addTaskButton;
     private Button editTaskButton;
@@ -78,46 +77,20 @@ public class TasksActivity extends AppCompatActivity {
         registerClickCallback();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveTaskSharedPrefs(this, taskManager);
+    }
+
     private void populateListView() {
-        // array adapter
         ArrayAdapter<Task> adapter = new TaskListAdapter();
         listView.setAdapter(adapter);
     }
 
-    // TODO: possibly refactor out this entire class (will need to use it in another activity)
-    private class TaskListAdapter extends ArrayAdapter<Task> {
-        public TaskListAdapter() {
-            super(TasksActivity.this, R.layout.task_item_view, taskManager.getTaskArray());
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View itemView = convertView;
-            if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.task_item_view, parent, false);
-            }
-
-            // TODO: Replace the child with the appropriate task
-            Task currentTask = taskManager.getTask(position);
-            // fill the view
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
-            ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
-
-            TextView textView1 = (TextView) itemView.findViewById(R.id.textViewTaskItem);
-            textView1.setText(currentTask.getNextChildInQueueName());
-
-            TextView textView2 = (TextView) itemView.findViewById(R.id.textTaskName);
-            textView2.setText(currentTask.getTaskName());
-
-
-            return itemView;
-        }
-    }
-
     private void initializeFields() {
-        fam = Family.getInstance(this);
-        taskManager = TaskManager.getInstance(fam.getChildren(), this);
+        family = Family.getInstance(this);
+        taskManager = TaskManager.getInstance(family.getChildren(), this);
         addTaskButton = findViewById(R.id.buttonAddTask);
         editTaskButton = findViewById(R.id.buttonEditTask);
         removeTaskButton = findViewById(R.id.buttonRemoveTask);
@@ -143,9 +116,9 @@ public class TasksActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                // NOTE: position gives position of thing clicked.
-                // TODO: have to implement the functionality when an item in the list view is clicked.
-
+                Intent viewTaskIntent = ViewTaskActivity.makeIntent(TasksActivity.this);
+                viewTaskIntent.putExtra(TASK_POSITION, position);
+                startActivity(viewTaskIntent);
             }
         });
     }
@@ -166,5 +139,32 @@ public class TasksActivity extends AppCompatActivity {
     public static String getTaskFromSharedPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_TASK, MODE_PRIVATE);
         return pref.getString(KEY_TASK, TaskManager.EMPTY);
+    }
+
+    private class TaskListAdapter extends ArrayAdapter<Task> {
+        public TaskListAdapter() {
+            super(TasksActivity.this, R.layout.task_item_adapter_view, taskManager.getTaskArray());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.task_item_adapter_view, parent, false);
+            }
+            Task currentTask = taskManager.getTask(position);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewTaskItem);
+            ViewActivity.loadImageFromStorage(currentTask.getNextChildInQueueImage(), imageView, TasksActivity.this);
+
+            TextView textViewTask = (TextView) itemView.findViewById(R.id.textViewTaskItem);
+            textViewTask.setText(currentTask.getTaskName());
+
+            TextView textViewChildName = (TextView) itemView.findViewById(R.id.textViewTaskChildName);
+            textViewChildName.setText(currentTask.getNextChildInQueueName());
+
+            return itemView;
+        }
     }
 }
