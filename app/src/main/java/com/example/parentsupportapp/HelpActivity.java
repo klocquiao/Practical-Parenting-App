@@ -29,7 +29,7 @@ public class HelpActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        TextView sources = (TextView) findViewById(R.id.textViewHelpSources);
+        TextView sources = findViewById(R.id.textViewHelpSources);
         sources.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

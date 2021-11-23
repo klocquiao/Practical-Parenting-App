@@ -58,11 +58,11 @@ public class AddChildActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         family = Family.getInstance(this);
-        setupAddBtn();
-        setupImageBtn();
+        setupAddButton();
+        setupImageButton();
     }
 
-    private void setupImageBtn() {
+    private void setupImageButton() {
         imgChild = findViewById(R.id.imgAddChild);
         imgChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +165,7 @@ public class AddChildActivity extends AppCompatActivity {
         return new Intent(context, AddChildActivity.class);
     }
 
-    public void setupAddBtn() {
+    public void setupAddButton() {
         ImageView img = findViewById(R.id.imgAddChild);
         Button btn = findViewById(R.id.btnAdd);
         btn.setOnClickListener(new View.OnClickListener() {

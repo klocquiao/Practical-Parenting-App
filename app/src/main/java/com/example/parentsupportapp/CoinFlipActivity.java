@@ -66,6 +66,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     public static final int CAM_DISTANCE = 8000;
     public static final int EVEN_NUM_FLIPS = 6;
     public static final int ODD_NUM_FLIPS = 7;
+    public static final String NOBODY = "Nobody";
 
     private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
@@ -115,7 +116,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(family.getChildren(), this);
         coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
-        nobody = new Child("Nobody");
+        nobody = new Child(NOBODY);
 
         updateUI();
         setupCoinFlipAnimation();

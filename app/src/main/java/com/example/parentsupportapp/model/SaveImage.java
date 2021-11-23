@@ -33,16 +33,6 @@ public class SaveImage {
         return this;
     }
 
-    public SaveImage setExternal(boolean external) {
-        this.external = external;
-        return this;
-    }
-
-    public SaveImage setDirectoryName(String directoryName) {
-        this.directoryName = directoryName;
-        return this;
-    }
-
     public void save(Bitmap bitmapImage) {
         FileOutputStream fileOutputStream = null;
         try {
@@ -80,17 +70,6 @@ public class SaveImage {
     private File getAlbumStorageDir(String albumName) {
         return new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), albumName);
-    }
-
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    public static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
     public Bitmap load() {

@@ -48,7 +48,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private int position;
     private ImageView imageViewEditChild;
-    private EditText editTextNewChildName;
+    private EditText editChildName;
     private Family family;
 
     @Override
@@ -193,21 +193,21 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private void setupSaveButton() {
         imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
-        editTextNewChildName = findViewById(R.id.editTextName);
+        editChildName = findViewById(R.id.editTextName);
 
         Button btnSave = findViewById(R.id.btnEditChild);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = editTextNewChildName.getText().toString();
-                if (checkName(str, editTextNewChildName) == -1){
+                String str = editChildName.getText().toString();
+                if (checkName(str, editChildName) == -1){
                     return;
                 }
-                Child child = new Child(correctString(str));
-                saveToInternalStorage(imageViewEditChild, child.getPortraitPath(), EditRemoveChildActivity.this);
 
-                family.getChildren().remove(position);
-                family.getChildren().add(position, child);
+                family.editChild(position, str);
+                saveToInternalStorage(imageViewEditChild, family.getChild(position).getPortraitPath(),
+                        EditRemoveChildActivity.this);
+
                 finish();
             }
         });
@@ -228,12 +228,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         }
         return 0;
     }
-
-    private String correctString(String str) {
-        str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
-        return str;
-    }
-
+    
     private void saveToInternalStorage(ImageView img, String path ,Context context){
         img.buildDrawingCache();
         Bitmap bitmapImage = img.getDrawingCache();
@@ -247,8 +242,8 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
         loadImageFromStorage(child.getPortraitPath(), imageViewEditChild, EditRemoveChildActivity.this);
 
-        editTextNewChildName = findViewById(R.id.editTextName);
-        editTextNewChildName.setText(child.getFirstName());
+        editChildName = findViewById(R.id.editTextName);
+        editChildName.setText(child.getFirstName());
     }
 
     public static Intent makeIntent(Context context) {
