@@ -24,6 +24,10 @@ import com.example.parentsupportapp.model.TaskManager;
 
 import java.util.ArrayList;
 
+/**
+ * EditTask allows the user to change the name of a Task in the TaskManager's Task list.
+ */
+
 public class EditTaskActivity extends AppCompatActivity {
 
     private Family family;

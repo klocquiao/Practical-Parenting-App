@@ -13,6 +13,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * SaveImage save the image that a user enters when using the add and edit function in
+ * child config. It is also able to load said image.
+ */
+
 public class SaveImage {
     private String directoryName = "images";
     private String fileName = "image.png";
@@ -25,16 +30,6 @@ public class SaveImage {
 
     public SaveImage setFileName(String fileName) {
         this.fileName = fileName;
-        return this;
-    }
-
-    public SaveImage setExternal(boolean external) {
-        this.external = external;
-        return this;
-    }
-
-    public SaveImage setDirectoryName(String directoryName) {
-        this.directoryName = directoryName;
         return this;
     }
 
@@ -75,17 +70,6 @@ public class SaveImage {
     private File getAlbumStorageDir(String albumName) {
         return new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), albumName);
-    }
-
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    public static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
     public Bitmap load() {

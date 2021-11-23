@@ -1,10 +1,3 @@
-/**
- * HistoryActivity presents the list of coin flip entries to the user, taking said data
- * from the HistoryManager. HistoryActivity also contains the sharedPreferences used by
- * the HistoryManager to save the history entry list and priority queue after the application is
- * terminated.
- */
-
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
@@ -30,6 +23,13 @@ import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
 import com.google.gson.Gson;
 
+/**
+ * HistoryActivity presents the list of coin flip entries to the user, taking said data
+ * from the HistoryManager. HistoryActivity also contains the sharedPreferences used by
+ * the HistoryManager to save the history entry list and priority queue after the application is
+ * terminated.
+ */
+
 public class HistoryActivity extends AppCompatActivity {
     private HistoryManager history;
     private Family children;
@@ -41,7 +41,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -73,7 +73,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void populateHistoryListView() {
         ArrayAdapter<HistoryEntry> adapter = new HistoryListAdapter();
-        ListView list = (ListView) findViewById(R.id.listHistory);
+        ListView list = findViewById(R.id.listHistory);
         list.setAdapter(adapter);
     }
 

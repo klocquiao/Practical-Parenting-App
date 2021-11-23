@@ -1,15 +1,6 @@
-/**
- * CoinFlipActivity allows the user to flip a coin for making decisions. It allows the user
- * to choose from a list of children (if there is any) and then let them decide whether
- * they want to choose heads or tails. Flipping the coin will play a realistic coin flip animation
- * and then will clearly display the results. The coin flips associated data is then saved in the history.
- * Lastly the app will make a suggestion as to who should go next based on least recently flipped.
- */
-
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,7 +16,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +42,14 @@ import com.google.gson.Gson;
 
 import java.util.Random;
 
+/**
+ * CoinFlipActivity allows the user to flip a coin for making decisions. It allows the user
+ * to choose from a list of children (if there is any) and then let them decide whether
+ * they want to choose heads or tails. Flipping the coin will play a realistic coin flip animation
+ * and then will clearly display the results. The coin flips associated data is then saved in the history.
+ * Lastly the app will make a suggestion as to who should go next based on least recently flipped.
+ */
+
 public class CoinFlipActivity extends AppCompatActivity {
     private static final String KEY_PRIORITY = "CoinFlipPriorityKey";
     private static final String PREF_PRIORITY = "CoinFlipActivityPref";
@@ -66,6 +64,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     public static final int CAM_DISTANCE = 8000;
     public static final int EVEN_NUM_FLIPS = 6;
     public static final int ODD_NUM_FLIPS = 7;
+    public static final String NOBODY = "Nobody";
 
     private AnimatorSet coinFlipAnimation;
     private Animator coinFlip1Animation;
@@ -115,7 +114,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         history = HistoryManager.getInstance(family.getChildren(), this);
         coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
-        nobody = new Child("Nobody");
+        nobody = new Child(NOBODY);
 
         updateUI();
         setupCoinFlipAnimation();
@@ -172,10 +171,10 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void getCoinFlipRecommendation() {
         String recommendation = coinFlipPriorityQueue.getNextInQueue().toString();
         if (recommendation.matches(nobody.getFirstName())) {
-            coinFlipSuggestionText.setText(R.string.no_suggestion);
+            coinFlipSuggestionText.setText(R.string.coin_flip_no_suggestion);
         }
         else {
-            coinFlipSuggestionText.setText(getString(R.string.suggestion_header, recommendation));
+            coinFlipSuggestionText.setText(getString(R.string.coin_flip_suggestion, recommendation));
         }
     }
 

@@ -1,14 +1,16 @@
 package com.example.parentsupportapp.model;
 
-import android.content.Context;
-
-import com.example.parentsupportapp.HistoryActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * The priority queue is a data structure that is used to keep track from left-to-right the
+ * child who has least recently participated in a task or a coin flip. When any child in the
+ * queue performs a task/coin flip, they will be removed from the queue and placed at the end.
+ */
 
 public class PriorityQueue {
     private List<Child> priorityQueue;

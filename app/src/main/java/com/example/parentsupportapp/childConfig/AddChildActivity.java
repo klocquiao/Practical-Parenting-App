@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,10 +34,11 @@ import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
- * Add child activity models adding a new new child to the
- * configuration
+ * The AddChildActivity adds a new child to the family list. The associated data
+ * per child that is added is a picture of them and their name.
  */
 
 public class AddChildActivity extends AppCompatActivity {
@@ -43,6 +47,7 @@ public class AddChildActivity extends AppCompatActivity {
     public static final int MIN_SDK = 23;
     private Family family;
     public ImageView imgChild;
+    private FloatingActionButton fabAddPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +60,22 @@ public class AddChildActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         family = Family.getInstance(this);
-        setupAddBtn();
-        setupImageBtn();
+        setupAddButton();
+        setupImageButton();
+        setupFabAddPhoto();
     }
 
-    private void setupImageBtn() {
+    private void setupFabAddPhoto() {
+        fabAddPhoto = findViewById(R.id.floatingActionButtonAddPhoto);
+        fabAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePhoto();
+            }
+        });
+    }
+
+    private void setupImageButton() {
         imgChild = findViewById(R.id.imgAddChild);
         imgChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +178,7 @@ public class AddChildActivity extends AppCompatActivity {
         return new Intent(context, AddChildActivity.class);
     }
 
-    public void setupAddBtn() {
+    public void setupAddButton() {
         ImageView img = findViewById(R.id.imgAddChild);
         Button btn = findViewById(R.id.btnAdd);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +203,13 @@ public class AddChildActivity extends AppCompatActivity {
         if (str.equals("")) {
             et.setHint(R.string.add_child_activity_enter_error);
             et.setHintTextColor(Color.RED);
+
+            MediaPlayer song = MediaPlayer.create(AddChildActivity.this, R.raw.negativebeep);
+            song.start();
+
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+
             return -1;
         }
         return 0;

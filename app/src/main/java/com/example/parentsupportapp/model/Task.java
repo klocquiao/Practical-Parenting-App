@@ -1,5 +1,14 @@
 package com.example.parentsupportapp.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
+
+/**
+ * The task class contains key data for each task created by the user. It holds
+ * the name of the task, as well as a priority queue that keeps track of whose turn it is.
+ */
+
 public class Task {
     private String name;
     private PriorityQueue childQueue;

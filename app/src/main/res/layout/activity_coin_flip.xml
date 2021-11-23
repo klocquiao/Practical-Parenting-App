@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="@string/flip"
+        android:text="@string/coin_flip_flip"
         app:layout_constraintBottom_toBottomOf="@+id/imageFlipper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -69,7 +69,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:prompt="@string/spinner_prompt"
+        android:prompt="@string/coin_flip_spinner_prompt"
         android:spinnerMode="dialog"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toTopOf="@+id/imageFlipper"
@@ -102,14 +102,14 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:layoutDirection="rtl"
-            android:text="@string/heads" />
+            android:text="@string/coin_flip_heads" />
 
         <RadioButton
             android:id="@+id/radioButtonTails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
-            android:text="@string/tails" />
+            android:text="@string/coin_flip_tails" />
 
     </RadioGroup>
 

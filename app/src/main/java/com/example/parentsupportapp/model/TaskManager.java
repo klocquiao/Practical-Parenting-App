@@ -14,6 +14,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The TaskManager manages a list of tasks. It is able to add tasks, remove tasks, edit tasks,
+ * and get tasks in the list. It also handles the save of the Task list.
+ */
+
 public class TaskManager {
     private static ArrayList<Task> taskArray;
     private static TaskManager instance;

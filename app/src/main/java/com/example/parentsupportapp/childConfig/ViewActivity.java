@@ -28,8 +28,9 @@ import com.google.gson.Gson;
 import java.util.List;
 
 /**
- * View activity helps to view all the children that
- * have been added to the app
+ * View activity helps to view all the children that have been added to the app.
+ * In this activity the user can click the floating action button to add a child to the list of saved
+ * children or click one of the children from the list which allows them to edit/remove said kid.
  */
 
 public class ViewActivity extends AppCompatActivity {
@@ -37,8 +38,8 @@ public class ViewActivity extends AppCompatActivity {
     private static final String KEY_FAMILY = "FamilyKey";
     private static final String PREF_CHILD_CONFIG = "ChildConfigPref";
     public static final String EXTRA_POSITION = "intVariableName";
-    private ListView listView;
-    private Family fam;
+    private ListView childrenListView;
+    private Family family;
     private List<Child> children;
     private FloatingActionButton fabAddChild;
 
@@ -52,9 +53,9 @@ public class ViewActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        fam = Family.getInstance(this);
-        children = fam.getChildren();
-        listView = findViewById(R.id.listViewChildren);
+        family = Family.getInstance(this);
+        children = family.getChildren();
+        childrenListView = findViewById(R.id.listViewChildren);
 
         populateListView();
         registerClickCallback();
@@ -112,7 +113,7 @@ public class ViewActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
-            super(ViewActivity.this, R.layout.child_view_layout, fam.getChildren());
+            super(ViewActivity.this, R.layout.child_view_layout, family.getChildren());
         }
 
         @NonNull

@@ -15,9 +15,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +28,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+/**
+ * The EditRemoveChildActivity allows the user to remove a child from the family list, change
+ * a specific child's name, or change their current image.
+ */
 
 public class EditRemoveChildActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GALLERY = 1;
@@ -40,8 +49,9 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private int position;
     private ImageView imageViewEditChild;
-    private EditText editTextNewChildName;
+    private EditText editChildName;
     private Family family;
+    private FloatingActionButton fabEditPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,17 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         setupSaveButton();
         setupImageBtn();
         setupRemoveBtn();
+        setupFabEditPhoto();
+    }
+
+    private void setupFabEditPhoto() {
+        fabEditPhoto = findViewById(R.id.floatingActionButtonEditPhoto);
+        fabEditPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePhoto();
+            }
+        });
     }
 
     private void setupRemoveBtn() {
@@ -185,21 +206,21 @@ public class EditRemoveChildActivity extends AppCompatActivity {
 
     private void setupSaveButton() {
         imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
-        editTextNewChildName = findViewById(R.id.editTextName);
+        editChildName = findViewById(R.id.editTextName);
 
         Button btnSave = findViewById(R.id.btnEditChild);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = editTextNewChildName.getText().toString();
-                if (checkName(str, editTextNewChildName) == -1){
+                String str = editChildName.getText().toString();
+                if (checkName(str, editChildName) == -1){
                     return;
                 }
-                Child child = new Child(correctString(str));
-                saveToInternalStorage(imageViewEditChild, child.getPortraitPath(), EditRemoveChildActivity.this);
 
-                family.getChildren().remove(position);
-                family.getChildren().add(position, child);
+                family.editChild(position, str);
+                saveToInternalStorage(imageViewEditChild, family.getChild(position).getPortraitPath(),
+                        EditRemoveChildActivity.this);
+
                 finish();
             }
         });
@@ -209,16 +230,18 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         if (str.equals("")) {
             et.setHint(R.string.add_child_activity_enter_error);
             et.setHintTextColor(Color.RED);
+
+            MediaPlayer song = MediaPlayer.create(EditRemoveChildActivity.this, R.raw.negativebeep);
+            song.start();
+
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+
             return -1;
         }
         return 0;
     }
-
-    private String correctString(String str) {
-        str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
-        return str;
-    }
-
+    
     private void saveToInternalStorage(ImageView img, String path ,Context context){
         img.buildDrawingCache();
         Bitmap bitmapImage = img.getDrawingCache();
@@ -232,8 +255,8 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
         loadImageFromStorage(child.getPortraitPath(), imageViewEditChild, EditRemoveChildActivity.this);
 
-        editTextNewChildName = findViewById(R.id.editTextName);
-        editTextNewChildName.setText(child.getFirstName());
+        editChildName = findViewById(R.id.editTextName);
+        editChildName.setText(child.getFirstName());
     }
 
     public static Intent makeIntent(Context context) {

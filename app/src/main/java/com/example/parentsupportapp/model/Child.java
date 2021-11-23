@@ -36,9 +36,6 @@ public class Child {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    public void setPortraitPath(String port) {
-        this.portraitPath = port;
-    }
 
     @NonNull
     @Override

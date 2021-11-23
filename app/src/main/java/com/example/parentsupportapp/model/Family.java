@@ -43,14 +43,6 @@ public class Family {
         return children;
     }
 
-    public List<String> getChildrenInString() {
-        List<String> ls = new ArrayList<>();
-        for (int i = 0; i < this.children.size(); i++) {
-            ls.add(children.get(i).getFirstName());
-        }
-        return ls;
-    }
-
     public void addChild(Child child) {
         this.children.add(child);
         ViewActivity.saveChildConfigPrefs(context, this);
@@ -65,6 +57,10 @@ public class Family {
         Child child = children.get(pos);
         child.setFirstName(fName);
         ViewActivity.saveChildConfigPrefs(context, this);
+    }
+
+    public Child getChild(int pos) {
+        return children.get(pos);
     }
 
     public boolean isNoChildren() {
