@@ -16,6 +16,12 @@ import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.TaskManager;
 
+/**
+ * AddTaskActivity allows the user to add a task to the TaskManager list.
+ * Tasks can be created by giving it a name and then a priority queue will automatically
+ * generate.
+ */
+
 public class AddTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
     private Family family;

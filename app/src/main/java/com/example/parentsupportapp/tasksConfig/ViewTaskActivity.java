@@ -19,6 +19,11 @@ import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
 
+/**
+ * ViewTaskActivity contains the hub for the Task functionality of the application.
+ * It contains 3 buttons that takes the user to add, edit, or remove tasks respectively.
+ */
+
 public class ViewTaskActivity extends AppCompatActivity {
 
     private Family family;

@@ -21,6 +21,10 @@ import com.example.parentsupportapp.model.TaskManager;
 
 import java.util.ArrayList;
 
+/**
+ * EditTask allows the user to remove a Task from the TaskManager's task list.
+ */
+
 public class RemoveTaskActivity extends AppCompatActivity {
 
     private TaskManager taskManager;
