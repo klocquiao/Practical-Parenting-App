@@ -83,9 +83,7 @@ public class RemoveTaskActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) { }
                 });
         alert.show();
     }

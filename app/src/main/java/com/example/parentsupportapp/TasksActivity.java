@@ -75,7 +75,6 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        // array adapter
         ArrayAdapter<Task> adapter = new TaskListAdapter();
         listView.setAdapter(adapter);
     }

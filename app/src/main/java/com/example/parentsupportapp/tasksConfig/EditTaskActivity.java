@@ -75,7 +75,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     private void editTaskName(int position) {
         View dialogView = getLayoutInflater().inflate(R.layout.edit_message_layout, null);
-        EditText editText = (EditText)dialogView.findViewById(R.id.editTextNewName);
+        EditText editText = dialogView.findViewById(R.id.editTextNewName);
         AlertDialog.Builder alert = new AlertDialog.Builder(EditTaskActivity.this);
         alert.setTitle(R.string.edit_task_alert_title)
                 .setView(dialogView)
@@ -89,7 +89,8 @@ public class EditTaskActivity extends AppCompatActivity {
                                     getString(R.string.edit_task_alert_message),
                                     Toast.LENGTH_SHORT)
                                     .show();
-                        } else {
+                        }
+                        else {
                             taskManager.getTask(position).setTaskName(newName);
                             TasksActivity.saveTaskSharedPrefs(EditTaskActivity.this, taskManager);
                             updateUI();
@@ -98,9 +99,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) { }
                 });
         alert.show();
     }
