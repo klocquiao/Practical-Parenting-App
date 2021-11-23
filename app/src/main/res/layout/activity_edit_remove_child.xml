@@ -57,6 +57,17 @@
     android:layout_centerHorizontal="true"
     android:text="Remove"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonEditPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imgEditRemoveChild"
+        android:layout_alignBottom="@+id/imgEditRemoveChild"
+        android:layout_marginEnd="-23dp"
+        android:layout_marginBottom="-19dp"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
 
 
 </RelativeLayout>

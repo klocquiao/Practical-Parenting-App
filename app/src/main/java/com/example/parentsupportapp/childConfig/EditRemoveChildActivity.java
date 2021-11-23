@@ -34,6 +34,7 @@ import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * The EditRemoveChildActivity allows the user to remove a child from the family list, change
@@ -50,6 +51,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
     private ImageView imageViewEditChild;
     private EditText editChildName;
     private Family family;
+    private FloatingActionButton fabEditPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,17 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         setupSaveButton();
         setupImageBtn();
         setupRemoveBtn();
+        setupFabEditPhoto();
+    }
+
+    private void setupFabEditPhoto() {
+        fabEditPhoto = findViewById(R.id.floatingActionButtonEditPhoto);
+        fabEditPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePhoto();
+            }
+        });
     }
 
     private void setupRemoveBtn() {

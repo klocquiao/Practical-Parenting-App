@@ -66,9 +66,9 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/imgAddChild"
         android:layout_alignBottom="@+id/imgAddChild"
-        android:layout_marginEnd="-27dp"
-        android:layout_marginBottom="-20dp"
-        app:fabSize="mini"
+        android:layout_marginEnd="-24dp"
+        android:layout_marginBottom="-17dp"
         android:clickable="true"
+        app:fabSize="mini"
         app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
 </RelativeLayout>
