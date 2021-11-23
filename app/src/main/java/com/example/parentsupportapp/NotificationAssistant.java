@@ -24,24 +24,21 @@ public class NotificationAssistant extends ContextWrapper {
     private static final String CHANNEL_ID_1 = "timerActivityChannel1";
     private static final int REQUEST_CODE_TIMER_ACTIVITY = 0;
     public static final int REQUEST_CODE_NOTIF_BTN_SILENCE = 1;
+    public static final String EXTRA_SILENCE_BUTTON_ID = "Silence button ID";
 
     public NotificationAssistant(Context base) {
         super(base);
-
         createNotificationChannel();
     }
 
     public void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.notif_assist_alarm_silence);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID_1, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
@@ -76,7 +73,7 @@ public class NotificationAssistant extends ContextWrapper {
     private PendingIntent createAlarmSilencePendingIntent() {
         Intent silenceAlarmIntent = new Intent(this, TimerBroadcastReceiver.class);
         silenceAlarmIntent.setAction("com.example.parentsupportapp.Broadcast");
-        silenceAlarmIntent.putExtra("Silence button ID", 1);
+        silenceAlarmIntent.putExtra(EXTRA_SILENCE_BUTTON_ID, 1);
         return PendingIntent.getBroadcast(this, REQUEST_CODE_NOTIF_BTN_SILENCE, silenceAlarmIntent, 0);
     }
 }

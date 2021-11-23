@@ -98,5 +98,6 @@
     <string name="child_config_deny_permission">Permission Not Granted</string>
     <string name="child_config_data">data</string>
     <string name="child_config_confirm">Confirm</string>
+    <string name="timer_activity_ok">OK</string>
 
 </resources>

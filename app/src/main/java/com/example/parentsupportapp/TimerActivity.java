@@ -47,6 +47,10 @@ public class TimerActivity extends AppCompatActivity {
     private static final long FIVE_MIN = 300000;
     private static final long TEN_MIN = 600000;
     private static final int NOTIFICATION_ID = 1;
+    public static final int MILLISECONDS_TO_SECONDS = 1000;
+    public static final int SECONDS_TO_MINUTES = 60;
+    public static final float GUIDE_PERCENT_1 = (float) 0.7;
+    public static final float GUIDE_PERCENT_2 = (float) 0.4;
 
     private TextView timerView;
     private Button startButton;
@@ -78,7 +82,6 @@ public class TimerActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
         initializeButtons();
         setupButtonListeners();
         setupVibrator();
@@ -88,25 +91,25 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initializeButtons() {
-        timerView = (TextView) findViewById(R.id.textViewTimer);
-        startButton = (Button) findViewById(R.id.buttonStart);
-        resetButton = (Button) findViewById(R.id.buttonReset);
-        customMinButton = (Button) findViewById(R.id.buttonCustomMin);
-        oneMinButton = (Button) findViewById(R.id.buttonOneMin);
-        twoMinButton = (Button) findViewById(R.id.buttonTwoMin);
-        threeMinButton = (Button) findViewById(R.id.buttonThreeMin);
-        fiveMinButton = (Button) findViewById(R.id.buttonFiveMin);
-        tenMinButton = (Button) findViewById(R.id.buttonTenMin);
+        timerView = findViewById(R.id.textViewTimer);
+        startButton = findViewById(R.id.buttonStart);
+        resetButton = findViewById(R.id.buttonReset);
+        customMinButton = findViewById(R.id.buttonCustomMin);
+        oneMinButton = findViewById(R.id.buttonOneMin);
+        twoMinButton = findViewById(R.id.buttonTwoMin);
+        threeMinButton = findViewById(R.id.buttonThreeMin);
+        fiveMinButton = findViewById(R.id.buttonFiveMin);
+        tenMinButton = findViewById(R.id.buttonTenMin);
     }
 
     private void setupButtonListeners() {
-
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isTicking) {
                     pauseTimer();
-                } else {
+                }
+                else {
                     startTimer();
                 }
             }
@@ -159,12 +162,12 @@ public class TimerActivity extends AppCompatActivity {
 
     private void askForCustomTime() {
         View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
-        EditText minuteText = (EditText)dialogView.findViewById(R.id.editTextTimerAlertMinute);
+        EditText minuteText = (EditText) dialogView.findViewById(R.id.editTextTimerAlertMinute);
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.timer_alert_provide_time);
         alert.setView(dialogView);
-        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.timer_activity_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Boolean shouldStart = true;
@@ -172,7 +175,7 @@ public class TimerActivity extends AppCompatActivity {
                 long extractedMinutes;
                 try {
                     extractedMinutes = Long.parseLong(minuteString);
-                    timeLeftInMill = extractedMinutes * 60 * 1000;
+                    timeLeftInMill = extractedMinutes * SECONDS_TO_MINUTES * MILLISECONDS_TO_SECONDS;
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {
@@ -237,7 +240,8 @@ public class TimerActivity extends AppCompatActivity {
                             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                             .setUsage(AudioAttributes.USAGE_ALARM)
                             .build());
-        } else {
+        }
+        else {
             Log.i("Vibrator Issue", "The vibrator initialized to null.");
         }
     }
@@ -253,16 +257,16 @@ public class TimerActivity extends AppCompatActivity {
         buttonDisappear(fiveMinButton);
         buttonDisappear(tenMinButton);
         buttonDisappear(customMinButton);
-        Guideline guideline = (Guideline) findViewById(R.id.guidelineHorizontal);
+        Guideline guideline = findViewById(R.id.guidelineHorizontal);
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideline.getLayoutParams();
-        params.guidePercent = (float) 0.7;
+        params.guidePercent = GUIDE_PERCENT_1;
         guideline.setLayoutParams(params);
     }
 
     private void updateUIShowButtons() {
-        Guideline guideline = (Guideline) findViewById(R.id.guidelineHorizontal);
+        Guideline guideline = findViewById(R.id.guidelineHorizontal);
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideline.getLayoutParams();
-        params.guidePercent = (float) 0.4;
+        params.guidePercent = GUIDE_PERCENT_2;
         guideline.setLayoutParams(params);
         buttonAppear(oneMinButton);
         buttonAppear(twoMinButton);
@@ -286,7 +290,6 @@ public class TimerActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // safety check to make sure it doesn't start new timer while one is already ticking
                 if (!isTicking) {
                     timeLeftInMill = time;
                     lastSelectedTime = time;
@@ -298,8 +301,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateTimerTextView() {
-        int seconds = (int) timeLeftInMill / 1000 % 60;
-        int minutes = (int) timeLeftInMill / 1000 / 60;
+        int seconds = (int) timeLeftInMill / MILLISECONDS_TO_SECONDS % SECONDS_TO_MINUTES;
+        int minutes = (int) timeLeftInMill / MILLISECONDS_TO_SECONDS / SECONDS_TO_MINUTES;
         String timeLeft = String.format(Locale.CANADA, "%02d:%02d", minutes, seconds);
         timerView.setText(timeLeft);
     }
