@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".childConfig.EditRemoveChildActivity">
@@ -24,39 +25,48 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
         android:id="@+id/imgEditRemoveChild"
-        android:layout_below="@+id/appBarLayoutEditRemoveChild"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/default_portrait"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/editTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayoutEditRemoveChild" />
 
     <EditText
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
         android:id="@+id/editTextName"
-        android:layout_below="@+id/imgEditRemoveChild"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:hint="New Name"/>
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:hint="New Name"
+        app:layout_constraintBottom_toTopOf="@+id/btnEditChild"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgEditRemoveChild" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btnEditChild"
-        android:layout_below="@+id/editTextName"
-        android:layout_centerHorizontal="true"
-        android:text="Save Changes"/>
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Save Changes"
+        app:layout_constraintBottom_toTopOf="@+id/btnRemoveChild2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/btnRemoveChild2"
-    android:layout_below="@+id/btnEditChild"
-    android:layout_centerHorizontal="true"
-    android:text="Remove"/>
+        android:id="@+id/btnRemoveChild2"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditChild" />
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

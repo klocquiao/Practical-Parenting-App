@@ -29,7 +29,7 @@ public class AddTaskActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setTitle("Add Task");
+            actionbar.setTitle(R.string.add_task_title);
         }
 
         family = Family.getInstance(this);
@@ -50,6 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 } else {
                     taskManager.addTask(family.getChildren(), extractedText);
                     Toast.makeText(AddTaskActivity.this, "New Task Added!!", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

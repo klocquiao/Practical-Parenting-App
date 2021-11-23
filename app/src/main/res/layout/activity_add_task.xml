@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/buttonConfirmAddTask"
         android:layout_width="150dp"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:text="Add Task"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +39,7 @@
     <EditText
         android:id="@+id/editTextTaskName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:ems="10"
         android:hint="Add Task Name"
         android:inputType="textPersonName"
