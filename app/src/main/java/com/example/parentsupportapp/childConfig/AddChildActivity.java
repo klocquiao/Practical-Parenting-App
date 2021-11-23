@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -187,6 +190,13 @@ public class AddChildActivity extends AppCompatActivity {
         if (str.equals("")) {
             et.setHint(R.string.add_child_activity_enter_error);
             et.setHintTextColor(Color.RED);
+
+            MediaPlayer song = MediaPlayer.create(AddChildActivity.this, R.raw.negativebeep);
+            song.start();
+
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+
             return -1;
         }
         return 0;
