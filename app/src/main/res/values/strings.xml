@@ -104,5 +104,8 @@
     <string name="edit_task_title">Edit Task</string>
     <string name="edit_task_alert_title">Edit Task Name</string>
     <string name="edit_task_alert_message">Please provide a new task name!</string>
+    <string name="child_config_deny_permission">Permission Not Granted</string>
+    <string name="child_config_data">data</string>
+    <string name="child_config_confirm">Confirm</string>
 
 </resources>

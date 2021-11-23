@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#084CD8"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        android:stretchColumns="*"
+        android:orientation="vertical">
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvConfirmation"
+                android:padding="15dp"
+                android:layout_span="2"
+                android:textColor="#ffffff"
+                android:text="Where would you like to choose the photo from?"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/btnCamera"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:padding="10dp"
+                android:text="Camera"
+                />
+
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/btnGallery"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:textColor="#ffffff"
+                android:text="Gallery"
+                />
+
+        </TableRow>
+
+
+
+    </TableLayout>
+
+
+
+
+</RelativeLayout>

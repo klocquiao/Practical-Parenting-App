@@ -3,9 +3,10 @@
     package="com.example.parentsupportapp">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
 
     <application
         android:allowBackup="true"
@@ -15,30 +16,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
+            android:name=".childConfig.EditRemoveChildActivity"
+            android:exported="true"
+            android:parentActivityName=".childConfig.ViewActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+        <activity
             android:name=".tasksConfig.ViewTaskActivity"
             android:exported="false"
             android:parentActivityName=".TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".tasksConfig.RemoveTaskActivity"
-            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".tasksConfig.EditTaskActivity"
-            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".tasksConfig.AddTaskActivity"
-            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".TasksActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".HistoryActivity"
             android:exported="true"
@@ -46,36 +52,21 @@
             android:parentActivityName=".CoinFlipActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
-            android:name=".childConfig.RemoveActivity"
-            android:exported="true"
-            android:parentActivityName=".ChildConfigActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
-        <activity
             android:name=".childConfig.ViewActivity"
-            android:exported="true"
-            android:parentActivityName=".ChildConfigActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:exported="true" />
         <activity
             android:name=".childConfig.AddChildActivity"
             android:exported="true"
-            android:parentActivityName=".ChildConfigActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
-        <activity
-            android:name=".childConfig.EditActivity"
-            android:exported="true"
-            android:parentActivityName=".ChildConfigActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
-        <activity
-            android:name=".ChildConfigActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".childConfig.ViewActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".CoinFlipActivity"
             android:exported="true"
             android:label="@string/coin_flip_title"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".TimerActivity"
             android:exported="false"
@@ -84,8 +75,7 @@
         <activity
             android:name=".HelpActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -97,6 +87,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <receiver
             android:name=".TimerBroadcastReceiver"
