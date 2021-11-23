@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.main_activity_title));
+        actionBar.setTitle(getString(R.string.main_menu_activity_title));
 
         this.configureChildButton = findViewById(R.id.buttonConfigChild);
         this.flipButton = findViewById(R.id.buttonFlipCoin);
@@ -85,5 +85,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }

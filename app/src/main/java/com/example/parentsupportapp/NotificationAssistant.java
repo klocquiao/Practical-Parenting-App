@@ -34,7 +34,7 @@ public class NotificationAssistant extends ContextWrapper {
     public void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.notif_assist_alarm_silence);
-            String description = getString(R.string.channel_description);
+            String description = getString(R.string.timer_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID_1, name, importance);
             channel.setDescription(description);

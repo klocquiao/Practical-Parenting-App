@@ -1,7 +1,6 @@
 package com.example.parentsupportapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,7 +16,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -173,10 +171,10 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void getCoinFlipRecommendation() {
         String recommendation = coinFlipPriorityQueue.getNextInQueue().toString();
         if (recommendation.matches(nobody.getFirstName())) {
-            coinFlipSuggestionText.setText(R.string.no_suggestion);
+            coinFlipSuggestionText.setText(R.string.coin_flip_no_suggestion);
         }
         else {
-            coinFlipSuggestionText.setText(getString(R.string.suggestion_header, recommendation));
+            coinFlipSuggestionText.setText(getString(R.string.coin_flip_suggestion, recommendation));
         }
     }
 

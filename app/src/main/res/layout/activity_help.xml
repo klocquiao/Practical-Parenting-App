@@ -28,7 +28,7 @@
         android:id="@+id/textViewHelpTeamName"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:text="@string/help_app_created_msg"
+        android:text="@string/help_created_msg"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewHelpSources"

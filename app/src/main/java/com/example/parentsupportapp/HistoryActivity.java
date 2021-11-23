@@ -73,7 +73,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void populateHistoryListView() {
         ArrayAdapter<HistoryEntry> adapter = new HistoryListAdapter();
-        ListView list = (ListView) findViewById(R.id.listHistory);
+        ListView list = findViewById(R.id.listHistory);
         list.setAdapter(adapter);
     }
 
