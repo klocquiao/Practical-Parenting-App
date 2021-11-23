@@ -34,6 +34,7 @@ import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * The AddChildActivity adds a new child to the family list. The associated data
@@ -46,6 +47,7 @@ public class AddChildActivity extends AppCompatActivity {
     public static final int MIN_SDK = 23;
     private Family family;
     public ImageView imgChild;
+    private FloatingActionButton fabAddPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,17 @@ public class AddChildActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         setupAddButton();
         setupImageButton();
+        setupFabAddPhoto();
+    }
+
+    private void setupFabAddPhoto() {
+        fabAddPhoto = findViewById(R.id.floatingActionButtonAddPhoto);
+        fabAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePhoto();
+            }
+        });
     }
 
     private void setupImageButton() {
