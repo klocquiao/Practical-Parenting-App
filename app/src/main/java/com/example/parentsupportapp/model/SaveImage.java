@@ -13,6 +13,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * SaveImage save the image that a user enters when using the add and edit function in
+ * child config. It is also able to load said image.
+ */
+
 public class SaveImage {
     private String directoryName = "images";
     private String fileName = "image.png";

@@ -1,10 +1,3 @@
-/**
- * The MainActivity class handles the model for the main/initial menu
- * It consists of three buttons for three different activities
- * The setupButtonListeners method is set so that on click of each of the three
- * buttons it will shift to the respective activities.
- */
-
 package com.example.parentsupportapp;
 
 import android.content.Intent;
@@ -17,6 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.childConfig.ViewActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
+
+/**
+ * The MainActivity class handles the model for the main/initial menu
+ * It consists of three buttons for three different activities
+ * The setupButtonListeners method is set so that on click of each of the three
+ * buttons it will shift to the respective activities.
+ */
 
 public class MainActivity extends AppCompatActivity {
     private Button configureChildButton;

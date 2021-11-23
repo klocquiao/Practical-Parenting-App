@@ -28,8 +28,9 @@ import com.google.gson.Gson;
 import java.util.List;
 
 /**
- * View activity helps to view all the children that
- * have been added to the app
+ * View activity helps to view all the children that have been added to the app.
+ * In this activity the user can click the floating action button to add a child to the list of saved
+ * children or click one of the children from the list which allows them to edit/remove said kid.
  */
 
 public class ViewActivity extends AppCompatActivity {

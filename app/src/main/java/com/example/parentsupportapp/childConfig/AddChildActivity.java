@@ -36,8 +36,8 @@ import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
 
 /**
- * Add child activity models adding a new new child to the
- * configuration
+ * The AddChildActivity adds a new child to the family list. The associated data
+ * per child that is added is a picture of them and their name.
  */
 
 public class AddChildActivity extends AppCompatActivity {

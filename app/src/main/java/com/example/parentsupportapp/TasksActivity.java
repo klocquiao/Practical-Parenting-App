@@ -33,6 +33,13 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+/**
+ * The TaskActivity is the starting screen of the overall task feature.
+ * It shows a list of tasks and its associated information (name of task, image of next child
+ * in the priority queue to perform said task, and their name).
+ * The user can edit, remove, and add tasks by clicking their respective button.
+ */
+
 public class TasksActivity extends AppCompatActivity {
 
     private Family fam;

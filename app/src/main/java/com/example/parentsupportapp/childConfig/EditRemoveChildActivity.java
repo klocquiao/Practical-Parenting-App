@@ -35,6 +35,11 @@ import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.SaveImage;
 
+/**
+ * The EditRemoveChildActivity allows the user to remove a child from the family list, change
+ * a specific child's name, or change their current image.
+ */
+
 public class EditRemoveChildActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GALLERY = 1;
     public static final int REQUEST_CODE_CAMERA = 2;

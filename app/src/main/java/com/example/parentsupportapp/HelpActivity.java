@@ -10,8 +10,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class HelpActivity extends AppCompatActivity {
+/**
+ * The HelpActivity contains the following information:
+ * Image citations
+ * Team name
+ */
 
+public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

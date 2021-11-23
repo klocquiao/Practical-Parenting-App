@@ -12,15 +12,15 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+/**
+ This class has helper functions for preparing the notification channels and creating the
+ required objects in order to send a notification through the created channel.
+
+ Referenced notification setup from:
+ https://developer.android.com/training/notify-user/build-notification#SimpleNotification
+ */
+
 public class NotificationAssistant extends ContextWrapper {
-    /*
-    This class has helper functions for preparing the notification channels and creating the
-    required objects in order to send a notification through the created channel.
-
-    Referenced notification setup from:
-    https://developer.android.com/training/notify-user/build-notification#SimpleNotification
-     */
-
     private static final String CHANNEL_ID_1 = "timerActivityChannel1";
     private static final int REQUEST_CODE_TIMER_ACTIVITY = 0;
     public static final int REQUEST_CODE_NOTIF_BTN_SILENCE = 1;
