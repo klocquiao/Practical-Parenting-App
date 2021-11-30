@@ -20,18 +20,6 @@ public class Task {
         this.taskHistory = new HistoryManager(children, HistoryManager.EMPTY);
     }
 
-    public PriorityQueue getPriorityQueue() {
-        return childQueue;
-    }
-
-    public String getNextChildInQueueName() {
-        return childQueue.getNextInQueue().getFirstName();
-    }
-
-    public String getNextChildInQueueImage() {
-        return childQueue.getNextInQueue().getPortraitPath();
-    }
-
     public void moveFirstChildToBack() {
         Child firstChild = childQueue.getNextInQueue();
         addHistoryEntry(firstChild);
@@ -43,10 +31,26 @@ public class Task {
         taskHistory.addHistoryEntry(newEntry);
     }
 
+    public HistoryManager getTaskHistory() {
+        return taskHistory;
+    }
+
     public String getSerializedTaskHistory() {
         Gson gson = new Gson();
         String jsonHistory = gson.toJson(taskHistory.getHistory());
         return jsonHistory;
+    }
+
+    public PriorityQueue getPriorityQueue() {
+        return childQueue;
+    }
+
+    public String getNextChildInQueueName() {
+        return childQueue.getNextInQueue().getFirstName();
+    }
+
+    public String getNextChildInQueueImage() {
+        return childQueue.getNextInQueue().getPortraitPath();
     }
 
     public String getTaskName() {

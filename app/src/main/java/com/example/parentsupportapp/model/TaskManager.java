@@ -32,6 +32,7 @@ public class TaskManager {
         }
 
         updatePriorityQueues(children);
+        updateTaskHistory(children);
         return instance;
     }
 
@@ -50,6 +51,12 @@ public class TaskManager {
     public static void updatePriorityQueues(List<Child> children) {
         for (Task task: taskArray) {
             task.getPriorityQueue().updateQueue(children);
+        }
+    }
+
+    public static void updateTaskHistory(List<Child> children) {
+        for (Task task: taskArray) {
+            task.getTaskHistory().updateChildObjects(children);
         }
     }
 

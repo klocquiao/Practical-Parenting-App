@@ -32,7 +32,7 @@ public class HistoryManager {
         updateChildObjects(children);
     }
 
-    private void updateChildObjects(List<Child> children) {
+    public void updateChildObjects(List<Child> children) {
         for (HistoryEntry entry: history) {
             int index = children.indexOf(entry.getChild());
             if (index != -1) {
