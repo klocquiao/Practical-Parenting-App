@@ -1,7 +1,6 @@
 package com.example.parentsupportapp.model;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.parentsupportapp.HistoryActivity;
 import com.google.gson.Gson;
@@ -20,53 +19,37 @@ import java.util.List;
 
 public class HistoryManager {
     public static final String EMPTY = "";
-    private static List<HistoryEntry> history;
-    private static HistoryManager instance;
-    private static Context context;
+    private List<HistoryEntry> history;
 
-    public static HistoryManager getInstance(List<Child> children, Context context) {
-        if (instance == null) {
-            instance = new HistoryManager(context);
-        }
-        updateChildObjects(children);
-        return instance;
-    }
-
-    public HistoryManager(Context context) {
-        this.context = context;
-        String jsonHistory = HistoryActivity.getHistoryEntries(context);
-
+    public HistoryManager(List<Child> children, String jsonHistory) {
         if (jsonHistory.matches(EMPTY)) {
             history = new ArrayList<>();
         }
         else {
             history = deserializeHistory(jsonHistory);
         }
+
+        updateChildObjects(children);
     }
 
-    private static void updateChildObjects(List<Child> children) {
+    private void updateChildObjects(List<Child> children) {
         for (HistoryEntry entry: history) {
-            int index = children.indexOf(entry.getFlipper());
+            int index = children.indexOf(entry.getChild());
             if (index != -1) {
-                entry.setFlipper(children.get(index));
+                entry.setChild(children.get(index));
             }
         }
     }
 
     public void addCoinFlipEntry(HistoryEntry newEntry) {
         history.add(0, newEntry);
-        HistoryActivity.saveHistoryActivityPrefs(context, this);
     }
 
     public List<HistoryEntry> getHistory() {
         return history;
     }
 
-    public HistoryEntry getHistoryEntry(int position) {
-       return history.get(position);
-    }
-
-    private List<HistoryEntry> deserializeHistory(String jsonHistory) {
+    public static List<HistoryEntry> deserializeHistory(String jsonHistory) {
         Type type = new TypeToken<List<HistoryEntry>>(){}.getType();
         Gson gson = new Gson();
         return gson.fromJson(jsonHistory, type);
