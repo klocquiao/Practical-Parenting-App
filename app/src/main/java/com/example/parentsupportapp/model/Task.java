@@ -1,10 +1,12 @@
 package com.example.parentsupportapp.model;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 /**
  * The task class contains key data for each task created by the user. It holds
- * the name of the task, as well as a priority queue that keeps track of whose turn it is.
+ * the name of the task, history of task, as well as a priority queue that keeps track of whose turn it is.
  */
 
 public class Task {
@@ -39,6 +41,12 @@ public class Task {
     public void addHistoryEntry(Child child) {
         HistoryEntry newEntry = new HistoryEntry(child);
         taskHistory.addHistoryEntry(newEntry);
+    }
+
+    public String getSerializedTaskHistory() {
+        Gson gson = new Gson();
+        String jsonHistory = gson.toJson(taskHistory.getHistory());
+        return jsonHistory;
     }
 
     public String getTaskName() {
