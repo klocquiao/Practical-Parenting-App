@@ -41,7 +41,7 @@ public class HistoryManager {
         }
     }
 
-    public void addCoinFlipEntry(HistoryEntry newEntry) {
+    public void addHistoryEntry(HistoryEntry newEntry) {
         history.add(0, newEntry);
     }
 

@@ -58,17 +58,12 @@ public class TaskManager {
     }
 
     public void addTask (List<Child> children, String taskName) {
-        this.taskArray.add(new Task(taskName, new PriorityQueue(children, EMPTY)));
+        this.taskArray.add(new Task(taskName, children));
         TasksActivity.saveTaskSharedPrefs(context, this);
     }
 
     public void removeTask (int index) {
         this.taskArray.remove(index);
-        TasksActivity.saveTaskSharedPrefs(context, this);
-    }
-
-    public void editTask (int index, String name) {
-        this.taskArray.get(index).setTaskName(name);
         TasksActivity.saveTaskSharedPrefs(context, this);
     }
 

@@ -16,7 +16,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -107,6 +106,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         isHead = true;
+        nobody = new Child(NOBODY);
 
         initializeViews();
 
@@ -116,11 +116,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         family = Family.getInstance(this);
         history = new HistoryManager(family.getChildren(), getHistoryEntries(this));
         coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
-        for (int i = 0; i < history.getHistory().size(); i++) {
-            Log.i("REE", history.getHistory().get(i).getChildName());
-
-        }
-        nobody = new Child(NOBODY);
+        saveHistoryActivityPrefs(this);
 
         updateUI();
         setupCoinFlipAnimation();
@@ -329,7 +325,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         Child child = (Child) childrenSpinner.getSelectedItem();
         String choice = getChoice();
         HistoryEntry newEntry = new HistoryEntry(child, choice, getResults());
-        history.addCoinFlipEntry(newEntry);
+        history.addHistoryEntry(newEntry);
         coinFlipPriorityQueue.queueRecentlyUsed(child);
     }
 

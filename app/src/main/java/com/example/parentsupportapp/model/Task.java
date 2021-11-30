@@ -1,8 +1,6 @@
 package com.example.parentsupportapp.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The task class contains key data for each task created by the user. It holds
@@ -12,10 +10,12 @@ import java.util.ArrayList;
 public class Task {
     private String name;
     private PriorityQueue childQueue;
+    private HistoryManager taskHistory;
 
-    public Task (String taskName, PriorityQueue childQueue) {
+    public Task (String taskName, List<Child> children) {
         this.name = taskName;
-        this.childQueue = childQueue;
+        this.childQueue = new PriorityQueue(children, PriorityQueue.EMPTY);
+        this.taskHistory = new HistoryManager(children, HistoryManager.EMPTY);
     }
 
     public PriorityQueue getPriorityQueue() {
@@ -32,7 +32,13 @@ public class Task {
 
     public void moveFirstChildToBack() {
         Child firstChild = childQueue.getNextInQueue();
+        addHistoryEntry(firstChild);
         childQueue.queueRecentlyUsed(firstChild);
+    }
+
+    public void addHistoryEntry(Child child) {
+        HistoryEntry newEntry = new HistoryEntry(child);
+        taskHistory.addHistoryEntry(newEntry);
     }
 
     public String getTaskName() {
