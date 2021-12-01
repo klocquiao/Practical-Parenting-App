@@ -3,15 +3,19 @@ package com.example.parentsupportapp.tasksConfig;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.parentsupportapp.HistoryActivity;
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.TasksActivity;
 import com.example.parentsupportapp.childConfig.ViewActivity;
@@ -45,6 +49,24 @@ public class ViewTaskActivity extends AppCompatActivity {
         initializeVariables();
         setupView();
         setupButton();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_flip, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.actionHistory:
+                Intent historyIntent = HistoryActivity.makeIntent(this, currentTask.getSerializedTaskHistory(), true);
+                startActivity(historyIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initializeVariables() {

@@ -52,7 +52,8 @@ import java.util.Random;
 
 public class CoinFlipActivity extends AppCompatActivity {
     private static final String KEY_PRIORITY = "CoinFlipPriorityKey";
-    private static final String PREF_PRIORITY = "CoinFlipActivityPref";
+    private static final String KEY_HISTORY = "CoinFlipHistoryKey";
+    private static final String PREF_COIN_FLIP = "CoinFlipActivityPref";
 
     private static final String HEADS = "Heads";
     private static final String TAILS = "Tails";
@@ -105,6 +106,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         isHead = true;
+        nobody = new Child(NOBODY);
 
         initializeViews();
 
@@ -112,9 +114,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         handler = new Handler();
 
         family = Family.getInstance(this);
-        history = HistoryManager.getInstance(family.getChildren(), this);
+        history = new HistoryManager(family.getChildren(), getHistoryEntries(this));
         coinFlipPriorityQueue = new PriorityQueue(family.getChildren(), getPriorityQueue(this));
-        nobody = new Child(NOBODY);
+        saveHistoryActivityPrefs(this);
 
         updateUI();
         setupCoinFlipAnimation();
@@ -145,7 +147,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.actionHistory:
-                Intent historyIntent = HistoryActivity.makeIntent(this);
+                Intent historyIntent = HistoryActivity.makeIntent(this, getHistoryEntries(this), false);
                 startActivity(historyIntent);
                 return true;
             default:
@@ -276,6 +278,7 @@ public class CoinFlipActivity extends AppCompatActivity {
                         if (!coinFlipPriorityQueue.isEmpty() && child != nobody) {
                             createHistoryEntry();
                             updateUI();
+                            saveHistoryActivityPrefs(CoinFlipActivity.this);
                         }
                     }
                 }, 2000);
@@ -322,7 +325,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         Child child = (Child) childrenSpinner.getSelectedItem();
         String choice = getChoice();
         HistoryEntry newEntry = new HistoryEntry(child, choice, getResults());
-        history.addCoinFlipEntry(newEntry);
+        history.addHistoryEntry(newEntry);
         coinFlipPriorityQueue.queueRecentlyUsed(child);
     }
 
@@ -354,16 +357,23 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     public static String getPriorityQueue(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(PREF_COIN_FLIP, MODE_PRIVATE);
         return prefs.getString(KEY_PRIORITY, PriorityQueue.EMPTY);
     }
 
+    public static String getHistoryEntries(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_COIN_FLIP, MODE_PRIVATE);
+        return prefs.getString(KEY_HISTORY, HistoryManager.EMPTY);
+    }
+
     private void saveHistoryActivityPrefs(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_PRIORITY, MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(PREF_COIN_FLIP, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String jsonPriority = gson.toJson(coinFlipPriorityQueue.getPriorityQueue());
+        String jsonHistory = gson.toJson(history.getHistory());
         editor.putString(KEY_PRIORITY, jsonPriority);
+        editor.putString(KEY_HISTORY, jsonHistory);
         editor.apply();
     }
 

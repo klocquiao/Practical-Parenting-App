@@ -10,23 +10,21 @@ import java.time.format.DateTimeFormatter;
  */
 
 public class HistoryEntry {
-    private Child flipperChild;
+    private Child child;
     private String timeOfFlip;
     private String flipChoice;
     private String flipResult;
 
-    public HistoryEntry(Child flipperChild, String flipChoice, String flipResult) {
+    public HistoryEntry(Child child) {
         this.timeOfFlip = convertTimeToString();
-        this.flipperChild = flipperChild;
-        this.flipChoice = flipChoice;
-        this.flipResult = flipResult;
+        this.child = child;
     }
 
-    public boolean isMatch() {
-        if (flipChoice.matches(flipResult)) {
-            return true;
-        }
-        return false;
+    public HistoryEntry(Child child, String flipChoice, String flipResult) {
+        this.timeOfFlip = convertTimeToString();
+        this.child = child;
+        this.flipChoice = flipChoice;
+        this.flipResult = flipResult;
     }
 
     private String convertTimeToString() {
@@ -34,6 +32,13 @@ public class HistoryEntry {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d @ hh:mm");
         String strTimeOfFlip = time.format(formatter);
         return strTimeOfFlip;
+    }
+
+    public boolean isMatch() {
+        if (flipChoice.matches(flipResult)) {
+            return true;
+        }
+        return false;
     }
 
     public String getTimeOfFlip() {
@@ -48,19 +53,19 @@ public class HistoryEntry {
         return flipResult;
     }
 
-    public Child getFlipper() {
-        return flipperChild;
+    public Child getChild() {
+        return child;
     }
 
-    public String getFlipperName() {
-        return flipperChild.toString();
+    public String getChildName() {
+        return child.toString();
     }
 
-    public String getFlipperImage() {
-        return flipperChild.getPortraitPath();
+    public String getChildImage() {
+        return child.getPortraitPath();
     }
 
-    public void setFlipper(Child child) {
-        this.flipperChild = child;
+    public void setChild(Child child) {
+        this.child = child;
     }
 }

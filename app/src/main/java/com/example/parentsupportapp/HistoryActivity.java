@@ -8,8 +8,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,23 +18,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.parentsupportapp.childConfig.ViewActivity;
-import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
-import com.google.gson.Gson;
+
+import java.util.List;
 
 /**
- * HistoryActivity presents the list of coin flip entries to the user, taking said data
- * from the HistoryManager. HistoryActivity also contains the sharedPreferences used by
- * the HistoryManager to save the history entry list and priority queue after the application is
- * terminated.
+ * HistoryActivity presents either a Task history or the coin flip history
+ * depending on what is is passed in an extra.
  */
 
 public class HistoryActivity extends AppCompatActivity {
-    private HistoryManager history;
-    private Family children;
-    private static final String KEY_HISTORY = "HistoryKey";
-    private static final String PREF_HISTORY = "HistoryActivityPref";
+    private static final String EXTRA_JSON_HISTORY = "com.example.parentsupportapp.HistoryActivity.json_history";
+    private static final String EXTRA_IS_TASK = "com.example.parentsupportapp.HistoryActivity.is_task";
+
+    private List<HistoryEntry> history;
+    private Boolean isTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,56 +45,57 @@ public class HistoryActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        children = Family.getInstance(this);
-        history = HistoryManager.getInstance(children.getChildren(), this);
-        populateHistoryListView();
+        isTask = getIntent().getBooleanExtra(EXTRA_IS_TASK, false);
+        String jsonHistory = getIntent().getStringExtra(EXTRA_JSON_HISTORY);
+
+        if (!jsonHistory.matches(HistoryManager.EMPTY)) {
+            history = HistoryManager.deserializeHistory(jsonHistory);
+            populateHistoryListView();
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        populateHistoryListView();
-    }
-
-    public static void saveHistoryActivityPrefs(Context context, HistoryManager historyManager) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String jsonHistory = gson.toJson(historyManager.getHistory());
-        editor.putString(KEY_HISTORY, jsonHistory);
-        editor.apply();
-    }
-
-    public static String getHistoryEntries(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(PREF_HISTORY, MODE_PRIVATE);
-        return prefs.getString(KEY_HISTORY, HistoryManager.EMPTY);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void populateHistoryListView() {
-        ArrayAdapter<HistoryEntry> adapter = new HistoryListAdapter();
+        ArrayAdapter<HistoryEntry> adapter;
+        if (isTask) {
+            adapter = new HistoryListTaskAdapter();
+        }
+        else {
+            adapter = new HistoryListCoinFlipAdapter();
+
+        }
         ListView list = findViewById(R.id.listHistory);
         list.setAdapter(adapter);
     }
 
-    private class HistoryListAdapter extends ArrayAdapter<HistoryEntry> {
-        public HistoryListAdapter() {
-            super(HistoryActivity.this, R.layout.history_list_view, history.getHistory());
+    private class HistoryListCoinFlipAdapter extends ArrayAdapter<HistoryEntry> {
+        public HistoryListCoinFlipAdapter() {
+            super(HistoryActivity.this, R.layout.history_list_coin_flip_view, history);
         }
 
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View historyListView = convertView;
             if (historyListView == null) {
-                historyListView = getLayoutInflater().inflate(R.layout.history_list_view, parent, false);
+                historyListView = getLayoutInflater().inflate(R.layout.history_list_coin_flip_view, parent, false);
             }
 
-            HistoryEntry currentHistoryEntry = history.getHistoryEntry(position);
+            HistoryEntry currentHistoryEntry = history.get(position);
 
             TextView textTimeOfFlip = (TextView) historyListView.findViewById(R.id.textTimeOfFlip);
             textTimeOfFlip.setText(currentHistoryEntry.getTimeOfFlip());
 
             TextView textFlipperName = (TextView) historyListView.findViewById(R.id.textFlipperName);
-            textFlipperName.setText(currentHistoryEntry.getFlipperName());
+            textFlipperName.setText(currentHistoryEntry.getChildName());
 
             TextView textFlipChoice = (TextView) historyListView.findViewById(R.id.textFlipChoice);
             textFlipChoice.setText(getString(R.string.history_choice,currentHistoryEntry.getFlipChoice()));
@@ -103,7 +103,7 @@ public class HistoryActivity extends AppCompatActivity {
             TextView textFlipResult = (TextView) historyListView.findViewById(R.id.textFlipResult);
             textFlipResult.setText(getString(R.string.history_results, currentHistoryEntry.getFlipResult()));
 
-            ImageView imageIsMatch = (ImageView) historyListView.findViewById(R.id.imageIsMatch);
+            ImageView imageIsMatch = (ImageView) historyListView.findViewById(R.id.imagePastCompleter);
             if (currentHistoryEntry.isMatch()) {
                 imageIsMatch.setImageResource(R.drawable.ic_baseline_check_circle_outline);
             }
@@ -112,15 +112,44 @@ public class HistoryActivity extends AppCompatActivity {
             }
 
             ImageView imageChild = (ImageView) historyListView.findViewById(R.id.imagePastFlipper);
-            ViewActivity.loadImageFromStorage(currentHistoryEntry.getFlipperImage(), imageChild, HistoryActivity.this);
+            ViewActivity.loadImageFromStorage(currentHistoryEntry.getChildImage(), imageChild, HistoryActivity.this);
 
 
             return historyListView;
         }
     }
 
-    public static Intent makeIntent(Context c) {
+    private class HistoryListTaskAdapter extends ArrayAdapter<HistoryEntry> {
+        public HistoryListTaskAdapter() {
+            super(HistoryActivity.this, R.layout.history_list_coin_task_view, history);
+        }
+
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View historyListView = convertView;
+            if (historyListView == null) {
+                historyListView = getLayoutInflater().inflate(R.layout.history_list_coin_task_view, parent, false);
+            }
+
+            HistoryEntry currentHistoryEntry = history.get(position);
+
+            TextView textTimeOfFlip = (TextView) historyListView.findViewById(R.id.textTimeOfCompletion);
+            textTimeOfFlip.setText(currentHistoryEntry.getTimeOfFlip());
+
+            TextView textFlipperName = (TextView) historyListView.findViewById(R.id.textPastCompleterName);
+            textFlipperName.setText(currentHistoryEntry.getChildName());
+
+            ImageView imageChild = (ImageView) historyListView.findViewById(R.id.imagePastCompleter);
+            ViewActivity.loadImageFromStorage(currentHistoryEntry.getChildImage(), imageChild, HistoryActivity.this);
+
+            return historyListView;
+        }
+    }
+
+    public static Intent makeIntent(Context c, String jsonHistory, Boolean isTask) {
         Intent intent = new Intent(c, HistoryActivity.class);
+        intent.putExtra(EXTRA_JSON_HISTORY, jsonHistory);
+        intent.putExtra(EXTRA_IS_TASK, isTask);
         return intent;
     }
 }
