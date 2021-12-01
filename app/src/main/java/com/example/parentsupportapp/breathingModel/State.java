@@ -1,21 +1,21 @@
 package com.example.parentsupportapp.breathingModel;
 
+import com.example.parentsupportapp.BreathingActivity;
+
 // State Pattern's base states
 public abstract class State {
-    // If putting in new file, you might want State base class to
-    // hold a reference to the activity
-        /*
-        private MainActivity context;
-        public State(MainActivity context) {
+
+        protected BreathingActivity context;
+
+        public State(BreathingActivity context) {
             this.context = context;
         }
-        */
 
     // Empty implementations, so derived class don't need to
     // override methods they don't care about.
 
-    void handleEnter() {}
-    void handleExit() {}
-    void handleClickOn() {}
-    void handleClickOff() {}
+    public void handleEnter() {}
+    public void handleExit() {}
+    public void handleClickOn() {}
+    public void handleClickOff() {}
 }
