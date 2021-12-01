@@ -3,10 +3,9 @@
     package="com.example.parentsupportapp">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
+        <activity
+            android:name=".StartBreathing"
+            android:exported="true" />
         <activity
             android:name=".childConfig.EditRemoveChildActivity"
             android:exported="true"
@@ -27,24 +29,24 @@
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".tasksConfig.RemoveTaskActivity"
+            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
-            android:exported="false" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".tasksConfig.EditTaskActivity"
+            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
-            android:exported="false" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".tasksConfig.AddTaskActivity"
+            android:exported="false"
             android:parentActivityName=".TasksActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
-            android:exported="false" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".TasksActivity"
             android:exported="false"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".HistoryActivity"
             android:exported="true"
@@ -54,8 +56,7 @@
         <activity
             android:name=".childConfig.ViewActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
-            android:exported="true" />
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".childConfig.AddChildActivity"
             android:exported="true"
@@ -66,7 +67,7 @@
             android:exported="true"
             android:label="@string/coin_flip_title"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".TimerActivity"
             android:exported="false"
@@ -76,7 +77,7 @@
             android:name=".HelpActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -88,7 +89,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <receiver
             android:name=".TimerBroadcastReceiver"
