@@ -1,10 +1,6 @@
 package com.example.parentsupportapp.model;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.example.parentsupportapp.TasksActivity;
 import com.google.gson.Gson;
@@ -77,7 +73,7 @@ public class TaskManager {
     }
 
     private ArrayList<Task> deserializeTaskArray (String jsonTask) {
-        Type type = new TypeToken<List<Task>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Task>>(){}.getType();
         Gson gson = new Gson();
         return gson.fromJson(jsonTask, type);
     }
