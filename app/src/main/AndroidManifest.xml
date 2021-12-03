@@ -54,7 +54,7 @@
         <activity
             android:name=".childConfig.ViewActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".childConfig.AddChildActivity"

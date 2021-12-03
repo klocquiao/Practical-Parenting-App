@@ -29,6 +29,8 @@ import androidx.constraintlayout.widget.Guideline;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.github.mikephil.charting.charts.PieChart;
+
 import java.util.Locale;
 
 /**
@@ -52,6 +54,7 @@ public class TimerActivity extends AppCompatActivity {
     public static final float GUIDE_PERCENT_1 = (float) 0.7;
     public static final float GUIDE_PERCENT_2 = (float) 0.4;
 
+    private PieChart pieChart;
     private TextView timerView;
     private Button startButton;
     private Button resetButton;
@@ -70,6 +73,7 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
+    private long timeDiffStartVsLeft = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initializeButtons() {
+        pieChart = findViewById(R.id.pieChartTimer);
         timerView = findViewById(R.id.textViewTimer);
         startButton = findViewById(R.id.buttonStart);
         resetButton = findViewById(R.id.buttonReset);
