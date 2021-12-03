@@ -30,7 +30,13 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -217,7 +223,9 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 timeLeftInMill = l;
+                timeDiffStartVsLeft = lastSelectedTime - timeLeftInMill;
                 updateTimerTextView();
+                updateTimerPieChart();
             }
 
             @RequiresApi(api = Build.VERSION_CODES.S)
@@ -236,6 +244,7 @@ public class TimerActivity extends AppCompatActivity {
         isTicking = true;
         updateUIHideButtons();
     }
+
 
     private void vibrateEndOfTimer() {
         if (vibrator.hasVibrator()) {
@@ -298,6 +307,7 @@ public class TimerActivity extends AppCompatActivity {
                 if (!isTicking) {
                     timeLeftInMill = time;
                     lastSelectedTime = time;
+                    timeDiffStartVsLeft = 0;    // has to be 0 at this point
                     updateTimerTextView();
                     startTimer();
                 }
@@ -310,6 +320,34 @@ public class TimerActivity extends AppCompatActivity {
         int minutes = (int) timeLeftInMill / MILLISECONDS_TO_SECONDS / SECONDS_TO_MINUTES;
         String timeLeft = String.format(Locale.CANADA, "%02d:%02d", minutes, seconds);
         timerView.setText(timeLeft);
+    }
+
+    private void updateTimerPieChart() {
+        List<PieEntry> pieEntries = new ArrayList<>();
+        if (pieEntries.isEmpty()) {
+            addPieEntries(pieEntries);
+        } else {
+            removePieEntries(pieEntries);
+            addPieEntries(pieEntries);
+        }
+
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Time remaining");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieData data = new PieData(dataSet);
+
+        pieChart.setData(data);
+        pieChart.invalidate();
+    }
+
+    private void addPieEntries(List<PieEntry> pieEntries) {
+        pieEntries.add(new PieEntry(timeLeftInMill));
+        pieEntries.add(new PieEntry(timeDiffStartVsLeft));
+    }
+
+    private void removePieEntries(List<PieEntry> pieEntries) {
+        for (PieEntry entry : pieEntries) {
+            pieEntries.remove(entry);
+        }
     }
 
     public static Intent makeIntent(Context context) {
