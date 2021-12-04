@@ -28,6 +28,7 @@ public class ExhaleState extends State {
     @Override
     public void handleExit() {
         super.handleExit();
+        handler.removeCallbacks(stateToExhale);
         //Cancel animations & sound
     }
 
@@ -40,6 +41,7 @@ public class ExhaleState extends State {
                 context.btnBreathe.setText(context.getString(R.string.breathing_in));
             }
             else {
+
                 context.setState(context.finishState);
             }
         }
@@ -54,7 +56,6 @@ public class ExhaleState extends State {
     @Override
     public void handleClick() {
         super.handleClick();
-        handler.removeCallbacks(stateToExhale);
         context.setState(context.inhaleState);
         context.currentState.handleClick();
     }

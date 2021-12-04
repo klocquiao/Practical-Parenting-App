@@ -20,7 +20,6 @@ public class StartState extends State{
     public void handleClick() {
         super.handleClick();
         context.setState(context.inhaleState);
-        context.btnBreathe.setText(context.getString(R.string.breathing_in));
         context.currentState.handleClick();
     }
 }
