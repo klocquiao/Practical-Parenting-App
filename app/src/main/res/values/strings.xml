@@ -97,6 +97,9 @@
     <string name="edit_task_alert_title">Edit Task Name</string>
     <string name="edit_task_alert_message">Please provide a new task name!</string>
 
+    <!-- Breathing Activity -->
+    <string name="breathing_header">Lets take %1$s breaths together!</string>
+
     <!-- Help Activity -->
     <string name="help_sources">
         Sources:

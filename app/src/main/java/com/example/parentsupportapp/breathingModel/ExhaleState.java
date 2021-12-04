@@ -6,4 +6,5 @@ public class ExhaleState extends State {
     public ExhaleState(BreathingActivity context) {
         super(context);
     }
+
 }

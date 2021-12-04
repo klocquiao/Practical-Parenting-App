@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button timerButton;
     private Button tasksButton;
     private Button helpButton;
+    private Button breathButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         this.timerButton = findViewById(R.id.buttonTimer);
         this.tasksButton = findViewById(R.id.buttonTasks);
         this.helpButton = findViewById(R.id.buttonHelp);
+        this.breathButton = findViewById(R.id.buttonBreathing);
 
         this.setupButtonListeners();
     }
@@ -82,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
                 startActivity(helpIntent);
+            }
+        });
+
+        this.breathButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent breathingIntent = StartBreathing.makeIntent(MainActivity.this);
+                startActivity(breathingIntent);
             }
         });
     }
