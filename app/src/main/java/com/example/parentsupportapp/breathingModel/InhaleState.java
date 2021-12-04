@@ -50,13 +50,6 @@ public class InhaleState extends State {
         handler.postDelayed(shouldBreathOut, TEN_SECONDS_MS);
     }
 
-    @Override
-    public void handleCancel() {
-        super.handleCancel();
-        handler.removeCallbacks(canBreatheOut);
-        handler.removeCallbacks(shouldBreathOut);
-    }
-
     Runnable shouldBreathOut = new Runnable() {
         public void run() {
             Toast.makeText(context, context.getString(R.string.breathing_exhale_error), Toast.LENGTH_SHORT).show();

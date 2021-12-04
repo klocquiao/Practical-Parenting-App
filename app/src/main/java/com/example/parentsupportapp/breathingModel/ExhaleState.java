@@ -18,6 +18,7 @@ public class ExhaleState extends State {
 
         context.btnBreathe.setEnabled(false);
         handler.postDelayed(exhaleButtonLock, THREE_SECONDS_MS);
+        handler.postDelayed(stateToExhale, TEN_SECONDS_MS);
 
         //Start animation & sound
 
@@ -44,9 +45,16 @@ public class ExhaleState extends State {
         }
     };
 
+    Runnable stateToExhale = new Runnable() {
+        public void run() {
+            context.setState(context.inhaleState);
+        }
+    };
+
     @Override
     public void handleClick() {
         super.handleClick();
+        handler.removeCallbacks(stateToExhale);
         context.setState(context.inhaleState);
         context.currentState.handleClick();
     }
