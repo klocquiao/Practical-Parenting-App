@@ -32,15 +32,24 @@ public class ExhaleState extends State {
 
     Runnable exhaleButtonLock = new Runnable() {
         public void run() {
+            String numBreaths = Integer.toString(context.numberOfBreaths);
+            context.txtMain.setText(context.getString(R.string.breathing_header, numBreaths));
             if (context.numberOfBreaths > 0) {
                 context.btnBreathe.setEnabled(true);
-                context.setState(context.inhaleState);
+                context.btnBreathe.setText(context.getString(R.string.breathing_in));
             }
             else {
                 context.setState(context.finishState);
             }
         }
     };
+
+    @Override
+    public void handleClick() {
+        super.handleClick();
+        context.setState(context.inhaleState);
+        context.currentState.handleClick();
+    }
 }
 
 

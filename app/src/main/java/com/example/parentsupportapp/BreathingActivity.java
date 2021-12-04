@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.breathingModel.ExhaleState;
 import com.example.parentsupportapp.breathingModel.FinishState;
+import com.example.parentsupportapp.breathingModel.IdleState;
 import com.example.parentsupportapp.breathingModel.StartState;
 import com.example.parentsupportapp.breathingModel.InhaleState;
 import com.example.parentsupportapp.breathingModel.State;
@@ -22,7 +23,8 @@ public class BreathingActivity extends AppCompatActivity {
     public final State inhaleState = new InhaleState(this);
     public final State exhaleState = new ExhaleState(this);
     public final State finishState = new FinishState(this);
-    private State currentState = new StartState(this);
+    public final State startState = new StartState(this);
+    public State currentState = new IdleState(this);
 
     public int numberOfBreaths;
     public Button btnBreathe;
@@ -35,7 +37,7 @@ public class BreathingActivity extends AppCompatActivity {
         setupViews();
         setupButtons();
         numberOfBreaths = getIntent().getIntExtra(EXTRA_NUM_OF_BREATHS, 1);
-        setState(inhaleState);
+        setState(startState);
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -15,13 +15,9 @@ public class InhaleState extends State {
     public void handleEnter() {
         super.handleEnter();
 
-        String numBreaths = Integer.toString(context.numberOfBreaths);
-        context.txtMain.setText(context.getString(R.string.breathing_header, numBreaths));
-
-        context.btnBreathe.setText(context.getString(R.string.breathing_in));
-
         Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void handleExit() {
         super.handleExit();
