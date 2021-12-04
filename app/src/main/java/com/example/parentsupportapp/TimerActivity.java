@@ -30,6 +30,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -98,6 +100,7 @@ public class TimerActivity extends AppCompatActivity {
         setupRingtone();
         setupNotificationEnvironment();
         updateTimerTextView();
+        setupPieChart();
     }
 
     private void initializeButtons() {
@@ -171,6 +174,24 @@ public class TimerActivity extends AppCompatActivity {
         manager = notificationAssistant.createManager();
     }
 
+    private void setupPieChart() {
+        hidePieChart();
+        Legend legend = pieChart.getLegend();
+        legend.setEnabled(false);
+        Description description = pieChart.getDescription();
+        description.setEnabled(false);
+        pieChart.setHoleRadius(0);
+        pieChart.setDrawCenterText(false);
+    }
+
+    private void showPieChart() {
+        pieChart.setVisibility(View.VISIBLE);
+    }
+
+    private void hidePieChart() {
+        pieChart.setVisibility(View.GONE);
+    }
+
     private void askForCustomTime() {
         View dialogView = getLayoutInflater().inflate(R.layout.timer_alert_layout, null);
         EditText minuteText = (EditText) dialogView.findViewById(R.id.editTextTimerAlertMinute);
@@ -208,6 +229,7 @@ public class TimerActivity extends AppCompatActivity {
             timeLeftInMill = lastSelectedTime;
             updateTimerTextView();
             updateUIShowButtons();
+            hidePieChart();
             startButton.setText(R.string.timerActivity_start);
         }
     }
@@ -243,8 +265,8 @@ public class TimerActivity extends AppCompatActivity {
         startButton.setText(R.string.timerActivity_pause);
         isTicking = true;
         updateUIHideButtons();
+        showPieChart();
     }
-
 
     private void vibrateEndOfTimer() {
         if (vibrator.hasVibrator()) {
@@ -332,7 +354,7 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "Time remaining");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(dataSet);
 
         pieChart.setData(data);
@@ -340,8 +362,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void addPieEntries(List<PieEntry> pieEntries) {
-        pieEntries.add(new PieEntry(timeLeftInMill));
-        pieEntries.add(new PieEntry(timeDiffStartVsLeft));
+        int secondLeft = (int) (timeLeftInMill / MILLISECONDS_TO_SECONDS);
+        pieEntries.add(new PieEntry(secondLeft));
+        int secondDiff = (int) (timeDiffStartVsLeft / MILLISECONDS_TO_SECONDS);
+        pieEntries.add(new PieEntry(secondDiff));
     }
 
     private void removePieEntries(List<PieEntry> pieEntries) {
