@@ -22,7 +22,6 @@ import com.example.parentsupportapp.breathingModel.WaitingState;
 
 public class BreathingActivity extends AppCompatActivity {
     private static final String EXTRA_NUM_OF_BREATHS = "breathingActivity.num_of_breaths";
-    private static final int SECONDS_TO_MILLISECONDS = 1000;
     public final State inhaleState = new InhaleState(this);
     public final State exhaleState = new ExhaleState(this);
     public final State waitingState = new WaitingState(this);
@@ -47,9 +46,16 @@ public class BreathingActivity extends AppCompatActivity {
         btnBreathe.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    currentState.handleClick();
+                }
+                if (motionEvent.getDownTime() >= State.TEN_SECONDS_MS) {
+
+                }
                 if (view.isPressed() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     long timeHeld = motionEvent.getEventTime() - motionEvent.getDownTime();
                     Toast.makeText(BreathingActivity.this, Long.toString(timeHeld), Toast.LENGTH_SHORT).show();
+                    currentState.handleButtonHold(timeHeld);
                 }
 
                 return false;

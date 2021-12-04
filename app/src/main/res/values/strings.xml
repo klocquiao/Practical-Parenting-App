@@ -99,6 +99,9 @@
 
     <!-- Breathing Activity -->
     <string name="breathing_header">Lets take %1$s breaths together!</string>
+    <string name="breathing_in">In</string>
+    <string name="breathing_out">Out</string>
+
 
     <!-- Help Activity -->
     <string name="help_sources">
