@@ -22,6 +22,7 @@ public abstract class State {
     public void handleEnter() {}
     public void handleExit() {}
     public void handleButtonHold(long seconds) {}
-    public void handleButtonLongHold() {}
     public void handleClick() {}
+    public void handleCancel() {}
+
 }

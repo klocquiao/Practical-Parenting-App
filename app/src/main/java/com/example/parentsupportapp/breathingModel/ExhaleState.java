@@ -13,6 +13,7 @@ public class ExhaleState extends State {
     @Override
     public void handleEnter() {
         super.handleEnter();
+
         context.numberOfBreaths--;
 
         context.btnBreathe.setEnabled(false);
@@ -20,12 +21,13 @@ public class ExhaleState extends State {
 
         //Start animation & sound
 
-        Toast.makeText(context, "Lets breathe out now...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.breathing_exhale_help), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
+        //Cancel animations & sound
     }
 
     Runnable exhaleButtonLock = new Runnable() {
@@ -35,7 +37,7 @@ public class ExhaleState extends State {
                 context.setState(context.inhaleState);
             }
             else {
-                context.btnBreathe.setText(R.string.breathing_exercise_complete);
+                context.setState(context.finishState);
             }
         }
     };

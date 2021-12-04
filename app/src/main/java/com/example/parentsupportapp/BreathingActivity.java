@@ -4,29 +4,26 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.parentsupportapp.breathingModel.ExhaleState;
 import com.example.parentsupportapp.breathingModel.FinishState;
-import com.example.parentsupportapp.breathingModel.IdleState;
+import com.example.parentsupportapp.breathingModel.StartState;
 import com.example.parentsupportapp.breathingModel.InhaleState;
 import com.example.parentsupportapp.breathingModel.State;
-import com.example.parentsupportapp.breathingModel.WaitingState;
 
 public class BreathingActivity extends AppCompatActivity {
     private static final String EXTRA_NUM_OF_BREATHS = "breathingActivity.num_of_breaths";
     public final State inhaleState = new InhaleState(this);
     public final State exhaleState = new ExhaleState(this);
-    public final State waitingState = new WaitingState(this);
     public final State finishState = new FinishState(this);
-    private State currentState = new IdleState(this);
+    private State currentState = new StartState(this);
+
     public int numberOfBreaths;
     public Button btnBreathe;
     public TextView txtMain;
@@ -49,15 +46,11 @@ public class BreathingActivity extends AppCompatActivity {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     currentState.handleClick();
                 }
-                if (motionEvent.getDownTime() >= State.TEN_SECONDS_MS) {
 
-                }
-                if (view.isPressed() && motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     long timeHeld = motionEvent.getEventTime() - motionEvent.getDownTime();
-                    Toast.makeText(BreathingActivity.this, Long.toString(timeHeld), Toast.LENGTH_SHORT).show();
                     currentState.handleButtonHold(timeHeld);
                 }
-
                 return false;
             }
         });

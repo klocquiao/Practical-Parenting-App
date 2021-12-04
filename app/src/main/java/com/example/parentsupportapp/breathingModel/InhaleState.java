@@ -20,7 +20,7 @@ public class InhaleState extends State {
 
         context.btnBreathe.setText(context.getString(R.string.breathing_in));
 
-        Toast.makeText(context, "Breathe in and hold the button...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
     }
     @Override
     public void handleExit() {
@@ -35,7 +35,7 @@ public class InhaleState extends State {
         handler.removeCallbacks(canBreatheOut);
         handler.removeCallbacks(shouldBreathOut);
         if (seconds <= THREE_SECONDS_MS) {
-            Toast.makeText(context, "Breathe for longer!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.breathing_inhale_error), Toast.LENGTH_SHORT).show();
             //1. Revert animation
             //2. Stop sound
             //3. Back to waiting
@@ -54,9 +54,16 @@ public class InhaleState extends State {
         handler.postDelayed(shouldBreathOut, TEN_SECONDS_MS);
     }
 
+    @Override
+    public void handleCancel() {
+        super.handleCancel();
+        handler.removeCallbacks(canBreatheOut);
+        handler.removeCallbacks(shouldBreathOut);
+    }
+
     Runnable shouldBreathOut = new Runnable() {
         public void run() {
-            Toast.makeText(context, "Release the button and breathe out!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.breathing_exhale_error), Toast.LENGTH_SHORT).show();
         }
     };
 
