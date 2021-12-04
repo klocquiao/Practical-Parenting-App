@@ -15,31 +15,27 @@ public class ExhaleState extends State {
         super.handleEnter();
         context.numberOfBreaths--;
 
-        String numBreaths = Integer.toString(context.numberOfBreaths);
-        context.txtMain.setText(context.getString(R.string.breathing_header, numBreaths));
-
-        context.btnBreathe.setText(context.getString(R.string.breathing_out));
-
         context.btnBreathe.setEnabled(false);
         handler.postDelayed(exhaleButtonLock, THREE_SECONDS_MS);
-        Toast.makeText(context, "Entered exhale state!", Toast.LENGTH_SHORT).show();
+
+        //Start animation & sound
+
+        Toast.makeText(context, "Lets breathe out now...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
-        //cancel animations
-        Toast.makeText(context, "Can inhale again!", Toast.LENGTH_SHORT).show();
     }
 
     Runnable exhaleButtonLock = new Runnable() {
         public void run() {
-            context.btnBreathe.setEnabled(true);
             if (context.numberOfBreaths > 0) {
+                context.btnBreathe.setEnabled(true);
                 context.setState(context.inhaleState);
             }
             else {
-                Toast.makeText(context, "Finished!", Toast.LENGTH_SHORT).show();
+                context.btnBreathe.setText(R.string.breathing_exercise_complete);
             }
         }
     };
