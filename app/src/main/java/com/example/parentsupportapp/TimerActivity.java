@@ -3,6 +3,8 @@ package com.example.parentsupportapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.media.AudioAttributes;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -61,6 +63,12 @@ public class TimerActivity extends AppCompatActivity {
     public static final int SECONDS_TO_MINUTES = 60;
     public static final float GUIDE_PERCENT_1 = (float) 0.7;
     public static final float GUIDE_PERCENT_2 = (float) 0.4;
+    private static final String KEY_IS_TICKING_KEY = "timerIsTickingKey";
+    private static final String KEY_TIME_LEFT_KEY = "timerTimeLeftKey";
+    private static final String KEY_TIME_DIFF_KEY = "timerTimeDiffKey";
+    private static final String KEY_TIME_AT_PAUSE = "timerAtPause";
+    private static final String KEY_TIME_LAST_SELECTED_KEY = "timerLastSelectedKey";
+    private static final String PREF_TIMER = "timerActivityPref";
 
     private PieChart pieChart;
     private TextView timerView;
@@ -72,6 +80,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button threeMinButton;
     private Button fiveMinButton;
     private Button tenMinButton;
+
     private CountDownTimer countDownTimer;
     private Vibrator vibrator;
     private NotificationAssistant notificationAssistant;
@@ -82,6 +91,8 @@ public class TimerActivity extends AppCompatActivity {
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
     private long timeDiffStartVsLeft = 0;
+    private long timeAtPause = 0;
+    private long timeAtResume = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +112,26 @@ public class TimerActivity extends AppCompatActivity {
         setupNotificationEnvironment();
         updateTimerTextView();
         setupPieChart();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadTimerActivityPrefs(this);
+        if (isTicking) {
+            timeAtResume = Calendar.getInstance().getTimeInMillis();
+            timeLeftInMill = timeLeftInMill - (timeAtResume - timeAtPause);
+            startTimer();
+        } else {
+            timeAtPause = 0;
+            timeAtResume = 0;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveTimerActivityPrefs(this);
     }
 
     private void initializeButtons() {
@@ -227,6 +258,8 @@ public class TimerActivity extends AppCompatActivity {
             Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_reset_btn_msg), Toast.LENGTH_SHORT).show();
         } else {
             timeLeftInMill = lastSelectedTime;
+            timeAtResume = 0;
+            timeAtPause = 0;
             updateTimerTextView();
             updateUIShowButtons();
             hidePieChart();
@@ -243,8 +276,8 @@ public class TimerActivity extends AppCompatActivity {
     private void startTimer() {
         countDownTimer = new CountDownTimer(timeLeftInMill, 1000) {
             @Override
-            public void onTick(long l) {
-                timeLeftInMill = l;
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMill = millisUntilFinished;
                 timeDiffStartVsLeft = lastSelectedTime - timeLeftInMill;
                 updateTimerTextView();
                 updateTimerPieChart();
@@ -372,6 +405,27 @@ public class TimerActivity extends AppCompatActivity {
         for (PieEntry entry : pieEntries) {
             pieEntries.remove(entry);
         }
+    }
+
+    private void loadTimerActivityPrefs(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_TIMER, MODE_PRIVATE);
+        if (prefs.contains(KEY_IS_TICKING_KEY)) {
+            isTicking = prefs.getBoolean(KEY_IS_TICKING_KEY, false);
+            timeLeftInMill = prefs.getLong(KEY_TIME_LEFT_KEY, DEFAULT_START_TIME);
+            lastSelectedTime = prefs.getLong(KEY_TIME_LAST_SELECTED_KEY, DEFAULT_START_TIME);
+            timeAtPause = prefs.getLong(KEY_TIME_AT_PAUSE, 0);
+        }
+    }
+
+    private void saveTimerActivityPrefs(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_TIMER, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(KEY_IS_TICKING_KEY, isTicking);
+        editor.putLong(KEY_TIME_LEFT_KEY, timeLeftInMill);
+        editor.putLong(KEY_TIME_LAST_SELECTED_KEY, lastSelectedTime);
+        timeAtPause = Calendar.getInstance().getTimeInMillis();
+        editor.putLong(KEY_TIME_AT_PAUSE, timeAtPause);
+        editor.apply();
     }
 
     public static Intent makeIntent(Context context) {
