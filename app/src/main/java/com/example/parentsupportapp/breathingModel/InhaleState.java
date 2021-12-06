@@ -16,13 +16,14 @@ public class InhaleState extends State {
     public void handleEnter() {
         super.handleEnter();
 
+        context.imgBreathingGuide.setColorFilter(context.getColor(R.color.breathing_green));
         Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
-        //1. Revert animation
+        context.growCircle.cancel();
         //2. Stop sound
     }
 
@@ -33,7 +34,7 @@ public class InhaleState extends State {
         handler.removeCallbacks(shouldBreathOut);
         if (seconds <= THREE_SECONDS_MS) {
             Toast.makeText(context, context.getString(R.string.breathing_inhale_error), Toast.LENGTH_SHORT).show();
-            //1. Revert animation
+            context.growCircle.cancel();
             //2. Stop sound
             //3. Back to waiting
         }

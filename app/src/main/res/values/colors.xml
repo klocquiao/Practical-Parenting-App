@@ -7,4 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="breathing_green">#B6D094</color>
+    <color name="breathing_red">#FE5448</color>
 </resources>

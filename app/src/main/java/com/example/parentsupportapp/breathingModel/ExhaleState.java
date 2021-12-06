@@ -20,6 +20,7 @@ public class ExhaleState extends State {
         handler.postDelayed(exhaleButtonLock, THREE_SECONDS_MS);
         handler.postDelayed(stateToExhale, TEN_SECONDS_MS);
 
+        context.imgBreathingGuide.setColorFilter(context.getColor(R.color.breathing_red));
         context.shrinkCircle.start();
 
         Toast.makeText(context, context.getString(R.string.breathing_exhale_help), Toast.LENGTH_SHORT).show();
@@ -29,7 +30,7 @@ public class ExhaleState extends State {
     public void handleExit() {
         super.handleExit();
         handler.removeCallbacks(stateToExhale);
-        //Cancel animations & sound
+        context.shrinkCircle.cancel();
     }
 
     Runnable exhaleButtonLock = new Runnable() {
