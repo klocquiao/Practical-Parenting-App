@@ -15,8 +15,7 @@ public class InhaleState extends State {
     @Override
     public void handleEnter() {
         super.handleEnter();
-
-        Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
+        context.tvPrompt.setText("Breathe in and hold the button...");
     }
 
     @Override
@@ -38,6 +37,7 @@ public class InhaleState extends State {
             //3. Back to waiting
         }
         else {
+            context.tvPrompt.setText("Lets breathe out now...");
             context.setState(context.exhaleState);
         }
     }

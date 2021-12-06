@@ -12,6 +12,7 @@ public class FinishState extends State {
     public void handleEnter() {
         super.handleEnter();
         context.btnBreathe.setText(R.string.breathing_exercise_complete);
+        context.tvPrompt.setText("Breathing finished");
 
         String numBreaths = Integer.toString(context.numberOfBreaths);
         context.txtMain.setText(context.getString(R.string.breathing_header, numBreaths));

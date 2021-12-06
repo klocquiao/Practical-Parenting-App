@@ -22,7 +22,7 @@ public class ExhaleState extends State {
 
         //Start animation & sound
 
-        Toast.makeText(context, context.getString(R.string.breathing_exhale_help), Toast.LENGTH_SHORT).show();
+        context.tvPrompt.setText("Lets breathe out now...");
     }
 
     @Override

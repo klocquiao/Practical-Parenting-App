@@ -29,6 +29,7 @@ public class BreathingActivity extends AppCompatActivity {
     public int numberOfBreaths;
     public Button btnBreathe;
     public TextView txtMain;
+    public TextView tvPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class BreathingActivity extends AppCompatActivity {
     public void setupViews() {
         btnBreathe = findViewById(R.id.btnBreathe);
         txtMain = findViewById(R.id.tvDemo);
+        tvPrompt = findViewById(R.id.tvBreathingPrompt);
     }
 
     public void setState(State newState) {
