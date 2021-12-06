@@ -6,13 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".StartBreathing">
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etBreaths"
-        android:hint="enter number of breaths"
+        android:id="@+id/tvSelectNumBreaths"
+        android:text="Select the number of breaths between 1 and 10"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"/>
+        android:textColor="@color/black"
+        android:layout_marginTop="60dp"/>
+
+    <EditText
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/etNumBreaths"
+        android:text="1"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvSelectNumBreaths"
+        />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnAddBreath"
+        android:text="+"
+        android:layout_toRightOf="@+id/etNumBreaths"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/tvSelectNumBreaths"
+        />
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btnDecreaseBreath"
+        android:text="-"
+        android:layout_toLeftOf="@+id/etNumBreaths"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/tvSelectNumBreaths"
+        />
 
     <Button
         android:layout_width="wrap_content"

@@ -8,19 +8,58 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import android.widget.Toast;
 
 public class StartBreathing extends AppCompatActivity {
     private Button startButton;
-    private EditText numBreaths;
+    private EditText etNumBreaths;
+    private Button btnIncrease;
+    private Button btnDecrease;
+    public int numBreaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_breathing);
-        numBreaths = findViewById(R.id.etBreaths);
+
+        etNumBreaths = findViewById(R.id.etNumBreaths);
+        btnIncrease = findViewById(R.id.btnAddBreath);
+        btnDecrease = findViewById(R.id.btnDecreaseBreath);
+        numBreaths = Integer.parseInt(etNumBreaths.getText().toString());
+
         setupButtonListeners();
+        setupIncreaseBreathBtn();
+        setupDecreaseBreathBtn();
+    }
+
+    private void setupDecreaseBreathBtn() {
+        btnDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numBreaths > 1) {
+                    numBreaths--;
+                    etNumBreaths.setText("" + numBreaths);
+                }
+                else if (numBreaths == 1) {
+                    Toast.makeText(StartBreathing.this, "Number of breaths cannot be less than 1!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void setupIncreaseBreathBtn() {
+        btnIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numBreaths <= 9) {
+                    numBreaths++;
+                    etNumBreaths.setText("" + numBreaths);
+                }
+                else if (numBreaths == 10) {
+                    Toast.makeText(StartBreathing.this, "Number of breaths cannot be more than 10!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void setupButtonListeners() {
@@ -29,7 +68,7 @@ public class StartBreathing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent breathingIntent = BreathingActivity.makeIntent(StartBreathing.this,
-                        Integer.parseInt(numBreaths.getText().toString()));
+                        Integer.parseInt(etNumBreaths.getText().toString()));
                 startActivity(breathingIntent);
             }
         });
