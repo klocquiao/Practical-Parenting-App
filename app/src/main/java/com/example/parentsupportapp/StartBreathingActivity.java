@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class StartBreathing extends AppCompatActivity {
+public class StartBreathingActivity extends AppCompatActivity {
     private Button startButton;
     private EditText etNumBreaths;
     private Button btnIncrease;
@@ -41,7 +41,7 @@ public class StartBreathing extends AppCompatActivity {
                     etNumBreaths.setText("" + numBreaths);
                 }
                 else if (numBreaths == 1) {
-                    Toast.makeText(StartBreathing.this, "Number of breaths cannot be less than 1!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StartBreathingActivity.this, "Number of breaths cannot be less than 1!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -56,7 +56,7 @@ public class StartBreathing extends AppCompatActivity {
                     etNumBreaths.setText("" + numBreaths);
                 }
                 else if (numBreaths == 10) {
-                    Toast.makeText(StartBreathing.this, "Number of breaths cannot be more than 10!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StartBreathingActivity.this, "Number of breaths cannot be more than 10!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -67,7 +67,7 @@ public class StartBreathing extends AppCompatActivity {
         this.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent breathingIntent = BreathingActivity.makeIntent(StartBreathing.this,
+                Intent breathingIntent = BreathingActivity.makeIntent(StartBreathingActivity.this,
                         Integer.parseInt(etNumBreaths.getText().toString()));
                 startActivity(breathingIntent);
             }
@@ -75,8 +75,7 @@ public class StartBreathing extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context c) {
-        Intent intent = new Intent(c, StartBreathing.class);
+        Intent intent = new Intent(c, StartBreathingActivity.class);
         return intent;
     }
-
 }

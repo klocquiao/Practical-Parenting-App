@@ -24,7 +24,7 @@ public class InhaleState extends State {
     public void handleExit() {
         super.handleExit();
         context.growCircle.cancel();
-        //2. Stop sound
+        context.stopSound(context.inhaleSound);
     }
 
     @Override
@@ -35,8 +35,7 @@ public class InhaleState extends State {
         if (seconds <= THREE_SECONDS_MS) {
             Toast.makeText(context, context.getString(R.string.breathing_inhale_error), Toast.LENGTH_SHORT).show();
             context.growCircle.cancel();
-            //2. Stop sound
-            //3. Back to waiting
+            context.stopSound(context.inhaleSound);
         }
         else {
             context.setState(context.exhaleState);
@@ -47,7 +46,7 @@ public class InhaleState extends State {
     public void handleClick() {
         super.handleClick();
         context.growCircle.start();
-        //2. Start sound
+        context.inhaleSound.start();
         handler.postDelayed(canBreatheOut, THREE_SECONDS_MS);
         handler.postDelayed(shouldBreathOut, TEN_SECONDS_MS);
     }

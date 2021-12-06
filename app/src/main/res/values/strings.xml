@@ -102,7 +102,6 @@
     <string name="breathing_in">In</string>
     <string name="breathing_out">Out</string>
 
-
     <!-- Help Activity -->
     <string name="help_sources">
         Sources:
@@ -117,5 +116,4 @@
     <string name="breathing_exhale_error">Release the button and breathe out!</string>
     <string name="breathing_exhale_help">Lets breathe out now...</string>
     <string name="breathing_begin">Begin</string>
-
 </resources>

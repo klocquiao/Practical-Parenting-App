@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
-            android:name=".StartBreathing"
+            android:name=".StartBreathingActivity"
             android:exported="true" />
         <activity
             android:name=".BreathingActivity"

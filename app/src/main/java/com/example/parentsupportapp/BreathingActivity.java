@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,9 @@ public class BreathingActivity extends AppCompatActivity {
     public ObjectAnimator shrinkCircleX;
     public ObjectAnimator shrinkCircleY;
 
+    public MediaPlayer inhaleSound;
+    public MediaPlayer exhaleSound;
+
     public int numberOfBreaths;
     public Button btnBreathe;
     public TextView txtMain;
@@ -52,6 +56,7 @@ public class BreathingActivity extends AppCompatActivity {
         setupViews();
         setupButtons();
         setupAnimation();
+        setupSound();
         numberOfBreaths = getIntent().getIntExtra(EXTRA_NUM_OF_BREATHS, 1);
         setState(startState);
     }
@@ -100,7 +105,16 @@ public class BreathingActivity extends AppCompatActivity {
         growCircle.playTogether(growCircleX, growCircleY);
         growCircle.setInterpolator(new DecelerateInterpolator());
         growCircle.setDuration(State.TEN_SECONDS_MS);
+    }
 
+    public void setupSound() {
+        inhaleSound = MediaPlayer.create(this, R.raw.breathing_activity_inhale);
+        exhaleSound = MediaPlayer.create(this, R.raw.breathing_activity_exhale);
+    }
+
+    public void stopSound(MediaPlayer sound) {
+        sound.pause();
+        sound.seekTo(0);
     }
 
     public static Intent makeIntent(Context c, int numOfBreaths) {
