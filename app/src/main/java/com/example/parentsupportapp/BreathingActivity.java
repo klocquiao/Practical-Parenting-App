@@ -16,7 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.breathingModel.ExhaleState;
 import com.example.parentsupportapp.breathingModel.FinishState;
@@ -24,6 +26,11 @@ import com.example.parentsupportapp.breathingModel.IdleState;
 import com.example.parentsupportapp.breathingModel.StartState;
 import com.example.parentsupportapp.breathingModel.InhaleState;
 import com.example.parentsupportapp.breathingModel.State;
+
+/**
+ * The BreathingActivity is the main control for the breathing exercise.
+ * It will guide the user through it, changing the state as necessary.
+ */
 
 public class BreathingActivity extends AppCompatActivity {
     private static final String EXTRA_NUM_OF_BREATHS = "breathingActivity.num_of_breaths";
@@ -53,12 +60,26 @@ public class BreathingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breathing);
+        Toolbar toolbar = findViewById(R.id.toolbarBreathing);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
         setupViews();
         setupButtons();
         setupAnimation();
         setupSound();
         numberOfBreaths = getIntent().getIntExtra(EXTRA_NUM_OF_BREATHS, 1);
         setState(startState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        shrinkCircle.cancel();
+        growCircle.cancel();
+        inhaleSound.stop();
+        exhaleSound.stop();
     }
 
     @SuppressLint("ClickableViewAccessibility")

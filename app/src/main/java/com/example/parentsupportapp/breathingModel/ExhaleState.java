@@ -5,6 +5,11 @@ import android.widget.Toast;
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
+/**
+ * Exhale state of the BreathingActivity exercise. Occurs when button is held down and
+ * user also stays in this state if they fail their inhale.
+ */
+
 public class ExhaleState extends State {
     public ExhaleState(BreathingActivity context) {
         super(context);
@@ -31,8 +36,7 @@ public class ExhaleState extends State {
     public void handleExit() {
         super.handleExit();
         handler.removeCallbacks(stateToExhale);
-        context.stopSound(context.exhaleSound);
-        context.shrinkCircle.cancel();
+
     }
 
     Runnable exhaleButtonLock = new Runnable() {
@@ -58,6 +62,8 @@ public class ExhaleState extends State {
     @Override
     public void handleClick() {
         super.handleClick();
+        context.stopSound(context.exhaleSound);
+        context.shrinkCircle.cancel();
         context.setState(context.inhaleState);
         context.currentState.handleClick();
     }

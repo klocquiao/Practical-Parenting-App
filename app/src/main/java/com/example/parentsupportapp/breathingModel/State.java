@@ -4,7 +4,10 @@ import android.os.Handler;
 
 import com.example.parentsupportapp.BreathingActivity;
 
-// State Pattern's base states
+/**
+ * The abstract implementation for states in BreathingActivity exercise.
+ */
+
 public abstract class State {
     public static final long THREE_SECONDS_MS = 3000;
     public static final long TEN_SECONDS_MS = 10000;
@@ -15,9 +18,6 @@ public abstract class State {
         this.context = context;
         this.handler = new Handler();
     }
-
-    // Empty implementations, so derived class don't need to
-    // override methods they don't care about.
 
     public void handleEnter() {}
     public void handleExit() {}

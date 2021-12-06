@@ -1,6 +1,8 @@
 package com.example.parentsupportapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,12 @@ import android.widget.Toast;
 
 import com.example.parentsupportapp.model.PriorityQueue;
 import com.google.gson.Gson;
+
+/**
+ * StartBreathingActivity is the start of the state model of the breathing exercise feature.
+ * It allows the user to set the number of breaths they would like to perform in the exercise.
+ * The "Begin" button brings the user to the breathing activity whether the true breathing exercise will begin.
+ */
 
 public class StartBreathingActivity extends AppCompatActivity {
     private static final String BREATHING_PREF = "BreathingActivityPref";
@@ -27,6 +35,10 @@ public class StartBreathingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_breathing);
+        Toolbar toolbar = findViewById(R.id.toolbarStartBreathing);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         numBreaths = getBreathingActivityPrefs(this);
         etNumBreaths = findViewById(R.id.etNumBreaths);

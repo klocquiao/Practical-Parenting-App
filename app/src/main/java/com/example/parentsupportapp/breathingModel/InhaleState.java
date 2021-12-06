@@ -6,6 +6,10 @@ import android.widget.Toast;
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
+/**
+ * Inhale state of the BreathingActivity exercise. Occurs when the user has let go of the
+ * button after >3 seconds.
+ */
 
 public class InhaleState extends State {
     public InhaleState(BreathingActivity context) {
