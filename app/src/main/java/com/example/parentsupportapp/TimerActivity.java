@@ -15,12 +15,15 @@ import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -93,6 +96,7 @@ public class TimerActivity extends AppCompatActivity {
     private long timeDiffStartVsLeft = 0;
     private long timeAtPause = 0;
     private long timeAtResume = 0;
+    private long countDownInterval = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +104,11 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
         Toolbar toolbar = findViewById(R.id.toolbarTimer);
         setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.timer_title);
         }
 
         initializeButtons();
@@ -112,6 +118,29 @@ public class TimerActivity extends AppCompatActivity {
         setupNotificationEnvironment();
         updateTimerTextView();
         setupPieChart();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu
+        getMenuInflater().inflate(R.menu.menu_timer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_accelerate_time:
+
+                return true;
+
+            case R.id.action_decelerate_time:
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -274,7 +303,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMill, 1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMill, countDownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMill = millisUntilFinished;
