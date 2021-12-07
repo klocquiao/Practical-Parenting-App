@@ -186,12 +186,6 @@ public class TimerActivity extends AppCompatActivity {
         currentBaseTime = (long) (currentBaseTime * oldTickRatePercent);
         currentBaseTime = (long) (currentBaseTime / tickRatePercent);
         timeDiffStartVsLeft = currentBaseTime - timeLeftInMill;
-        Log.i("timeScaleVals()", "tickRate: " + tickRate +
-                " tickRatePerc: " + tickRatePercent +
-                " timeLeftInMill: " + timeLeftInMill +
-                " currentBaseTime: " + currentBaseTime +
-                " diffStartVsLeft: " + timeDiffStartVsLeft +
-                " lastTimeSelected: " + lastSelectedTime);
         updateTimerTextView();
         updateTimerPieChart();
         pauseTimer();
@@ -366,11 +360,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        Log.i("timeStartTimer()", "tickRate: " + tickRate +
-                                            "tickRatePerc" + tickRatePercent +
-                                            "timeLeftInMill: " + timeLeftInMill +
-                                            "currentBaseTime: " + currentBaseTime +
-                                            "lastTimeSelected: " + lastSelectedTime);
         countDownTimer = new CountDownTimer(timeLeftInMill, tickRate) {
             @Override
             public void onTick(long millisUntilFinished) {
