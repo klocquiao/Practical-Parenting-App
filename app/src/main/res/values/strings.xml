@@ -97,6 +97,13 @@
     <string name="edit_task_alert_title">Edit Task Name</string>
     <string name="edit_task_alert_message">Please provide a new task name!</string>
 
+    <!-- Breathing Activity -->
+    <string name="breathing_header">Lets take %1$s breath(s) together!</string>
+    <string name="breathing_in">In</string>
+    <string name="breathing_out">Out</string>
+    <string name="breathing_out_prompt">Lets breathe out now...</string>
+    <string name="breathing_finished">Breathing finished. Good Job!</string>
+
     <!-- Help Activity -->
     <string name="help_sources">
         Sources:
@@ -107,4 +114,10 @@
     <string name="help_created_msg">App created by team Carbon!!</string>
     <string name="timer_pie_chart_data_set_label">Time remaining</string>
 
+    <string name="breathing_exercise_complete">Good job</string>
+    <string name="breathing_inhale_help">Breathe in and hold the button for at least 3 secs</string>
+    <string name="breathing_inhale_error">Breathe for longer!</string>
+    <string name="breathing_exhale_error">Release the button and breathe out!</string>
+    <string name="breathing_exhale_help">Lets breathe out now...</string>
+    <string name="breathing_begin">Begin</string>
 </resources>
