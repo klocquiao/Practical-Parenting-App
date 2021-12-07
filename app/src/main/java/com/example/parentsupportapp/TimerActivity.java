@@ -55,26 +55,30 @@ is clicked.
  */
 
 public class TimerActivity extends AppCompatActivity {
-    private static final long DEFAULT_START_TIME = 300000;
-    private static final long ONE_MIN = 60000;
-    private static final long TWO_MIN = 120000;
-    private static final long THREE_MIN = 180000;
-    private static final long FIVE_MIN = 300000;
-    private static final long TEN_MIN = 600000;
-    private static final int NOTIFICATION_ID = 1;
+    public static final long DEFAULT_START_TIME = 300000;
+    public static final long ONE_MIN = 60000;
+    public static final long TWO_MIN = 120000;
+    public static final long THREE_MIN = 180000;
+    public static final long FIVE_MIN = 300000;
+    public static final long TEN_MIN = 600000;
     public static final int MILLISECONDS_TO_SECONDS = 1000;
     public static final int SECONDS_TO_MINUTES = 60;
     public static final float GUIDE_PERCENT_1 = (float) 0.7;
     public static final float GUIDE_PERCENT_2 = (float) 0.4;
+    private static final int NOTIFICATION_ID = 1;
     private static final String KEY_IS_TICKING_KEY = "timerIsTickingKey";
     private static final String KEY_TIME_LEFT_KEY = "timerTimeLeftKey";
-    private static final String KEY_TIME_DIFF_KEY = "timerTimeDiffKey";
     private static final String KEY_TIME_AT_PAUSE = "timerAtPause";
+    private static final String KEY_TIME_CURRENT_BASE = "timerCurrentBaseKey";
     private static final String KEY_TIME_LAST_SELECTED_KEY = "timerLastSelectedKey";
     private static final String PREF_TIMER = "timerActivityPref";
+    public static final int DEFAULT_TICK_RATE = 1000;
+    public static final float DEFAULT_TICK_RATE_PERCENT = 1;
+    public static final int ZERO = 0;
 
     private PieChart pieChart;
     private TextView timerView;
+    private TextView tickRateView;
     private Button startButton;
     private Button resetButton;
     private Button customMinButton;
@@ -93,10 +97,13 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isTicking;
     private long timeLeftInMill = DEFAULT_START_TIME;
     private long lastSelectedTime = DEFAULT_START_TIME;
-    private long timeDiffStartVsLeft = 0;
-    private long timeAtPause = 0;
-    private long timeAtResume = 0;
-    private long countDownInterval = 1000;
+    private long currentBaseTime = DEFAULT_START_TIME;
+    private long timeDiffStartVsLeft = ZERO;
+    private long timeAtPause = ZERO;
+    private long timeAtResume = ZERO;
+    private int tickRate = DEFAULT_TICK_RATE;
+    private float tickRatePercent = DEFAULT_TICK_RATE_PERCENT;
+    private float oldTickRatePercent = DEFAULT_TICK_RATE_PERCENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,16 +138,66 @@ public class TimerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_accelerate_time:
-
+                if (tickRate > 250 && isTicking) {
+                    accelerateTime();
+                    scaleTimeValues();
+                    Toast.makeText(this, "increasing time rate: " + tickRate, Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             case R.id.action_decelerate_time:
-
+                if (tickRate < 4000 && isTicking) {
+                    decelerateTime();
+                    scaleTimeValues();
+                    Toast.makeText(this, "decreasing time rate: " + tickRate, Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void accelerateTime() {
+        oldTickRatePercent = tickRatePercent;
+        if (tickRatePercent < 1.0) {
+            tickRatePercent += 0.25;
+            Log.i("TimeChange", "tickRatePercent += 0.25 tickRatePercent: " + tickRatePercent);
+        }
+        else {
+            tickRatePercent += 1;
+            Log.i("TimeChange", "tickRatePercent += 1 tickRatePercent: " + tickRatePercent);
+        }
+    }
+
+    private void decelerateTime() {
+        oldTickRatePercent = tickRatePercent;
+        if (tickRatePercent <= 1) {
+            tickRatePercent -= 0.25;
+            Log.i("TimeChange", "tickRatePercent -= 0.25 tickRatePercent: " + tickRatePercent);
+        } else {
+            tickRatePercent -= 1;
+            Log.i("TimeChange", "tickRatePercent -= 1 tickRatePercent: " + tickRatePercent);
+        }
+    }
+
+    private void scaleTimeValues() {
+        tickRate = (int) (DEFAULT_TICK_RATE / tickRatePercent);
+        // have to renormalize timeLeftInMill
+        timeLeftInMill = (long) (timeLeftInMill * oldTickRatePercent);
+        timeLeftInMill = (long) (timeLeftInMill / tickRatePercent);
+        currentBaseTime = (long) (lastSelectedTime / tickRatePercent);
+        timeDiffStartVsLeft = currentBaseTime - timeLeftInMill;
+        Log.i("TimeUpdateTimerRate", "tickRate: " + tickRate +
+                " timeLeftInMill: " + timeLeftInMill +
+                " currentBaseTime: " + currentBaseTime +
+                " timeDiffStartVsLeft: " + timeDiffStartVsLeft +
+                " lastSelectedTime: " + lastSelectedTime);
+        updateTimerTextView();
+        updateTimerPieChart();
+        pauseTimer();
+        startTimer();
+        updateTickRateView();
     }
 
     @Override
@@ -174,6 +231,7 @@ public class TimerActivity extends AppCompatActivity {
         threeMinButton = findViewById(R.id.buttonThreeMin);
         fiveMinButton = findViewById(R.id.buttonFiveMin);
         tenMinButton = findViewById(R.id.buttonTenMin);
+        tickRateView = findViewById(R.id.textViewTickRate);
     }
 
     private void setupButtonListeners() {
@@ -262,12 +320,13 @@ public class TimerActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.timer_activity_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Boolean shouldStart = true;
+                boolean shouldStart = true;
                 String minuteString = minuteText.getText().toString();
                 long extractedMinutes;
                 try {
                     extractedMinutes = Long.parseLong(minuteString);
                     timeLeftInMill = extractedMinutes * SECONDS_TO_MINUTES * MILLISECONDS_TO_SECONDS;
+                    currentBaseTime = timeLeftInMill;
                     lastSelectedTime = timeLeftInMill;
                 }
                 catch (NumberFormatException e) {
@@ -287,8 +346,11 @@ public class TimerActivity extends AppCompatActivity {
             Toast.makeText(TimerActivity.this, getString(R.string.timer_activity_reset_btn_msg), Toast.LENGTH_SHORT).show();
         } else {
             timeLeftInMill = lastSelectedTime;
+            currentBaseTime = lastSelectedTime;
             timeAtResume = 0;
             timeAtPause = 0;
+            tickRate = DEFAULT_TICK_RATE;
+            tickRatePercent = DEFAULT_TICK_RATE_PERCENT;
             updateTimerTextView();
             updateUIShowButtons();
             hidePieChart();
@@ -303,11 +365,12 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMill, countDownInterval) {
+        Log.i("TimeStartTimer", "timeLeftInMill:" + timeLeftInMill + " ticRate:" + tickRate + " currentBaseTime:" + currentBaseTime);
+        countDownTimer = new CountDownTimer(timeLeftInMill, tickRate) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMill = millisUntilFinished;
-                timeDiffStartVsLeft = lastSelectedTime - timeLeftInMill;
+                timeDiffStartVsLeft = currentBaseTime - timeLeftInMill;
                 updateTimerTextView();
                 updateTimerPieChart();
             }
@@ -327,6 +390,7 @@ public class TimerActivity extends AppCompatActivity {
         startButton.setText(R.string.timerActivity_pause);
         isTicking = true;
         updateUIHideButtons();
+        updateTickRateView();
         showPieChart();
     }
 
@@ -359,6 +423,7 @@ public class TimerActivity extends AppCompatActivity {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideline.getLayoutParams();
         params.guidePercent = GUIDE_PERCENT_1;
         guideline.setLayoutParams(params);
+        tickRateView.setVisibility(View.VISIBLE);
     }
 
     private void updateUIShowButtons() {
@@ -372,6 +437,7 @@ public class TimerActivity extends AppCompatActivity {
         buttonAppear(fiveMinButton);
         buttonAppear(tenMinButton);
         buttonAppear(customMinButton);
+        tickRateView.setVisibility(View.INVISIBLE);
     }
 
     private void buttonAppear(Button button) {
@@ -390,8 +456,9 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!isTicking) {
                     timeLeftInMill = time;
+                    currentBaseTime = time;
                     lastSelectedTime = time;
-                    timeDiffStartVsLeft = 0;    // has to be 0 at this point
+                    timeDiffStartVsLeft = 0;
                     updateTimerTextView();
                     startTimer();
                 }
@@ -400,8 +467,9 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateTimerTextView() {
-        int seconds = (int) timeLeftInMill / MILLISECONDS_TO_SECONDS % SECONDS_TO_MINUTES;
-        int minutes = (int) timeLeftInMill / MILLISECONDS_TO_SECONDS / SECONDS_TO_MINUTES;
+        int localTimeLeftInMill = (int) (timeLeftInMill * tickRatePercent);
+        int seconds = (int) (localTimeLeftInMill / MILLISECONDS_TO_SECONDS) % SECONDS_TO_MINUTES;
+        int minutes = (int) (localTimeLeftInMill / MILLISECONDS_TO_SECONDS / SECONDS_TO_MINUTES);
         String timeLeft = String.format(Locale.CANADA, "%02d:%02d", minutes, seconds);
         timerView.setText(timeLeft);
     }
@@ -424,9 +492,9 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void addPieEntries(List<PieEntry> pieEntries) {
-        int secondLeft = (int) (timeLeftInMill / MILLISECONDS_TO_SECONDS);
+        int secondLeft = (int) (timeLeftInMill);
         pieEntries.add(new PieEntry(secondLeft));
-        int secondDiff = (int) (timeDiffStartVsLeft / MILLISECONDS_TO_SECONDS);
+        int secondDiff = (int) (timeDiffStartVsLeft);
         pieEntries.add(new PieEntry(secondDiff));
     }
 
@@ -436,11 +504,17 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    private void updateTickRateView() {
+        String newTickRate = String.format(Locale.CANADA, "Time @%.0f", (tickRatePercent * 100));
+        tickRateView.setText(newTickRate);
+    }
+
     private void loadTimerActivityPrefs(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_TIMER, MODE_PRIVATE);
         if (prefs.contains(KEY_IS_TICKING_KEY)) {
             isTicking = prefs.getBoolean(KEY_IS_TICKING_KEY, false);
             timeLeftInMill = prefs.getLong(KEY_TIME_LEFT_KEY, DEFAULT_START_TIME);
+            currentBaseTime = prefs.getLong(KEY_TIME_CURRENT_BASE, DEFAULT_START_TIME);
             lastSelectedTime = prefs.getLong(KEY_TIME_LAST_SELECTED_KEY, DEFAULT_START_TIME);
             timeAtPause = prefs.getLong(KEY_TIME_AT_PAUSE, 0);
         }
@@ -451,6 +525,7 @@ public class TimerActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(KEY_IS_TICKING_KEY, isTicking);
         editor.putLong(KEY_TIME_LEFT_KEY, timeLeftInMill);
+        editor.putLong(KEY_TIME_CURRENT_BASE, currentBaseTime);
         editor.putLong(KEY_TIME_LAST_SELECTED_KEY, lastSelectedTime);
         timeAtPause = Calendar.getInstance().getTimeInMillis();
         editor.putLong(KEY_TIME_AT_PAUSE, timeAtPause);
