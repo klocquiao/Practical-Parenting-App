@@ -183,8 +183,15 @@ public class TimerActivity extends AppCompatActivity {
         tickRate = (int) (DEFAULT_TICK_RATE / tickRatePercent);
         timeLeftInMill = (long) (timeLeftInMill * oldTickRatePercent);
         timeLeftInMill = (long) (timeLeftInMill / tickRatePercent);
-        currentBaseTime = (long) (lastSelectedTime / tickRatePercent);
+        currentBaseTime = (long) (currentBaseTime * oldTickRatePercent);
+        currentBaseTime = (long) (currentBaseTime / tickRatePercent);
         timeDiffStartVsLeft = currentBaseTime - timeLeftInMill;
+        Log.i("timeScaleVals()", "tickRate: " + tickRate +
+                " tickRatePerc: " + tickRatePercent +
+                " timeLeftInMill: " + timeLeftInMill +
+                " currentBaseTime: " + currentBaseTime +
+                " diffStartVsLeft: " + timeDiffStartVsLeft +
+                " lastTimeSelected: " + lastSelectedTime);
         updateTimerTextView();
         updateTimerPieChart();
         pauseTimer();
@@ -203,6 +210,8 @@ public class TimerActivity extends AppCompatActivity {
         } else {
             timeAtPause = 0;
             timeAtResume = 0;
+            tickRate = DEFAULT_TICK_RATE;
+            tickRatePercent = DEFAULT_TICK_RATE_PERCENT;
         }
     }
 
@@ -357,6 +366,11 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
+        Log.i("timeStartTimer()", "tickRate: " + tickRate +
+                                            "tickRatePerc" + tickRatePercent +
+                                            "timeLeftInMill: " + timeLeftInMill +
+                                            "currentBaseTime: " + currentBaseTime +
+                                            "lastTimeSelected: " + lastSelectedTime);
         countDownTimer = new CountDownTimer(timeLeftInMill, tickRate) {
             @Override
             public void onTick(long millisUntilFinished) {
