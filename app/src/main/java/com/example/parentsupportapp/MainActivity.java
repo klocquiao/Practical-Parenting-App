@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         this.breathButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent breathingIntent = StartBreathing.makeIntent(MainActivity.this);
+                Intent breathingIntent = StartBreathingActivity.makeIntent(MainActivity.this);
                 startActivity(breathingIntent);
             }
         });

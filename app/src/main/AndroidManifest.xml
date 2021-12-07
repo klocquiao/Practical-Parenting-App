@@ -16,11 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentSupportApp">
         <activity
-            android:name=".StartBreathing"
-            android:exported="true" />
+            android:name=".StartBreathingActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".BreathingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".childConfig.EditRemoveChildActivity"
             android:exported="true"
@@ -60,8 +64,9 @@
         <activity
             android:name=".childConfig.ViewActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="true" />
+
         <activity
             android:name=".childConfig.AddChildActivity"
             android:exported="true"

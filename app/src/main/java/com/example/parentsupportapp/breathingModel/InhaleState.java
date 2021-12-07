@@ -6,6 +6,10 @@ import android.widget.Toast;
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
+/**
+ * Inhale state of the BreathingActivity exercise. Occurs when the user has let go of the
+ * button after >3 seconds.
+ */
 
 public class InhaleState extends State {
     public InhaleState(BreathingActivity context) {
@@ -15,14 +19,17 @@ public class InhaleState extends State {
     @Override
     public void handleEnter() {
         super.handleEnter();
+
+        context.imgBreathingGuide.setColorFilter(context.getColor(R.color.breathing_green));
+        Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
         context.tvPrompt.setText("Breathe in and hold the button...");
     }
 
     @Override
     public void handleExit() {
         super.handleExit();
-        //1. Revert animation
-        //2. Stop sound
+        context.growCircle.cancel();
+        context.stopSound(context.inhaleSound);
     }
 
     @Override
@@ -32,9 +39,8 @@ public class InhaleState extends State {
         handler.removeCallbacks(shouldBreathOut);
         if (seconds <= THREE_SECONDS_MS) {
             Toast.makeText(context, context.getString(R.string.breathing_inhale_error), Toast.LENGTH_SHORT).show();
-            //1. Revert animation
-            //2. Stop sound
-            //3. Back to waiting
+            context.growCircle.cancel();
+            context.stopSound(context.inhaleSound);
         }
         else {
             context.tvPrompt.setText("Lets breathe out now...");
@@ -46,7 +52,7 @@ public class InhaleState extends State {
     public void handleClick() {
         super.handleClick();
         context.growCircle.start();
-        //2. Start sound
+        context.inhaleSound.start();
         handler.postDelayed(canBreatheOut, THREE_SECONDS_MS);
         handler.postDelayed(shouldBreathOut, TEN_SECONDS_MS);
     }

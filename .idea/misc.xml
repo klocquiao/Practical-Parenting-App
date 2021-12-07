@@ -21,12 +21,20 @@
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/ic_notification_icon.xml" value="0.1" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/drawable/timer_activity_button.xml" value="0.1" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_add_child.xml" value="0.30932971014492755" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_add_task.xml" value="0.296195652173913" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_breathing.xml" value="0.22" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_child_config.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_coin_flip.xml" value="0.2015625" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_edit_task.xml" value="0.296195652173913" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_history.xml" value="0.296195652173913" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_start_breathing.xml" value="0.29846014492753625" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/activity_tasks.xml" value="0.1625" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/child_view_layout.xml" value="0.29846014492753625" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/flipper_row.xml" value="0.1625" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/history_list_view.xml" value="0.33" />
         <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/layout/task_item_view.xml" value="0.33" />
+        <entry key="..\:/Users/klocq/AndroidStudioProjects/ParentSupportApp/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/background_gradient.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/drawable/ic_baseline_timer_24.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/drawable/timer_activity_button.xml" value="0.27239583333333334" />

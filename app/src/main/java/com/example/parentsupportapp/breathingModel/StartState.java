@@ -3,6 +3,11 @@ package com.example.parentsupportapp.breathingModel;
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
+/**
+ * First state entered in the BreathingActivity exercise. This state handles the situation
+ * where the user first boots up the exercise and technically the user isn't exhaling or breathing.
+ */
+
 public class StartState extends State{
     public StartState(BreathingActivity context) {
         super(context);

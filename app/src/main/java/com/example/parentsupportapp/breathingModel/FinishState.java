@@ -3,6 +3,10 @@ package com.example.parentsupportapp.breathingModel;
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
+/**
+ * Last state entered in the BreathingActivity exercise.
+ */
+
 public class FinishState extends State {
     public FinishState(BreathingActivity context) {
         super(context);
