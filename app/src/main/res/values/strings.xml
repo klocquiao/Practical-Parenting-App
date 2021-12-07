@@ -105,5 +105,6 @@
         Default child image: <a href="https://www.freepik.com/free-vector/collection-lovely-kids-avatars_1258328.htm#page=1&amp;query=kids%20avatar%20collection&amp;position=3&amp;from_view=search">Child Image</a>
     </string>
     <string name="help_created_msg">App created by team Carbon!!</string>
+    <string name="timer_pie_chart_data_set_label">Time remaining</string>
 
 </resources>

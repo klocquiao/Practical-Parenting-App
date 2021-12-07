@@ -145,7 +145,6 @@ public class TimerActivity extends AppCompatActivity {
                 if (tickRate > 250 && isTicking) {
                     accelerateTime();
                     scaleTimeValues();
-                    Toast.makeText(this, "increasing time rate: " + tickRate, Toast.LENGTH_SHORT).show();
                 }
                 return true;
 
@@ -153,7 +152,6 @@ public class TimerActivity extends AppCompatActivity {
                 if (tickRate < 4000 && isTicking) {
                     decelerateTime();
                     scaleTimeValues();
-                    Toast.makeText(this, "decreasing time rate: " + tickRate, Toast.LENGTH_SHORT).show();
                 }
                 return true;
 
@@ -166,11 +164,9 @@ public class TimerActivity extends AppCompatActivity {
         oldTickRatePercent = tickRatePercent;
         if (tickRatePercent < 1.0) {
             tickRatePercent += 0.25;
-            Log.i("TimeChange", "tickRatePercent += 0.25 tickRatePercent: " + tickRatePercent);
         }
         else {
             tickRatePercent += 1;
-            Log.i("TimeChange", "tickRatePercent += 1 tickRatePercent: " + tickRatePercent);
         }
     }
 
@@ -178,25 +174,17 @@ public class TimerActivity extends AppCompatActivity {
         oldTickRatePercent = tickRatePercent;
         if (tickRatePercent <= 1) {
             tickRatePercent -= 0.25;
-            Log.i("TimeChange", "tickRatePercent -= 0.25 tickRatePercent: " + tickRatePercent);
         } else {
             tickRatePercent -= 1;
-            Log.i("TimeChange", "tickRatePercent -= 1 tickRatePercent: " + tickRatePercent);
         }
     }
 
     private void scaleTimeValues() {
         tickRate = (int) (DEFAULT_TICK_RATE / tickRatePercent);
-        // have to renormalize timeLeftInMill
         timeLeftInMill = (long) (timeLeftInMill * oldTickRatePercent);
         timeLeftInMill = (long) (timeLeftInMill / tickRatePercent);
         currentBaseTime = (long) (lastSelectedTime / tickRatePercent);
         timeDiffStartVsLeft = currentBaseTime - timeLeftInMill;
-        Log.i("TimeUpdateTimerRate", "tickRate: " + tickRate +
-                " timeLeftInMill: " + timeLeftInMill +
-                " currentBaseTime: " + currentBaseTime +
-                " timeDiffStartVsLeft: " + timeDiffStartVsLeft +
-                " lastSelectedTime: " + lastSelectedTime);
         updateTimerTextView();
         updateTimerPieChart();
         pauseTimer();
@@ -369,7 +357,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        Log.i("TimeStartTimer", "timeLeftInMill:" + timeLeftInMill + " ticRate:" + tickRate + " currentBaseTime:" + currentBaseTime);
         countDownTimer = new CountDownTimer(timeLeftInMill, tickRate) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -487,7 +474,7 @@ public class TimerActivity extends AppCompatActivity {
             addPieEntries(pieEntries);
         }
 
-        PieDataSet dataSet = new PieDataSet(pieEntries, "Time remaining");
+        PieDataSet dataSet = new PieDataSet(pieEntries, getString(R.string.timer_pie_chart_data_set_label));
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(dataSet);
 
