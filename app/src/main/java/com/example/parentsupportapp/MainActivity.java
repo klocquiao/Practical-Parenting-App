@@ -2,9 +2,12 @@ package com.example.parentsupportapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,10 +43,27 @@ public class MainActivity extends AppCompatActivity {
         this.flipButton = findViewById(R.id.buttonFlipCoin);
         this.timerButton = findViewById(R.id.buttonTimer);
         this.tasksButton = findViewById(R.id.buttonTasks);
-        this.helpButton = findViewById(R.id.buttonHelp);
         this.breathButton = findViewById(R.id.buttonBreathing);
 
         this.setupButtonListeners();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.actionHelp:
+                Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
+                startActivity(helpIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setupButtonListeners() {
@@ -76,14 +96,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent taskIntent = TasksActivity.makeIntent(MainActivity.this);
                 startActivity(taskIntent);
-            }
-        });
-
-        this.helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
-                startActivity(helpIntent);
             }
         });
 

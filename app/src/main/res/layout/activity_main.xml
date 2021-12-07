@@ -66,23 +66,12 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonFlipCoin" />
 
     <Button
-        android:id="@+id/buttonHelp"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="@string/main_menu_help"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBreathing" />
-
-    <Button
         android:id="@+id/buttonBreathing"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="Breathing"
 
-        app:layout_constraintBottom_toTopOf="@+id/buttonHelp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTimer" />
