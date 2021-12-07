@@ -75,8 +75,7 @@
         <activity
             android:name=".CoinFlipActivity"
             android:exported="true"
-            android:label="@string/coin_flip_title"
-            android:parentActivityName=".MainActivity"
+            android:label="@string/history_title"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".TimerActivity"

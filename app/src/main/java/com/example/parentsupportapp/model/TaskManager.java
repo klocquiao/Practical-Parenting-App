@@ -28,6 +28,7 @@ public class TaskManager {
         }
 
         updatePriorityQueues(children);
+        updateTaskHistory(children);
         return instance;
     }
 
@@ -49,22 +50,23 @@ public class TaskManager {
         }
     }
 
+    public static void updateTaskHistory(List<Child> children) {
+        for (Task task: taskArray) {
+            task.getTaskHistory().updateChildObjects(children);
+        }
+    }
+
     public ArrayList<Task> getTaskArray() {
         return taskArray;
     }
 
     public void addTask (List<Child> children, String taskName) {
-        this.taskArray.add(new Task(taskName, new PriorityQueue(children, EMPTY)));
+        this.taskArray.add(new Task(taskName, children));
         TasksActivity.saveTaskSharedPrefs(context, this);
     }
 
     public void removeTask (int index) {
         this.taskArray.remove(index);
-        TasksActivity.saveTaskSharedPrefs(context, this);
-    }
-
-    public void editTask (int index, String name) {
-        this.taskArray.get(index).setTaskName(name);
         TasksActivity.saveTaskSharedPrefs(context, this);
     }
 

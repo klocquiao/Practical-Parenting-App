@@ -43,9 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="NAME"
-        app:layout_constraintBottom_toBottomOf="@+id/imageIsMatch"
+        app:layout_constraintBottom_toBottomOf="@+id/imagePastCompleter"
         app:layout_constraintStart_toEndOf="@+id/imagePastFlipper"
-        app:layout_constraintTop_toTopOf="@+id/imageIsMatch"
+        app:layout_constraintTop_toTopOf="@+id/imagePastCompleter"
         app:layout_constraintVertical_bias="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -56,7 +56,7 @@
         app:layout_constraintGuide_percent="0.35" />
 
     <ImageView
-        android:id="@+id/imageIsMatch"
+        android:id="@+id/imagePastCompleter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
