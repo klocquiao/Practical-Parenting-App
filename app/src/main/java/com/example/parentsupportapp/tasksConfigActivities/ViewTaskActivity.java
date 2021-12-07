@@ -1,4 +1,4 @@
-package com.example.parentsupportapp.tasksConfig;
+package com.example.parentsupportapp.tasksConfigActivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.HistoryActivity;
 import com.example.parentsupportapp.R;
-import com.example.parentsupportapp.TasksActivity;
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.childConfigActivities.ViewActivity;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;

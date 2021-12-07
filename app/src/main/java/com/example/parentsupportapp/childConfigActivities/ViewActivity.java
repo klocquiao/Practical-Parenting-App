@@ -1,4 +1,4 @@
-package com.example.parentsupportapp.childConfig;
+package com.example.parentsupportapp.childConfigActivities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

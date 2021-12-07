@@ -1,16 +1,7 @@
-package com.example.parentsupportapp.childConfig;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
+package com.example.parentsupportapp.childConfigActivities;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +20,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.example.parentsupportapp.R;
 import com.example.parentsupportapp.model.Child;
@@ -37,47 +36,37 @@ import com.example.parentsupportapp.model.SaveImage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
- * The EditRemoveChildActivity allows the user to remove a child from the family list, change
- * a specific child's name, or change their current image.
+ * The AddChildActivity adds a new child to the family list. The associated data
+ * per child that is added is a picture of them and their name.
  */
 
-public class EditRemoveChildActivity extends AppCompatActivity {
+public class AddChildActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_GALLERY = 1;
     public static final int REQUEST_CODE_CAMERA = 2;
     public static final int MIN_SDK = 23;
-    public static final String EXTRA_POSITION = "intVariableName";
-
-    private int position;
-    private ImageView imageViewEditChild;
-    private EditText editChildName;
     private Family family;
-    private FloatingActionButton fabEditPhoto;
+    public ImageView imgChild;
+    private FloatingActionButton fabAddPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_remove_child);
+        setContentView(R.layout.activity_add_child);
 
-        Toolbar toolbar = findViewById(R.id.tbEditRemove);
+        Toolbar toolbar = findViewById(R.id.tbAdd);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         family = Family.getInstance(this);
-
-        Intent mIntent = getIntent();
-        position = mIntent.getIntExtra(EXTRA_POSITION, 0);
-
-        setupChild();
-        setupSaveButton();
-        setupImageBtn();
-        setupRemoveBtn();
-        setupFabEditPhoto();
+        setupAddButton();
+        setupImageButton();
+        setupFabAddPhoto();
     }
 
-    private void setupFabEditPhoto() {
-        fabEditPhoto = findViewById(R.id.floatingActionButtonEditPhoto);
-        fabEditPhoto.setOnClickListener(new View.OnClickListener() {
+    private void setupFabAddPhoto() {
+        fabAddPhoto = findViewById(R.id.floatingActionButtonAddPhoto);
+        fabAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePhoto();
@@ -85,34 +74,9 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         });
     }
 
-    private void setupRemoveBtn() {
-        Button btn = findViewById(R.id.btnRemoveChild2);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View dialogView = getLayoutInflater().inflate(R.layout.remove_message_layout, null);
-                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(EditRemoveChildActivity.this);
-                alert.setTitle(getString(R.string.child_config_confirm))
-                        .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                family.removeChild(position);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                alert.show();
-            }
-        });
-    }
-
-    private void setupImageBtn() {
-        imageViewEditChild.setOnClickListener(new View.OnClickListener() {
+    private void setupImageButton() {
+        imgChild = findViewById(R.id.imgAddChild);
+        imgChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePhoto();
@@ -121,7 +85,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
     }
 
     private void choosePhoto() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditRemoveChildActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddChildActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.choose_dialog,null);
         builder.setCancelable(true);
@@ -142,7 +106,6 @@ public class EditRemoveChildActivity extends AppCompatActivity {
                 }
             }
         });
-
         btnViewGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,23 +134,23 @@ public class EditRemoveChildActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Uri selectedImageUri = data.getData();
-                    imageViewEditChild.setImageURI(selectedImageUri);
+                    imgChild.setImageURI(selectedImageUri);
                 }
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     Bitmap bitmapImage = (Bitmap) bundle.get(getString(R.string.child_config_data));
-                    imageViewEditChild.setImageBitmap(bitmapImage);
+                    imgChild.setImageBitmap(bitmapImage);
                 }
         }
     }
 
     private boolean checkAndRequestPermission() {
         if (Build.VERSION.SDK_INT >= MIN_SDK) {
-            int cameraPermission = ActivityCompat.checkSelfPermission(EditRemoveChildActivity.this, Manifest.permission.CAMERA);
+            int cameraPermission = ActivityCompat.checkSelfPermission(AddChildActivity.this, Manifest.permission.CAMERA);
             if (cameraPermission == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(EditRemoveChildActivity.this, new String[]{Manifest.permission.CAMERA},20);
+                ActivityCompat.requestPermissions(AddChildActivity.this, new String[]{Manifest.permission.CAMERA},20);
                 return false;
             }
         }
@@ -200,27 +163,30 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         if (requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             takePictureFromCamera();
         } else {
-            Toast.makeText(EditRemoveChildActivity.this, getString(R.string.child_config_deny_permission), Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddChildActivity.this, getText(R.string.child_config_deny_permission), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setupSaveButton() {
-        imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
-        editChildName = findViewById(R.id.editTextName);
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, AddChildActivity.class);
+    }
 
-        Button btnSave = findViewById(R.id.btnEditChild);
-        btnSave.setOnClickListener(new View.OnClickListener() {
+    public void setupAddButton() {
+        ImageView img = findViewById(R.id.imgAddChild);
+        Button btn = findViewById(R.id.btnAdd);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = editChildName.getText().toString();
-                if (checkName(str, editChildName) == -1){
+                EditText etFirstName = findViewById(R.id.etFirstName);
+                String str = etFirstName.getText().toString();
+                etFirstName.setHint(R.string.add_child_activity_enter_name);
+                if (checkName(str, etFirstName) == -1){
                     return;
                 }
+                Child child = new Child(correctString(str));
+                saveToInternalStorage(img, child.getPortraitPath(), AddChildActivity.this);
 
-                family.editChild(position, str);
-                saveToInternalStorage(imageViewEditChild, family.getChild(position).getPortraitPath(),
-                        EditRemoveChildActivity.this);
-
+                family.addChild(child);
                 finish();
             }
         });
@@ -231,7 +197,7 @@ public class EditRemoveChildActivity extends AppCompatActivity {
             et.setHint(R.string.add_child_activity_enter_error);
             et.setHintTextColor(Color.RED);
 
-            MediaPlayer song = MediaPlayer.create(EditRemoveChildActivity.this, R.raw.negativebeep);
+            MediaPlayer song = MediaPlayer.create(AddChildActivity.this, R.raw.negativebeep);
             song.start();
 
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -241,32 +207,17 @@ public class EditRemoveChildActivity extends AppCompatActivity {
         }
         return 0;
     }
-    
+
+    private String correctString(String str) {
+        str = str.replaceAll("(?m)^[ \t]*\r?\n", "");
+        return str;
+    }
+
     private void saveToInternalStorage(ImageView img, String path ,Context context){
         img.buildDrawingCache();
         Bitmap bitmapImage = img.getDrawingCache();
         new SaveImage(context).
                 setFileName(path).
                 save(bitmapImage);
-    }
-
-    private void setupChild() {
-        Child child = family.getChildren().get(position);
-        imageViewEditChild = findViewById(R.id.imgEditRemoveChild);
-        loadImageFromStorage(child.getPortraitPath(), imageViewEditChild, EditRemoveChildActivity.this);
-
-        editChildName = findViewById(R.id.editTextName);
-        editChildName.setText(child.getFirstName());
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, EditRemoveChildActivity.class);
-    }
-
-    public static void loadImageFromStorage(String path, ImageView img, Context context) {
-        Bitmap bitmap = new SaveImage(context).
-                setFileName(path).
-                load();
-        img.setImageBitmap(bitmap);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.parentsupportapp;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -10,7 +9,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,12 +18,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.parentsupportapp.breathingModel.ExhaleState;
-import com.example.parentsupportapp.breathingModel.FinishState;
-import com.example.parentsupportapp.breathingModel.IdleState;
-import com.example.parentsupportapp.breathingModel.StartState;
-import com.example.parentsupportapp.breathingModel.InhaleState;
-import com.example.parentsupportapp.breathingModel.State;
+import com.example.parentsupportapp.model.breathingModel.ExhaleState;
+import com.example.parentsupportapp.model.breathingModel.FinishState;
+import com.example.parentsupportapp.model.breathingModel.IdleState;
+import com.example.parentsupportapp.model.breathingModel.StartState;
+import com.example.parentsupportapp.model.breathingModel.InhaleState;
+import com.example.parentsupportapp.model.breathingModel.State;
 
 /**
  * The BreathingActivity is the main control for the breathing exercise.

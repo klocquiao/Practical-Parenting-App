@@ -32,7 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.childConfigActivities.ViewActivity;
 import com.example.parentsupportapp.model.Child;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.HistoryEntry;

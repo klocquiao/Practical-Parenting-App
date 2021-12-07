@@ -1,4 +1,4 @@
-package com.example.parentsupportapp;
+package com.example.parentsupportapp.tasksConfigActivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,17 +19,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.R;
+import com.example.parentsupportapp.childConfigActivities.ViewActivity;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
-import com.example.parentsupportapp.tasksConfig.AddTaskActivity;
-import com.example.parentsupportapp.tasksConfig.EditTaskActivity;
-import com.example.parentsupportapp.tasksConfig.RemoveTaskActivity;
-import com.example.parentsupportapp.tasksConfig.ViewTaskActivity;
 import com.google.gson.Gson;
-
-import java.util.List;
 
 /**
  * The TaskActivity is the starting screen of the overall task feature.

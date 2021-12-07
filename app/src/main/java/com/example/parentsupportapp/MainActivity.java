@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.childConfigActivities.ViewActivity;
 import com.example.parentsupportapp.databinding.ActivityMainBinding;
+import com.example.parentsupportapp.tasksConfigActivities.TasksActivity;
 
 /**
  * The MainActivity class handles the model for the main/initial menu

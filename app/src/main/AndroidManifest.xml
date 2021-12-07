@@ -28,33 +28,33 @@
             android:label="@string/breathing_exercise_title"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
-            android:name=".childConfig.EditRemoveChildActivity"
+            android:name=".childConfigActivities.EditRemoveChildActivity"
             android:exported="true"
             android:label="@string/edit_child_title"
-            android:parentActivityName=".childConfig.ViewActivity"
+            android:parentActivityName=".childConfigActivities.ViewActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
-            android:name=".tasksConfig.ViewTaskActivity"
+            android:name=".tasksConfigActivities.ViewTaskActivity"
             android:exported="false"
-            android:parentActivityName=".TasksActivity"
+            android:parentActivityName=".tasksConfigActivities.TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
-            android:name=".tasksConfig.RemoveTaskActivity"
-            android:parentActivityName=".TasksActivity"
+            android:name=".tasksConfigActivities.RemoveTaskActivity"
+            android:parentActivityName=".tasksConfigActivities.TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".tasksConfig.EditTaskActivity"
-            android:parentActivityName=".TasksActivity"
+            android:name=".tasksConfigActivities.EditTaskActivity"
+            android:parentActivityName=".tasksConfigActivities.TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".tasksConfig.AddTaskActivity"
-            android:parentActivityName=".TasksActivity"
+            android:name=".tasksConfigActivities.AddTaskActivity"
+            android:parentActivityName=".tasksConfigActivities.TasksActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".TasksActivity"
+            android:name=".tasksConfigActivities.TasksActivity"
             android:exported="false"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:parentActivityName=".MainActivity"/>
@@ -65,17 +65,17 @@
             android:parentActivityName=".CoinFlipActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
-            android:name=".childConfig.ViewActivity"
+            android:name=".childConfigActivities.ViewActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
             android:label="@string/child_config_title"
             android:exported="true" />
 
         <activity
-            android:name=".childConfig.AddChildActivity"
+            android:name=".childConfigActivities.AddChildActivity"
             android:exported="true"
             android:label="@string/add_child_title"
-            android:parentActivityName=".childConfig.ViewActivity"
+            android:parentActivityName=".childConfigActivities.ViewActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".CoinFlipActivity"

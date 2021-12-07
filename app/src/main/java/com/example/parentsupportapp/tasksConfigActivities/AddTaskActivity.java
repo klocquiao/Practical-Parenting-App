@@ -1,4 +1,4 @@
-package com.example.parentsupportapp.tasksConfig;
+package com.example.parentsupportapp.tasksConfigActivities;
 
 import android.content.Context;
 import android.content.Intent;
