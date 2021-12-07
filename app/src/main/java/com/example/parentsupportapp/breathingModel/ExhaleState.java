@@ -20,7 +20,7 @@ public class ExhaleState extends State {
         handler.postDelayed(exhaleButtonLock, THREE_SECONDS_MS);
         handler.postDelayed(stateToExhale, TEN_SECONDS_MS);
 
-        //Start animation & sound
+        context.shrinkCircle.start();
 
         context.tvPrompt.setText("Lets breathe out now...");
     }
@@ -41,7 +41,6 @@ public class ExhaleState extends State {
                 context.btnBreathe.setText(context.getString(R.string.breathing_in));
             }
             else {
-
                 context.setState(context.finishState);
             }
         }

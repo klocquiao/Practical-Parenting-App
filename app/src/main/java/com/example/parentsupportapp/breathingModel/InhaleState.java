@@ -45,7 +45,7 @@ public class InhaleState extends State {
     @Override
     public void handleClick() {
         super.handleClick();
-        //1. Start Animation
+        context.growCircle.start();
         //2. Start sound
         handler.postDelayed(canBreatheOut, THREE_SECONDS_MS);
         handler.postDelayed(shouldBreathOut, TEN_SECONDS_MS);

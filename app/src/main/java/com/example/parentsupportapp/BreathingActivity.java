@@ -1,12 +1,18 @@
 package com.example.parentsupportapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +32,19 @@ public class BreathingActivity extends AppCompatActivity {
     public final State startState = new StartState(this);
     public State currentState = new IdleState(this);
 
+    public AnimatorSet growCircle;
+    public ObjectAnimator growCircleX;
+    public ObjectAnimator growCircleY;
+
+    public AnimatorSet shrinkCircle;
+    public ObjectAnimator shrinkCircleX;
+    public ObjectAnimator shrinkCircleY;
+
     public int numberOfBreaths;
     public Button btnBreathe;
     public TextView txtMain;
     public TextView tvPrompt;
+    public ImageView imgBreathingGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,7 @@ public class BreathingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_breathing);
         setupViews();
         setupButtons();
+        setupAnimation();
         numberOfBreaths = getIntent().getIntExtra(EXTRA_NUM_OF_BREATHS, 1);
         setState(startState);
     }
@@ -63,12 +79,30 @@ public class BreathingActivity extends AppCompatActivity {
         btnBreathe = findViewById(R.id.btnBreathe);
         txtMain = findViewById(R.id.tvDemo);
         tvPrompt = findViewById(R.id.tvBreathingPrompt);
+        imgBreathingGuide = findViewById(R.id.imgBreathingGuide);
     }
 
     public void setState(State newState) {
         currentState.handleExit();
         currentState = newState;
         currentState.handleEnter();
+    }
+
+    public void setupAnimation() {
+        shrinkCircle = new AnimatorSet();
+        shrinkCircleX = ObjectAnimator.ofFloat(imgBreathingGuide, "scaleX", 1.0f);
+        shrinkCircleY = ObjectAnimator.ofFloat(imgBreathingGuide, "scaleY", 1.0f);
+        shrinkCircle.playTogether(shrinkCircleX, shrinkCircleY);
+        shrinkCircle.setInterpolator(new DecelerateInterpolator());
+        shrinkCircle.setDuration(State.TEN_SECONDS_MS);
+
+        growCircle = new AnimatorSet();
+        growCircleX = ObjectAnimator.ofFloat(imgBreathingGuide, "scaleX", 1.8f);
+        growCircleY = ObjectAnimator.ofFloat(imgBreathingGuide, "scaleY", 1.8f);
+        growCircle.playTogether(growCircleX, growCircleY);
+        growCircle.setInterpolator(new DecelerateInterpolator());
+        growCircle.setDuration(State.TEN_SECONDS_MS);
+
     }
 
     public static Intent makeIntent(Context c, int numOfBreaths) {
