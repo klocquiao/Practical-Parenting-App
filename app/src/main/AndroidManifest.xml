@@ -19,15 +19,18 @@
             android:name=".StartBreathingActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
+            android:label="@string/breathing_exercise_title"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".BreathingActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".StartBreathingActivity"
+            android:label="@string/breathing_exercise_title"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".childConfig.EditRemoveChildActivity"
             android:exported="true"
+            android:label="@string/edit_child_title"
             android:parentActivityName=".childConfig.ViewActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
@@ -65,18 +68,21 @@
             android:name=".childConfig.ViewActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:label="@string/child_config_title"
             android:exported="true" />
 
         <activity
             android:name=".childConfig.AddChildActivity"
             android:exported="true"
+            android:label="@string/add_child_title"
             android:parentActivityName=".childConfig.ViewActivity"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar" />
         <activity
             android:name=".CoinFlipActivity"
             android:exported="true"
-            android:label="@string/history_title"
-            android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
+            android:label="@string/coin_flip_title"
+            android:theme="@style/Theme.ParentSupportApp.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".TimerActivity"
             android:exported="false"
@@ -86,6 +92,7 @@
             android:name=".HelpActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
+            android:label="@string/help_title"
             android:theme="@style/Theme.ParentSupportApp.NoActionBar"/>
         <activity
             android:name=".MainActivity"
