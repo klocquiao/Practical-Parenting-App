@@ -20,7 +20,7 @@
     <!-- History Activity -->
     <string name="history_choice">Choice: %1$s</string>
     <string name="history_results">Results: %1$s</string>
-    <string name="history_title">Coin Flip History</string>
+    <string name="history_title">History</string>
 
     <!-- Tasks Activity -->
     <string name="tasks_add_task">Add</string>
@@ -116,4 +116,7 @@
     <string name="breathing_exhale_error">Release the button and breathe out!</string>
     <string name="breathing_exhale_help">Lets breathe out now...</string>
     <string name="breathing_begin">Begin</string>
+    
+    <string name="timer_pie_chart_data_set_label">Time remaining</string>
+
 </resources>

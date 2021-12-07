@@ -23,6 +23,7 @@ public class PriorityQueue {
         else {
             priorityQueue = deserializePriorityQueue(jsonString);
         }
+
         updateQueue(children);
     }
 
