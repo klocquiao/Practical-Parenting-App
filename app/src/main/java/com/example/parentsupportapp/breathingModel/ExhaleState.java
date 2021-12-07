@@ -25,12 +25,11 @@ public class ExhaleState extends State {
         handler.postDelayed(exhaleButtonLock, THREE_SECONDS_MS);
         handler.postDelayed(stateToExhale, TEN_SECONDS_MS);
 
-        context.shrinkCircle.start();
         context.imgBreathingGuide.setColorFilter(context.getColor(R.color.breathing_red));
         context.shrinkCircle.start();
         context.exhaleSound.start();
 
-        context.tvPrompt.setText("Lets breathe out now...");
+        context.tvPrompt.setText(R.string.breathing_out_prompt);
     }
 
     @Override

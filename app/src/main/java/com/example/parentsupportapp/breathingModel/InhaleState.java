@@ -42,7 +42,7 @@ public class InhaleState extends State {
             context.stopSound(context.inhaleSound);
         }
         else {
-            context.tvPrompt.setText("Lets breathe out now...");
+            context.tvPrompt.setText(R.string.breathing_out_prompt);
             context.setState(context.exhaleState);
         }
     }
@@ -58,13 +58,13 @@ public class InhaleState extends State {
 
     Runnable shouldBreathOut = new Runnable() {
         public void run() {
-            context.tvPrompt.setText("Release the button to breathe out!");
+            context.tvPrompt.setText(R.string.breathing_exhale_error);
         }
     };
 
     Runnable canBreatheOut = new Runnable() {
         public void run() {
-            context.tvPrompt.setText("Lets breathe out now...");
+            context.tvPrompt.setText(R.string.breathing_out_prompt);
             context.btnBreathe.setText(context.getString(R.string.breathing_out));
         }
     };

@@ -101,6 +101,8 @@
     <string name="breathing_header">Lets take %1$s breath(s) together!</string>
     <string name="breathing_in">In</string>
     <string name="breathing_out">Out</string>
+    <string name="breathing_out_prompt">Lets breathe out now...</string>
+    <string name="breathing_finished">Breathing finished. Good Job!</string>
 
     <!-- Help Activity -->
     <string name="help_sources">
