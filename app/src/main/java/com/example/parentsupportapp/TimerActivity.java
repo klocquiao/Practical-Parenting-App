@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -71,6 +72,8 @@ public class TimerActivity extends AppCompatActivity {
     private static final String KEY_TIME_AT_PAUSE = "timerAtPause";
     private static final String KEY_TIME_CURRENT_BASE = "timerCurrentBaseKey";
     private static final String KEY_TIME_LAST_SELECTED_KEY = "timerLastSelectedKey";
+    private static final String KEY_TIME_TICK_RATE = "timerTickRateKey";
+    private static final String KEY_TIME_TICK_RATE_PERCENT = "timerTickRatePercentKey";
     private static final String PREF_TIMER = "timerActivityPref";
     public static final int DEFAULT_TICK_RATE = 1000;
     public static final float DEFAULT_TICK_RATE_PERCENT = 1;
@@ -109,9 +112,10 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         Toolbar toolbar = findViewById(R.id.toolbarTimer);
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -517,6 +521,8 @@ public class TimerActivity extends AppCompatActivity {
             currentBaseTime = prefs.getLong(KEY_TIME_CURRENT_BASE, DEFAULT_START_TIME);
             lastSelectedTime = prefs.getLong(KEY_TIME_LAST_SELECTED_KEY, DEFAULT_START_TIME);
             timeAtPause = prefs.getLong(KEY_TIME_AT_PAUSE, 0);
+            tickRate = prefs.getInt(KEY_TIME_TICK_RATE, DEFAULT_TICK_RATE);
+            tickRatePercent = prefs.getFloat(KEY_TIME_TICK_RATE_PERCENT, DEFAULT_TICK_RATE_PERCENT);
         }
     }
 
@@ -527,6 +533,8 @@ public class TimerActivity extends AppCompatActivity {
         editor.putLong(KEY_TIME_LEFT_KEY, timeLeftInMill);
         editor.putLong(KEY_TIME_CURRENT_BASE, currentBaseTime);
         editor.putLong(KEY_TIME_LAST_SELECTED_KEY, lastSelectedTime);
+        editor.putInt(KEY_TIME_TICK_RATE, tickRate);
+        editor.putFloat(KEY_TIME_TICK_RATE_PERCENT, tickRatePercent);
         timeAtPause = Calendar.getInstance().getTimeInMillis();
         editor.putLong(KEY_TIME_AT_PAUSE, timeAtPause);
         editor.apply();
