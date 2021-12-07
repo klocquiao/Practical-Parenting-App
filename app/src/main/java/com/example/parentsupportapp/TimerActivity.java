@@ -48,11 +48,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
-This activity handles the timer functionality for the app. The timer activity will continue
-counting down from the selected time, whether preset or custom time. When the timer reaches 0,
-the activity causes the phone to vibrate, starts an alarm, and sends a notification (top level)
-to the user to allow them to silence the alarm or go back to the activity when the notification
-is clicked.
+ * This activity handles the timer functionality for the app. The timer activity will continue
+ * counting down from the selected time, whether preset or custom time. When the timer reaches 0,
+ * the activity causes the phone to vibrate, starts an alarm, and sends a notification (top level)
+ * to the user to allow them to silence the alarm or go back to the activity when the notification
+ * is clicked.
  */
 
 public class TimerActivity extends AppCompatActivity {

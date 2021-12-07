@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private Button flipButton;
     private Button timerButton;
     private Button tasksButton;
-    private Button helpButton;
     private Button breathButton;
 
     @Override

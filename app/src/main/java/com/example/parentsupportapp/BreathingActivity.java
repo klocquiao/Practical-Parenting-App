@@ -28,6 +28,7 @@ import com.example.parentsupportapp.model.breathingModel.State;
 /**
  * The BreathingActivity is the main control for the breathing exercise.
  * It will guide the user through it, changing the state as necessary.
+ * State changes push the exercise further till there are 0 breaths left to take
  */
 
 public class BreathingActivity extends AppCompatActivity {
