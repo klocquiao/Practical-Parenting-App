@@ -29,11 +29,10 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="@string/timer_title"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTasks"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBreathing"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonFlipCoin" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTasks" />
 
     <Button
         android:id="@+id/buttonConfigChild"
@@ -42,7 +41,6 @@
         android:text="@string/child_config_title"
         app:layout_constraintBottom_toTopOf="@+id/buttonFlipCoin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
@@ -51,9 +49,8 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="@string/coin_flip_title"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTimer"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTasks"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonConfigChild" />
 
@@ -62,34 +59,32 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="@string/tasks_title"
-        app:layout_constraintBottom_toTopOf="@+id/buttonHelp"
+
+        app:layout_constraintBottom_toTopOf="@+id/buttonTimer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTimer" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFlipCoin" />
 
     <Button
         android:id="@+id/buttonHelp"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:text="@string/main_menu_help"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTasks" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonBreathing" />
 
     <Button
         android:id="@+id/buttonBreathing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
-        android:layout_marginBottom="61dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:text="Breathing"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonHelp"
+
+        app:layout_constraintBottom_toTopOf="@+id/buttonHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonTasks"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTimer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
