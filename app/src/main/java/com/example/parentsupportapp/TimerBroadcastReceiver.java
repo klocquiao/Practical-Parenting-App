@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- Basic class that extends BroadcastReceiver, allowing user to stop the alarm from the notification.
+ * Basic class that extends BroadcastReceiver, allowing user to stop the alarm from the notification.
  */
 
 public class TimerBroadcastReceiver extends BroadcastReceiver {

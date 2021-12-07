@@ -1,6 +1,4 @@
-package com.example.parentsupportapp.breathingModel;
-
-import android.widget.Toast;
+package com.example.parentsupportapp.model.breathingModel;
 
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;

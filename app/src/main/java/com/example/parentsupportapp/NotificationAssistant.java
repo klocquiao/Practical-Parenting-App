@@ -13,11 +13,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 /**
- This class has helper functions for preparing the notification channels and creating the
- required objects in order to send a notification through the created channel.
+ * This class has helper functions for preparing the notification channels and creating the
+ * required objects in order to send a notification through the created channel.
 
- Referenced notification setup from:
- https://developer.android.com/training/notify-user/build-notification#SimpleNotification
+ * Referenced notification setup from:
+ * https://developer.android.com/training/notify-user/build-notification#SimpleNotification
  */
 
 public class NotificationAssistant extends ContextWrapper {

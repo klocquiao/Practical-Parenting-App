@@ -65,11 +65,14 @@
     <string name="select_a_child_to_edit_it">Select a child to edit it</string>
     <string name="are_you_sure_you_want_to_delete_the_selected_child">Are you sure you want to delete the selected child?</string>
     <string name="enter_new_name">Enter new name</string>
-    <string name="child_config_title">Child Config</string>
+    <string name="child_config_title">Child Configuration</string>
+    <string name="child_config_button">Child Config</string>
     <string name="child_config_add_child">Add a child</string>
     <string name="child_config_remove_child">Remove a child</string>
     <string name="child_config_edit_child">Edit a child</string>
     <string name="child_config_view_all">View all</string>
+    <string name="add_child_title">Add Child</string>
+    <string name="edit_child_title">Edit Child</string>
     <string name="add_child_activity_enter_name">Enter Name</string>
     <string name="add_child_activity_added_toast">New Child Added</string>
     <string name="add_child_activity_enter_error">Enter again!</string>
@@ -97,13 +100,6 @@
     <string name="edit_task_alert_title">Edit Task Name</string>
     <string name="edit_task_alert_message">Please provide a new task name!</string>
 
-    <!-- Breathing Activity -->
-    <string name="breathing_header">Lets take %1$s breath(s) together!</string>
-    <string name="breathing_in">In</string>
-    <string name="breathing_out">Out</string>
-    <string name="breathing_out_prompt">Lets breathe out now...</string>
-    <string name="breathing_finished">Breathing finished. Good Job!</string>
-
     <!-- Help Activity -->
     <string name="help_sources">
         Sources:
@@ -113,11 +109,20 @@
     </string>
     <string name="help_created_msg">App created by team Carbon!!</string>
     <string name="timer_pie_chart_data_set_label">Time remaining</string>
+    <string name="help_title">Help</string>
 
+    <!-- Breathing Activity -->
+    <string name="breathing_exercise_title">Breathing Exercise</string>
     <string name="breathing_exercise_complete">Good job</string>
     <string name="breathing_inhale_help">Breathe in and hold the button for at least 3 secs</string>
     <string name="breathing_inhale_error">Breathe for longer!</string>
     <string name="breathing_exhale_error">Release the button and breathe out!</string>
     <string name="breathing_exhale_help">Lets breathe out now...</string>
     <string name="breathing_begin">Begin</string>
+    <string name="breathing_header">Lets take %1$s breath(s) together!</string>
+    <string name="breathing_in">In</string>
+    <string name="breathing_out">Out</string>
+    <string name="breathing_out_prompt">Lets breathe out now...</string>
+    <string name="breathing_finished">Breathing finished. Good Job!</string>
+
 </resources>

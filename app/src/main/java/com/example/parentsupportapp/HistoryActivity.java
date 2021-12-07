@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.parentsupportapp.childConfig.ViewActivity;
+import com.example.parentsupportapp.childConfigActivities.ViewActivity;
 import com.example.parentsupportapp.model.HistoryEntry;
 import com.example.parentsupportapp.model.HistoryManager;
 

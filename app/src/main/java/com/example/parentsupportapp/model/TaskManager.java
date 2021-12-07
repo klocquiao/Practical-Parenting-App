@@ -2,7 +2,7 @@ package com.example.parentsupportapp.model;
 
 import android.content.Context;
 
-import com.example.parentsupportapp.TasksActivity;
+import com.example.parentsupportapp.tasksConfigActivities.TasksActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

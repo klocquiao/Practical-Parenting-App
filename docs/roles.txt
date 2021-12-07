@@ -1,4 +1,6 @@
-Kyle: Scrum Master
-Damir: Repo Manager
-Mohammed: Product Owner
-Yatik: Teammate
+Iteration 3:
+
+Kyle: Teammate
+Damir: Product Owner
+Mohammed: Scrum Master
+Yatik: Repo Manager

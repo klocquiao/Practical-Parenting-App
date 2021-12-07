@@ -1,4 +1,4 @@
-package com.example.parentsupportapp.tasksConfig;
+package com.example.parentsupportapp.tasksConfigActivities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -17,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.parentsupportapp.R;
-import com.example.parentsupportapp.TasksActivity;
 import com.example.parentsupportapp.model.Family;
 import com.example.parentsupportapp.model.Task;
 import com.example.parentsupportapp.model.TaskManager;
@@ -25,34 +22,33 @@ import com.example.parentsupportapp.model.TaskManager;
 import java.util.ArrayList;
 
 /**
- * EditTask allows the user to change the name of a Task in the TaskManager's Task list.
+ * EditTask allows the user to remove a Task from the TaskManager's task list.
  */
 
-public class EditTaskActivity extends AppCompatActivity {
+public class RemoveTaskActivity extends AppCompatActivity {
 
-    private Family family;
     private TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_task);
-        Toolbar toolbar = findViewById(R.id.toolbarEditTask);
+        setContentView(R.layout.activity_remove_task);
+        Toolbar toolbar = findViewById(R.id.toolbarRemoveTask);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setTitle(R.string.edit_task_title);
+            actionbar.setTitle(R.string.remove_task_activity_title);
         }
 
-        initializeVariables();
+        initializeVarialbes();
         updateUI();
         registerClickCallback();
     }
 
-    private void initializeVariables() {
-        family = Family.getInstance(EditTaskActivity.this);
-        taskManager = TaskManager.getInstance(family.getChildren(), EditTaskActivity.this);
+    private void initializeVarialbes() {
+        Family family = Family.getInstance(RemoveTaskActivity.this);
+        taskManager = TaskManager.getInstance(family.getChildren(), RemoveTaskActivity.this);
     }
 
     private void updateUI() {
@@ -63,42 +59,30 @@ public class EditTaskActivity extends AppCompatActivity {
                 R.id.textViewBasicListItem,
                 tasks);
 
-        ListView list = findViewById(R.id.listViewEditTask);
+        ListView list = findViewById(R.id.listViewRemoveTask);
         list.setAdapter(adapter);
     }
 
     private void registerClickCallback() {
-        ListView list = findViewById(R.id.listViewEditTask);
+        ListView list = findViewById(R.id.listViewRemoveTask);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                editTaskName(position);
+                confirmationPopup(position);
             }
         });
     }
 
-    private void editTaskName(int position) {
-        View dialogView = getLayoutInflater().inflate(R.layout.edit_message_layout, null);
-        EditText editText = dialogView.findViewById(R.id.editTextNewName);
-        AlertDialog.Builder alert = new AlertDialog.Builder(EditTaskActivity.this);
-        alert.setTitle(R.string.edit_task_alert_title)
+    private void confirmationPopup(int position) {
+        View dialogView = getLayoutInflater().inflate(R.layout.remove_task_message_layout, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(RemoveTaskActivity.this);
+        alert.setTitle(R.string.remove_task_removal_message)
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String newName = editText.getText().toString();
-
-                        if (newName.equals("")) {
-                            Toast.makeText(EditTaskActivity.this,
-                                    getString(R.string.edit_task_alert_message),
-                                    Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                        else {
-                            taskManager.getTask(position).setTaskName(newName);
-                            TasksActivity.saveTaskSharedPrefs(EditTaskActivity.this, taskManager);
-                            updateUI();
-                        }
+                        taskManager.removeTask(position);
+                        updateUI();
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -109,6 +93,6 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context) {
-        return new Intent(context, EditTaskActivity.class);
+        return new Intent(context, RemoveTaskActivity.class);
     }
 }
