@@ -10,6 +10,7 @@ import com.example.parentsupportapp.BreathingActivity;
 
 public abstract class State {
     public static final long THREE_SECONDS_MS = 3000;
+    public static final long SEVEN_SECONDS_MS = 7000;
     public static final long TEN_SECONDS_MS = 10000;
     protected Handler handler;
     protected BreathingActivity context;
