@@ -1,5 +1,7 @@
 package com.example.parentsupportapp.breathingModel;
 
+import android.widget.Toast;
+
 import com.example.parentsupportapp.BreathingActivity;
 import com.example.parentsupportapp.R;
 
@@ -20,5 +22,7 @@ public class FinishState extends State {
 
         String numBreaths = Integer.toString(context.numberOfBreaths);
         context.txtMain.setText(context.getString(R.string.breathing_header, numBreaths));
+        Toast.makeText(context, "Breathing finished. Good Job!", Toast.LENGTH_SHORT).show();
+        context.finish();
     }
 }

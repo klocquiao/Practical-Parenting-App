@@ -21,8 +21,7 @@ public class InhaleState extends State {
         super.handleEnter();
 
         context.imgBreathingGuide.setColorFilter(context.getColor(R.color.breathing_green));
-        Toast.makeText(context, context.getString(R.string.breathing_inhale_help), Toast.LENGTH_SHORT).show();
-        context.tvPrompt.setText("Breathe in and hold the button...");
+        context.tvPrompt.setText(R.string.breathing_inhale_help);
     }
 
     @Override
@@ -59,12 +58,13 @@ public class InhaleState extends State {
 
     Runnable shouldBreathOut = new Runnable() {
         public void run() {
-            Toast.makeText(context, context.getString(R.string.breathing_exhale_error), Toast.LENGTH_SHORT).show();
+            context.tvPrompt.setText("Release the button to breathe out!");
         }
     };
 
     Runnable canBreatheOut = new Runnable() {
         public void run() {
+            context.tvPrompt.setText("Lets breathe out now...");
             context.btnBreathe.setText(context.getString(R.string.breathing_out));
         }
     };
